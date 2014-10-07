@@ -1,0 +1,23 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="Android.Android" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Kangou.Core/WebClients/Conekta/ConektaClient.cs">
+    <Files>
+      <File FileName="Kangou.Droid/Views/RegisterOrderView.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Core/WebClients/Conekta/ConektaClient.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Droid/Properties/AndroidManifest.xml" Line="1" Column="1" />
+      <File FileName="Kangou.Droid/Views/PickUpView.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Droid/Views/DropOffView.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Droid/Views/ItemsView.cs" Line="1" Column="1" />
+      <File FileName="../../../../../../Library/Frameworks/Mono.framework/External/xbuild/Xamarin/Android/Xamarin.Android.Common.targets" Line="1" Column="1" />
+      <File FileName="Kangou.Core/WebClients/Kangou/KangouClient.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Droid/Properties/AssemblyInfo.cs" Line="1" Column="1" />
+      <File FileName="../../../../../../Library/Frameworks/Mono.framework/Versions/3.6.0/lib/mono/4.5/Microsoft.Common.targets" Line="1" Column="1" />
+      <File FileName="Kangou.Droid/Setup.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Droid/SplashScreen.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

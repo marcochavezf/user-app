@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/id_dropoffdata"
+        android:visibility="invisible"
+        local:MvxBind="Text Id" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17.5dp"
+        android:text="Nombre"
+        local:MvxBind="Text FullName"
+        android:gravity="left"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13dp"
+        android:text="Número de teléfono"
+        android:id="@+id/phoneNumber"
+        local:MvxBind="Text PhoneNumber"
+        android:gravity="left"
+        android:layout_marginLeft="10dp" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13dp"
+        android:text="Email"
+        local:MvxBind="Text Email"
+        android:gravity="left"
+        android:layout_marginLeft="10dp" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13dp"
+        android:text="Dirección"
+        local:MvxBind="Text Address"
+        android:gravity="left"
+        android:layout_marginLeft="10dp" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="13dp"
+        android:text="Referencias"
+        local:MvxBind="Text References"
+        android:gravity="left"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp" />
+</LinearLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <Button
+        android:text="Agregar tarjeta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addDropOffData"
+        local:MvxBind="Click AddCreditCardDataCommand" />
+    <Mvx.MvxListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/listView"
+        local:MvxBind="ItemsSource CreditCardDataList; ItemClick SelectDataCommand"
+        local:MvxItemTemplate="@layout/item_creditcarddata" />
+</LinearLayout>

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.kangou" android:versionName="1.0.3" android:versionCode="4">
+  <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="19" />
+  <application android:label="Kangou" android:theme="@android:style/Theme.Holo.Light" android:icon="@drawable/icon" android:debuggable="false" android:name="mono.android.app.Application">
+    <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyCAwW2MWVnd6YMSGSdZlXvtM8CXGk4UsIQ" />
+    <activity android:icon="@drawable/icon" android:label="Kangou" android:noHistory="true" android:screenOrientation="portrait" android:theme="@style/Theme.Splash" android:name="kangou.droid.SplashScreen">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <activity android:label="Registra tu Orden" android:name="kangou.droid.views.RegisterOrderView" />
+    <activity android:icon="@drawable/icon" android:label="¿Qué comprar o traer?" android:name="kangou.droid.views.ItemsView" />
+    <activity android:label="¿Dónde recolectar? (Opcional)" android:name="kangou.droid.views.PickUpView" />
+    <activity android:label="¿Dónde entregar?" android:name="kangou.droid.views.DropOffView" />
+    <activity android:icon="@drawable/icon" android:label="Tarjeta de Crédito" android:name="kangou.droid.views.CreditCardView" />
+    <activity android:icon="@drawable/icon" android:label="Código de promoción" android:name="kangou.droid.views.PromoCodeView" />
+    <activity android:label="¿Dónde entregar?" android:name="kangou.droid.views.DropOffListView" />
+    <activity android:label="¿Dónde recolectar?" android:name="kangou.droid.views.PickUpListView" />
+    <activity android:label="Agregar tarjeta de crédito" android:name="kangou.droid.views.CreditCardListView" />
+    <activity android:icon="@drawable/icon" android:label="Orden confirmada" android:name="kangou.droid.views.ConfirmationOrderView" />
+    <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="2147483647" android:authorities="com.kangou.mono.MonoRuntimeProvider.__mono_init__" />
+  </application>
+  <permission android:name="com.kangou.permission.MAPS_RECEIVE" android:protectionLevel="signature" />
+  <uses-permission android:name="com.kangou.permission.MAPS_RECEIVE" />
+  <!-- We need to be able to download map tiles and access Google Play Services-->
+  <uses-permission android:name="android.permission.INTERNET" />
+  <!-- Allow the application to access Google web-based services. -->
+  <!-- Google Maps for Android v2 will cache map tiles on external storage -->
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <!-- Google Maps for Android v2 needs this permission so that it may check the connection state as it must download data -->
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <!-- These are optional, but recommended. They will allow Maps to use the My Location provider. -->
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+  <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+  <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+  <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
+  <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+  <!-- Google Maps for Android v2 requires OpenGL ES v2 -->
+  <uses-feature android:glEsVersion="0x00020000" android:required="true" />
+</manifest>

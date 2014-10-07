@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <EditText
+        android:id="@+id/creditCardNumber"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:hint="1234 5678 9012 3456"
+        android:maxLength="19"
+        local:MvxBind="Text CreditCardNumber"
+        android:inputType="phone" />
+    <EditText
+        android:id="@+id/expirationDate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:hint="MM/YY"
+        android:maxLength="5"
+        local:MvxBind="Text ExpirationDate"
+        android:inputType="phone" />
+    <EditText
+        android:id="@+id/cvv"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:hint="CVV"
+        local:MvxBind="Text CVV"
+        android:maxLength="4"
+        android:inputType="phone" />
+    <TextView
+        android:text="* No se realizará el cargo a la tarjeta hasta que el Kangou haya entregado el envío."
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="35dp"
+        android:layout_gravity="center"
+        android:textDirection="locale" />
+</LinearLayout>

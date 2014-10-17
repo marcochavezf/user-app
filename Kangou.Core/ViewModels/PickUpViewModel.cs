@@ -56,15 +56,100 @@ namespace Kangou.Core.ViewModels
 		}
 
 		/* * * * * * * * * * * *
+		* Short Address Property
+		*/
+
+		private string _addressToDisplay;
+		public string AddressToDisplay { 
+			get { return _addressToDisplay; }
+			set {
+				_addressToDisplay = value;
+				RaisePropertyChanged (() => AddressToDisplay);
+			}
+		}
+
+		/* * * * * * * * * * * *
 		* Address Property
 		*/
 
-		private string _address;
-		public string Address { 
-			get { return _address; }
+		private string _street;
+		public string Street { 
+			get { return _street; }
 			set {
-				_address = value;
-				RaisePropertyChanged (() => Address);
+				_street = value;
+				RaisePropertyChanged (() => Street);
+			}
+		}
+
+		private string _subLocality;
+		public string SubLocality { 
+			get { return _subLocality; }
+			set {
+				_subLocality = value;
+				RaisePropertyChanged (() => SubLocality);
+			}
+		}
+
+		private string _locality;
+		public string Locality { 
+			get { return _locality; }
+			set {
+				_locality = value;
+				RaisePropertyChanged (() => Locality);
+			}
+		}
+
+		private string _administrativeArea;
+		public string AdministrativeArea { 
+			get { return _administrativeArea; }
+			set {
+				_administrativeArea = value;
+				RaisePropertyChanged (() => AdministrativeArea);
+			}
+		}
+
+		private string _country;
+		public string Country { 
+			get { return _country; }
+			set {
+				_country = value;
+				RaisePropertyChanged (() => Country);
+			}
+		}
+
+		private string _postalCode;
+		public string PostalCode { 
+			get { return _postalCode; }
+			set {
+				_postalCode = value;
+				RaisePropertyChanged (() => PostalCode);
+			}
+		}
+
+		private string _isoCountryCode;
+		public string IsoCountryCode { 
+			get { return _isoCountryCode; }
+			set {
+				_isoCountryCode = value;
+				RaisePropertyChanged (() => IsoCountryCode);
+			}
+		}
+
+		private double _lat;
+		public double Lat { 
+			get { return _lat; }
+			set {
+				_lat = value;
+				RaisePropertyChanged (() => Lat);
+			}
+		}
+
+		private double _lng;
+		public double Lng { 
+			get { return _lng; }
+			set {
+				_lng = value;
+				RaisePropertyChanged (() => Lng);
 			}
 		}
 
@@ -72,7 +157,16 @@ namespace Kangou.Core.ViewModels
 		{
 			var pickUpData = new PickUpData () {
 				FullName =  this.FullName,
-				Address = this.Address,
+				AddressToDisplay = this.AddressToDisplay,
+				Street = this.Street,
+				SubLocality = this.SubLocality,
+				Locality = this.Locality,
+				AdministrativeArea = this.AdministrativeArea,
+				Country = this.Country,
+				PostalCode = this.PostalCode,
+				IsoCountryCode = this.IsoCountryCode,
+				Lat = this.Lat,
+				Lng = this.Lng,
 				References = this.References
 			};
 			_dataService.Add(pickUpData);

@@ -84,11 +84,11 @@ namespace Kangou.Core.ViewModels
 		public bool PublishData()
 		{
 			/*
-			var name = "";
-			var email = "";
+			var name = "Marco";
+			var email = "marco@kangou.mx";
 			var phoneNumber = "5512345678";
 			var address = "Dirección prueba";
-			var cardNumber = "4766 8400 7383 1823453459";
+			var cardNumber = "4766 8400 7383 1823";
 			var expMonth = "02";
 			var expYear = "2020";
 			var cvc = "693";
@@ -107,10 +107,11 @@ namespace Kangou.Core.ViewModels
 
 			//Acquiring DropOff Data
 			_messenger.Publish (new RequestDropOffInfoMessage (this));
-			var name = DropOffData.FullName;
-			var email = DropOffData.Email;
-			var phoneNumber = DropOffData.PhoneNumber;
-			var address = DropOffData.Address;
+			var userData = _dataService.GetUserData ();
+			var name = userData.Name;
+			var email = userData.Email;
+			var phoneNumber = userData.PhoneNumber;
+			var address = DropOffData.Street;
 
 			string [] expDate = this.ExpirationDate.Split(new Char [] {'/'});
 
@@ -131,25 +132,23 @@ namespace Kangou.Core.ViewModels
 				cvc
 			);
 
+
 			//It wasn't a succesful operation to create client
-			System.Diagnostics.Debug.WriteLine ("card_id: {0}",client.default_card_id);
 			if (client.default_card_id == null)
 				return false;
-
 			var creditCardNumber = this.CreditCardNumber;
 			string pattern = @"^[0-9]+$";
 			Regex regex = new Regex(pattern);
-			if (regex.IsMatch (creditCardNumber[0].ToString()))
-				creditCardNumber = StringFormater.HideCreditCardNumber(creditCardNumber);
-
+			if (regex.IsMatch (creditCardNumber [0].ToString ())) 
+				creditCardNumber = StringFormater.HideCreditCardNumber (creditCardNumber);
+		
 			var creditCardData = new CreditCardData () {
 				CreditCardNumber = creditCardNumber,
-				ConektaId = client.default_card_id,
+				CardId = client.default_card_id,
+				TypeCardId = "Conekta"
 			};
-
 			_dataService.Add(creditCardData);
 			_messenger.Publish (new CreditCardDataMessage (this, creditCardData));
-
 			//All was succesfull
 			return true;
 		}

@@ -24,5 +24,8 @@ namespace Kangou.Core.Services.DataStore
 		void Delete(CreditCardData collectedItem);
 		void Update(CreditCardData collectedItem);
 		CreditCardData GetCreditCardData(int id);
+
+		void AddOrUpdate(UserData userData);
+		UserData GetUserData();
     }
 }

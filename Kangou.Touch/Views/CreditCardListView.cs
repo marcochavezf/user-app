@@ -14,12 +14,7 @@ namespace Kangou.Touch.Views
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
-
 			var viewModel = (CreditCardListViewModel)ViewModel;
-
-			// ios7 layout
-			if (RespondsToSelector(new Selector("edgesForExtendedLayout")))
-				EdgesForExtendedLayout = UIRectEdge.None;
 
 			//Creating Table
 			var source = new MvxDeleteStandardTableViewSource (viewModel, TableView, UITableViewCellStyle.Subtitle, new NSString("Id"), "TitleText CreditCardNumber", UITableViewCellAccessory.None);

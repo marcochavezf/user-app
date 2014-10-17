@@ -18,3 +18,23 @@
 /Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/Kangou.Core/bin/Debug/System.Net.Http.Primitives.dll
 /Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/Kangou.Core/bin/Debug/System.Net.Http.Extensions.dll
 /Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/Kangou.Core/bin/Debug/Newtonsoft.Json.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/obj/Debug/.NETPortable,Version=v4.5,Profile=Profile78.AssemblyAttribute.cs
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Kangou.Core.dll.config
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Kangou.Core.dll.mdb
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Kangou.Core.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/obj/Debug/Kangou.Core.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/obj/Debug/Kangou.Core.dll.mdb
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Cirrious.CrossCore.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Cirrious.MvvmCross.Localization.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Cirrious.MvvmCross.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Cirrious.MvvmCross.Plugins.Messenger.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Cirrious.MvvmCross.Plugins.Location.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Cirrious.MvvmCross.Community.Plugins.Sqlite.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Cirrious.MvvmCross.Plugins.Json.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Cirrious.MvvmCross.Plugins.DownloadCache.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Cirrious.MvvmCross.Plugins.File.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/ModernHttpClient.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/System.Net.Http.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/System.Net.Http.Primitives.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/System.Net.Http.Extensions.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Newtonsoft.Json.dll

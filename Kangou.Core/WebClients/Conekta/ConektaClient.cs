@@ -5,6 +5,7 @@ using System.Text;
 using System.Net.Http.Headers;
 using Cirrious.CrossCore.Platform;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Kangou.Core.WebClients
 {
@@ -22,8 +23,8 @@ namespace Kangou.Core.WebClients
 		public ConektaClient (IMvxJsonConverter jsonConverter)
 		{
 			_jsonConverter = jsonConverter;
-			System.Diagnostics.Debug.WriteLine ("PrivateKey: {0}",PrivateKey);
-			System.Diagnostics.Debug.WriteLine ("PublicKey: {0}",PublicKey);
+			Debug.WriteLine ("PrivateKey: {0}",PrivateKey);
+			Debug.WriteLine ("PublicKey: {0}",PublicKey);
 		}
 
 		public Client CreateClient(string name, string email, string phone, string shippingAddress, string card, string expMonth, string expYear, string cvc) {
@@ -56,7 +57,7 @@ namespace Kangou.Core.WebClients
 				"&_Version=0.3.0&_RaiseHtmlError=false&auth_token=" + PublicKey +
 				"&conekta_client_user_agent={\"agent\":\"Conekta JavascriptBindings/0.3.0\"}";
 			var getResponse = Get (endpoint);
-			System.Diagnostics.Debug.WriteLine (getResponse);
+			System.Diagnostics.Debug.WriteLine ("Response:{0}",getResponse);
 			var jsonResponse = getResponse.Replace ("jsonp2(", "").Replace (")", "");
 			var token = _jsonConverter.DeserializeObject<Token> (jsonResponse);
 			return token;

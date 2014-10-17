@@ -11,126 +11,125 @@ using Kangou.Touch.Helpers;
 using Kangou.Core.Helpers;
 using Kangou.Helpers;
 using MonoTouch.CoreGraphics;
+using MonoTouch.CoreLocation;
+using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Kangou.Touch.Views
 {
 	[Register("RegisterOrderView")]
-	public class RegisterOrderView : MvxViewController
+	public class RegisterOrderView : RootMvxViewController
 	{
 		private const int CREDIT_CARD_ID = 0;
 		private const int CASH_ID = 1;
 		private RegisterOrderViewModel _viewModel;
+		private CLLocationManager locMgr;
 
 		public override void ViewDidLoad()
 		{
-			View = new UIView(){ BackgroundColor = UIColor.White};
+			NavigationItem.Title = "Crear orden";
 			base.ViewDidLoad();
 
-			// ios7 layout
-			if (RespondsToSelector(new Selector("edgesForExtendedLayout")))
-				EdgesForExtendedLayout = UIRectEdge.None;
+			locMgr = new CLLocationManager();
+			if (UIDevice.CurrentDevice.CheckSystemVersion (7, 8)) {
+				locMgr.RequestWhenInUseAuthorization ();
+			}
 
 			//Constants
 			var WIDTH = UIScreen.MainScreen.Bounds.Width;
 			var HEIGHT = UIScreen.MainScreen.Bounds.Height;
-			var MARGIN_SUBVIEWS = WIDTH / 8; 
-			var PADDING_LABEL_BUTTON = 25;
-			var PADDING_SECTION = 80;
-			var HEIGHT_BUTTON = 50;
+			var MARGIN_SUBVIEWS = WIDTH / 8;
+			var MARGIN_BUTTONS = WIDTH * 0.05f;
+			var PADDING_LABEL_BUTTON = HEIGHT * 0.05f;
+			var PADDING_SECTION = HEIGHT * 0.1f;
+			var HEIGHT_BUTTON = HEIGHT * 0.035f;
 			var LABEL_FONT_SIZE = 15f;
 			var BUTTON_FONT_SIZE = 15f;
 			var LABEL_FONT = "Arial-BoldMT";
 			var BUTTON_FONT = "Arial-BoldMT";
-			var BORDER_WIDTH = 0.5f;
+			var BORDER_WIDTH = 0.0f;
 			_viewModel = (RegisterOrderViewModel)ViewModel;
 
-			var pY = 40f;
+			var pYoffset = HEIGHT * 0.2f;
 
 			//Items Label
-			var itemsLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS-7.5f, pY, WIDTH-MARGIN_SUBVIEWS*2, 20));
+			var itemsLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20));
 			itemsLabel.Text = "1. ¿Qué comprar o traer?";
 			itemsLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			itemsLabel.TextColor = UIColor.Gray;
 			itemsLabel.TextAlignment = UITextAlignment.Center;
 			Add(itemsLabel);
-			pY += PADDING_LABEL_BUTTON;
+			pYoffset += PADDING_LABEL_BUTTON;
 
 			//Items Button
 			var itemsButton = new UIButton (UIButtonType.RoundedRect);
 			itemsButton.SetTitle ("Agregar productos", UIControlState.Normal);
 			itemsButton.Font = UIFont.FromName(BUTTON_FONT, BUTTON_FONT_SIZE);
-			itemsButton.Frame = new RectangleF(MARGIN_SUBVIEWS, pY, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_BUTTON);
+			itemsButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			itemsButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			itemsButton.Layer.BorderWidth = BORDER_WIDTH;
 			Add (itemsButton);
 
-			pY += PADDING_SECTION;
+			pYoffset += PADDING_SECTION;
+
+			//Items Label
+			var pickUpLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20));
+			pickUpLabel.Text = "2. ¿Dónde recoger?";
+			pickUpLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
+			pickUpLabel.TextColor = UIColor.Gray;
+			pickUpLabel.TextAlignment = UITextAlignment.Center;
+			Add(pickUpLabel);
+			pYoffset += PADDING_LABEL_BUTTON;
+
+			//Items Button
+			var pickUpButton = new UIButton (UIButtonType.RoundedRect);
+			pickUpButton.SetTitle ("Agregar dirección", UIControlState.Normal);
+			pickUpButton.Font = UIFont.FromName(BUTTON_FONT, BUTTON_FONT_SIZE);
+			pickUpButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
+			pickUpButton.Layer.BorderColor = UIColor.Gray.CGColor;
+			pickUpButton.Layer.BorderWidth = BORDER_WIDTH;
+			Add (pickUpButton);
+			pYoffset += PADDING_SECTION;
 
 			//Drop Off Label
-			var dropOffLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS-7.5f, pY, WIDTH-MARGIN_SUBVIEWS*2, 20));
-			dropOffLabel.Text = "2. ¿Dónde entregar?";
+			var dropOffLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20));
+			dropOffLabel.Text = "3. ¿Dónde entregar?";
 			dropOffLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			dropOffLabel.TextColor = UIColor.Gray;
 			dropOffLabel.TextAlignment = UITextAlignment.Center;
 			Add(dropOffLabel);
-			pY += PADDING_LABEL_BUTTON;
+			pYoffset += PADDING_LABEL_BUTTON;
 
 			//Drop Off Button
 			var dropOffButton = new UIButton (UIButtonType.RoundedRect);
 			dropOffButton.SetTitle ("Agregar dirección", UIControlState.Normal);
 			dropOffButton.Font = UIFont.FromName(BUTTON_FONT, BUTTON_FONT_SIZE);
-			dropOffButton.Frame = new RectangleF(MARGIN_SUBVIEWS, pY, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_BUTTON);
+			dropOffButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			dropOffButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			dropOffButton.Layer.BorderWidth = BORDER_WIDTH;
 			Add (dropOffButton);
 
-			pY += PADDING_SECTION;
+			pYoffset += PADDING_SECTION;
 
 			//Payment Method Label
-			var paymentMethodLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS-7.5f, pY, WIDTH-MARGIN_SUBVIEWS*2, 20));
-			paymentMethodLabel.Text = "3. Información de pago";
+			var paymentMethodLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20));
+			paymentMethodLabel.Text = "4. Información de pago";
 			paymentMethodLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			paymentMethodLabel.TextColor = UIColor.Gray;
 			paymentMethodLabel.TextAlignment = UITextAlignment.Center;
 			Add(paymentMethodLabel);
-			pY += PADDING_LABEL_BUTTON;
-
-			//Payment Method Action Sheet
-			var paymentMethodactionSheet = new UIActionSheet ("Forma de pago");
-			paymentMethodactionSheet.Center = new PointF(100,100);
-			paymentMethodactionSheet.AddButton ("Tarjeta de Crédito");
-			paymentMethodactionSheet.AddButton ("Efectivo");
-			paymentMethodactionSheet.Clicked += delegate(object a, UIButtonEventArgs b) {
-				switch (b.ButtonIndex) {
-
-				case CREDIT_CARD_ID:
-					_viewModel.AddCreditCardCommand.Execute (null);
-					break;
-
-				case CASH_ID:
-					_viewModel.SetCashPaymentMethod();
-					break;
-
-				default:
-					_viewModel.InfoPaymentMethod = "Seleccionar forma de pago";
-					break;
-
-				}
-			};
+			pYoffset += PADDING_LABEL_BUTTON;
 
 			//Payment Method Button
 			var paymentMethodButton = new UIButton (UIButtonType.RoundedRect);
 			paymentMethodButton.SetTitle ("Seleccionar forma de pago", UIControlState.Normal);
 			paymentMethodButton.Font = UIFont.FromName(BUTTON_FONT, BUTTON_FONT_SIZE);
-			paymentMethodButton.Frame = new RectangleF(MARGIN_SUBVIEWS, pY, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_BUTTON);
+			paymentMethodButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			paymentMethodButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			paymentMethodButton.Layer.BorderWidth = BORDER_WIDTH;
-			paymentMethodButton.TouchUpInside += (object sender, System.EventArgs e) => {
-				paymentMethodactionSheet.ShowInView (View);
-			};
 			Add (paymentMethodButton);
 
-			pY += PADDING_SECTION * 1.75f;
+			pYoffset += PADDING_SECTION * 1.5f;
 
 			//Confirm Order Alert
 			var confirmOrderAlert = new UIAlertView ("Confirmar Orden",StringMessages.CONFIRM_MESSAGE_IOS, null, "Cancelar", "Confirmar");
@@ -149,15 +148,13 @@ namespace Kangou.Touch.Views
 			var pideUnKangouButton = new UIButton (UIButtonType.RoundedRect);
 			pideUnKangouButton.SetTitle ("Pedir un Kangou", UIControlState.Normal);
 			pideUnKangouButton.Font = UIFont.FromName(BUTTON_FONT, BUTTON_FONT_SIZE);
-			pideUnKangouButton.Frame = new RectangleF(MARGIN_SUBVIEWS, pY, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_BUTTON);
+			pideUnKangouButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			pideUnKangouButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			pideUnKangouButton.Layer.BorderWidth = BORDER_WIDTH;
 			pideUnKangouButton.TouchUpInside += (object sender, System.EventArgs e) => {
 				if (_viewModel.IsDeliveryDataSet ()) {
 					if (_viewModel.IsPaymentInfoSet ())
 						confirmOrderAlert.Show ();
-					else
-						paymentMethodactionSheet.ShowInView (View);
 				}
 			};
 			Add (pideUnKangouButton);
@@ -165,33 +162,52 @@ namespace Kangou.Touch.Views
 			//Data Binding
 			var set = this.CreateBindingSet<RegisterOrderView, RegisterOrderViewModel>();
 			set.Bind(itemsButton).For("Title").To(vm => vm.Items);
+			set.Bind(pickUpButton).For("Title").To(vm => vm.PickUpAddress);
 			set.Bind(dropOffButton).For("Title").To(vm => vm.DropOffAddress);
 			set.Bind(paymentMethodButton).For("Title").To(vm => vm.InfoPaymentMethod);
 			set.Bind(itemsButton).To (vm => vm.AddItemsCommand);
+			set.Bind(pickUpButton).To (vm => vm.AddPickUpAddressCommand);
 			set.Bind(dropOffButton).To(vm => vm.AddDropOffAddressCommand);
+			set.Bind(paymentMethodButton).To(vm => vm.AddCreditCardCommand);
 			set.Apply();
 
+			_viewModel.EnablePickUpButton = ()=>{
+				InvokeOnMainThread (delegate {  
+					pickUpButton.Enabled = true;
+					pickUpLabel.TextColor = UIColor.Gray;
+				});
+			};
+
 			_viewModel.EnableDropOffButton = ()=>{
-				dropOffButton.Enabled = true;
-				dropOffLabel.TextColor = UIColor.Gray;
+				_viewModel.EnablePickUpButton();
+				InvokeOnMainThread (delegate {
+					dropOffButton.Enabled = true;
+					dropOffLabel.TextColor = UIColor.Gray;
+				});
 			};
 
 			_viewModel.EnablePaymentMethodButton = ()=>{
 				_viewModel.EnableDropOffButton();
-				paymentMethodButton.Enabled = true;
-				paymentMethodLabel.TextColor = UIColor.Gray;
+				InvokeOnMainThread (delegate {  
+					paymentMethodButton.Enabled = true;
+					paymentMethodLabel.TextColor = UIColor.Gray;
+				});
 			};
 
 			_viewModel.EnablePUKButton = ()=>{
 				_viewModel.EnablePaymentMethodButton ();
-				pideUnKangouButton.Enabled = true;
+				InvokeOnMainThread (delegate {  
+					pideUnKangouButton.Enabled = true;
+				});
 			};
 
 			_viewModel.DisableButtons = () => {
+				pickUpButton.Enabled = false;
 				dropOffButton.Enabled = false;
 				paymentMethodButton.Enabled = false;
 				pideUnKangouButton.Enabled = false;
 
+				pickUpLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
 				dropOffLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
 				paymentMethodLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
 			};

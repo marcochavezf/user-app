@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Cirrious.MvvmCross.Community.Plugins.Sqlite;
+using System.Diagnostics;
 
 namespace Kangou.Core.Services.DataStore
 {
@@ -16,6 +17,7 @@ namespace Kangou.Core.Services.DataStore
             _connection.CreateTable<DropOffData>();
 			_connection.CreateTable<PickUpData>();
 			_connection.CreateTable<CreditCardData>();
+			_connection.CreateTable<UserData>();
         }
 
 
@@ -147,5 +149,29 @@ namespace Kangou.Core.Services.DataStore
 			return _connection.Get<CreditCardData>(id);
 		}
 
+
+		/*******************
+		 * User Data
+		 * */
+		public void AddOrUpdate(UserData userDataParam)
+		{
+			var userData = GetUserData ();
+			if (userData == null) {
+				Debug.WriteLine ("Adding User Data");
+				_connection.Insert (userDataParam);
+			} else {
+				Debug.WriteLine ("Updating User Data");
+				userDataParam.Id = userData.Id;
+				_connection.Update (userDataParam);
+			}
+		}
+
+		public UserData GetUserData()
+		{
+			return _connection
+				.Table<UserData> ()
+				.OrderBy (x => x.Id)
+				.FirstOrDefault<UserData> ();
+		}
     }
 }

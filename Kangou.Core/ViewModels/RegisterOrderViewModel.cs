@@ -25,6 +25,7 @@ namespace Kangou.Core.ViewModels
 
 		private readonly MvxSubscriptionToken 
 		_tokenItems,
+		_tokenPickUpAddress,
 		_tokenDropOffData,
 		_tokenCreditCardNumber,
 		_tokenPromoCode,
@@ -36,9 +37,9 @@ namespace Kangou.Core.ViewModels
 		private readonly KangouClient _kangouClient;
 
 		private ItemsData _itemsData;
+		private PickUpData _pickUpData;
 		private DropOffData _dropOffData;
 		private CreditCardData _creditCardData;
-	
 
 		public RegisterOrderViewModel (IMvxJsonConverter _jsonConverter, ILocationService locationService, IDataService dataService, IMvxMessenger messenger)
 		{
@@ -49,12 +50,12 @@ namespace Kangou.Core.ViewModels
 			_dataService = dataService;
 			_messenger = messenger;
 			_tokenItems = messenger.Subscribe<ItemsDataMessage> (UpdateItems);
+			_tokenPickUpAddress = messenger.Subscribe<PickUpDataMessage> (UpdatePickUpViewModel);
 			_tokenDropOffData = messenger.Subscribe<DropOffDataMessage> (UpdateDropOffData);
 			_tokenCreditCardNumber = messenger.Subscribe<CreditCardDataMessage> (UpdateCreditCardData);
 			_tokenPromoCode = messenger.Subscribe<PromoCodeMessage> (UpdatePromoCode);
 			_tokenResetOrderData = messenger.Subscribe<ResetOrderDataMessage> (ResetOrderData);
 			_tokenRequestDropOffInfo = messenger.Subscribe<RequestDropOffInfoMessage> (RequestDropOffData);
-
 		}
 
 		private void RequestDropOffData(RequestDropOffInfoMessage requestDropOffInfoMessage){
@@ -65,10 +66,12 @@ namespace Kangou.Core.ViewModels
 		private void ResetOrderData(ResetOrderDataMessage resetOrderDataMessage)
 		{
 			_itemsData = null;
+			_pickUpData = null;
 			_dropOffData = null;
 			_creditCardData = null;
 
 			Items = "Agregar productos";
+			PickUpAddress = "Seleccionar una dirección";
 			DropOffAddress = "Seleccionar una dirección";
 			InfoPaymentMethod = "Seleccionar forma de pago";
 			PromoCode = "Código de promoción";
@@ -85,25 +88,21 @@ namespace Kangou.Core.ViewModels
 			if (itemsInfoString.Equals (""))
 				return;
 
-			if (_itemsData.PickUpData == null)
-				Items = itemsInfoString;
-			else {
-				var pickUpAddressString = _itemsData.PickUpData.Address;
-				var conjunction = " de ";
-				if (itemsInfoString [itemsInfoString.Length - 1] == ' ')
-					conjunction = "de ";
-				Items = itemsInfoString + conjunction + pickUpAddressString;
-			}
-
-			EnableDropOffButton ();
+			Items = itemsInfoString;
+			EnablePickUpButton ();
 		}
 			
-		private void UpdateDropOffData(DropOffDataMessage dropOffDataMessage){
-			_dropOffData = dropOffDataMessage.DropOffData;
-			DropOffAddress =  _dropOffData.Address + "\n" + _dropOffData.FullName + "\n"  + _dropOffData.PhoneNumber + "\n" + _dropOffData.Email;
-			EnablePaymentMethodButton ();
+		private void UpdatePickUpViewModel(PickUpDataMessage pickUpDataMessage){
+			_pickUpData = pickUpDataMessage.PickUpData;
+			PickUpAddress = _pickUpData.AddressToDisplay;
+			EnableDropOffButton ();
 		}
 
+		private void UpdateDropOffData(DropOffDataMessage dropOffDataMessage){
+			_dropOffData = dropOffDataMessage.DropOffData;
+			DropOffAddress = _dropOffData.AddressToDisplay;
+			EnablePaymentMethodButton ();
+		}
 
 		private void UpdateCreditCardData(CreditCardDataMessage creditCardMessage){
 			_creditCardData = creditCardMessage.CreditCardData;
@@ -120,6 +119,7 @@ namespace Kangou.Core.ViewModels
 		 * Properties
 		 */
 
+		public Action EnablePickUpButton { get; set; }
 		public Action EnableDropOffButton { get; set; }
 		public Action EnablePaymentMethodButton { get; set; }
 		public Action EnablePUKButton { get; set; }
@@ -131,6 +131,15 @@ namespace Kangou.Core.ViewModels
 			set {
 				_items = value;
 				RaisePropertyChanged (() => Items);
+			}
+		}
+
+		private string _pickUpAddress;
+		public string PickUpAddress { 
+			get { return _pickUpAddress; }
+			set {
+				_pickUpAddress = value;
+				RaisePropertyChanged (() => PickUpAddress);
 			}
 		}
 
@@ -177,6 +186,28 @@ namespace Kangou.Core.ViewModels
 		}
 
 		/* * * * * * * * * * * * * * * * * * * * * * * * 
+		 * Pick Up
+		 */
+
+		private MvxCommand _addPickUpAddressCommand;
+		public ICommand AddPickUpAddressCommand {
+			get {
+				_addPickUpAddressCommand = _addPickUpAddressCommand ?? new MvxCommand (()=>
+					{
+						if (_itemsData == null)
+							return;
+
+						if (_dataService.CountPickUpData > 0) 
+							ShowViewModel <PickUpListViewModel> ();
+						else
+							ShowViewModel <PickUpViewModel> ();
+					});
+				return _addPickUpAddressCommand;
+			}
+		}
+
+
+		/* * * * * * * * * * * * * * * * * * * * * * * * 
 		 * Drop Off Address
 		 */
 
@@ -185,7 +216,7 @@ namespace Kangou.Core.ViewModels
 			get {
 				_addDropOffAddressCommand = _addDropOffAddressCommand ?? new MvxCommand (()=>
 					{
-						if (_itemsData == null)
+						if (_pickUpData == null)
 							return;
 
 						if (_dataService.CountDropOffData > 0) 
@@ -253,25 +284,16 @@ namespace Kangou.Core.ViewModels
 
 		public void SetCashPaymentMethod()
 		{
-			InfoPaymentMethod = "Efectivo";
 			_creditCardData = null;
-
+			InfoPaymentMethod = "Efectivo";
 			EnablePUKButton ();
 		}
 
 		public void ConfirmOrder(Action<string> successAction, Action<string> errorAction)
 		{
-			var userData = new UserData ()
-			{ 
-				Name = _dropOffData.FullName,
-				Email = _dropOffData.Email,
-				PhoneNumber = _dropOffData.PhoneNumber
-			};
-			String idCreditCard = null;
-			if (_creditCardData != null)
-				idCreditCard = _creditCardData.ConektaId;
-			
-			_kangouClient.SendOrderData(_itemsData, _dropOffData, userData, idCreditCard, 
+			var userData = _dataService.GetUserData ();
+				
+			_kangouClient.SendOrderData(_itemsData, _pickUpData, _dropOffData, _creditCardData, userData, 
 				(response) =>
 				{
 					successAction(response);

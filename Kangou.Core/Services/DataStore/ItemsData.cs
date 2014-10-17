@@ -9,6 +9,5 @@ namespace Kangou.Core.Services.DataStore
     public class ItemsData
     {
 		public string Items { get; set; }
-		public PickUpData PickUpData { get; set; }
     }
 }

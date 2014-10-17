@@ -5,6 +5,7 @@ using System.Text;
 using System.IO;
 using Cirrious.CrossCore;
 using Cirrious.CrossCore.Platform;
+using System.Diagnostics;
 
 namespace Kangou.Core.WebClients
 {
@@ -17,7 +18,7 @@ namespace Kangou.Core.WebClients
 			_jsonConverter = jsonConverter;
 		}
 
-		public void SendOrderData(ItemsData itemsData, DropOffData dropOffData, UserData userData, String idCreditCard, Action<string> succesAction, Action<string> errorAction)
+		public void SendOrderData(ItemsData itemsData, PickUpData pickUpData, DropOffData dropOffData, CreditCardData _creditCardData, UserData userData,  Action<string> succesAction, Action<string> errorAction)
 		{
 
 			/* Preparing Data. */
@@ -25,31 +26,41 @@ namespace Kangou.Core.WebClients
 			request.ContentType = "application/x-www-form-urlencoded";
 			request.Method = "POST";
 
-			var pickupAddress 	 = "";
-			var pickupReferences = "";
-			var pickupFullname 	 = "";
-
-			idCreditCard = idCreditCard ?? "cash";
-
-			if (itemsData.PickUpData != null) 
-			{
-				pickupAddress 	 = itemsData.PickUpData.Address;
-				pickupReferences = itemsData.PickUpData.References;
-				pickupFullname 	 = itemsData.PickUpData.FullName;
-			}
-
 			string postData = 
-				"credit_card_id=" 		+ idCreditCard +
-				"&list_items=" 			+ itemsData.Items +
-				"&pickup_address=" 		+ pickupAddress +
-				"&pickup_references=" 	+ pickupReferences +
-				"&pickup_fullname=" 	+ pickupFullname +
-				"&dropoff_address=" 	+ dropOffData.Address +
-				"&dropoff_references=" 	+ dropOffData.References +
-				"&dropoff_fullname=" 	+ dropOffData.FullName +
-				"&client_name=" 		+ userData.Name + 
-				"&client_email=" 		+ userData.Email +
-				"&client_phone_number=" + userData.PhoneNumber;
+				"credit_card_id=" 				+ _creditCardData.CardId +
+				"&type_card_id=" 				+ _creditCardData.TypeCardId + 
+
+				"&client_name=" 				+ userData.Name + 
+				"&client_email=" 				+ userData.Email +
+				"&client_phone_number=" 		+ userData.PhoneNumber +
+
+				"&list_items=" 					+ itemsData.Items +
+
+				"&pickup_lat=" 					+ pickUpData.Lat +
+				"&pickup_lng=" 					+ pickUpData.Lng +
+				"&pickup_street=" 				+ pickUpData.Street +
+				"&pickup_sublocality=" 			+ pickUpData.SubLocality +
+				"&pickup_locality=" 			+ pickUpData.Locality +
+				"&pickup_administrative_area=" 	+ pickUpData.AdministrativeArea +
+				"&pickup_country=" 				+ pickUpData.Country +
+				"&pickup_postal_code=" 			+ pickUpData.PostalCode +
+				"&pickup_iso_country_code=" 	+ pickUpData.IsoCountryCode +
+				"&pickup_references=" 			+ pickUpData.References +
+				"&pickup_fullname=" 			+ pickUpData.FullName +
+
+				"&dropoff_lat=" 				+ dropOffData.Lat +
+				"&dropoff_lng=" 				+ dropOffData.Lng +
+				"&dropoff_street=" 				+ dropOffData.Street +
+				"&dropoff_sublocality=" 		+ dropOffData.SubLocality +
+				"&dropoff_locality=" 			+ dropOffData.Locality +
+				"&dropoff_administrative_area=" + dropOffData.AdministrativeArea +
+				"&dropoff_country=" 			+ dropOffData.Country +
+				"&dropoff_postal_code=" 		+ dropOffData.PostalCode +
+				"&dropoff_iso_country_code=" 	+ dropOffData.IsoCountryCode +
+				"&dropoff_references=" 			+ dropOffData.References +
+				"&dropoff_fullname=" 			+ dropOffData.FullName;
+
+			Debug.WriteLine ("postData:{0}",postData);
 
 			// Convert the string into a byte array.
 			byte[] byteArray = Encoding.UTF8.GetBytes(postData);

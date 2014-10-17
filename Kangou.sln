@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kangou.Droid", "Kangou.Droi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kangou.Touch", "Kangou.Touch\Kangou.Touch.csproj", "{FE65A681-9550-4D89-B60D-6AA62E84E07E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlidingPanels.Touch", "SlidingPanels\SlidingPanels.Lib\SlidingPanels.Touch.csproj", "{2FD1999D-45B1-4485-BF96-EAB061481945}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,22 @@ Global
 		AppStore|iPhone = AppStore|iPhone
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.AppStore|iPhone.Build.0 = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Release|iPhone.Build.0 = Release|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{2FD1999D-45B1-4485-BF96-EAB061481945}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{78F2CC87-F3C7-4DF1-8D20-61E582B23BFF}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
 		{78F2CC87-F3C7-4DF1-8D20-61E582B23BFF}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
 		{78F2CC87-F3C7-4DF1-8D20-61E582B23BFF}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
@@ -69,6 +87,6 @@ Global
 		{FE65A681-9550-4D89-B60D-6AA62E84E07E}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Kangou.Droid\Kangou.Droid.csproj
+		StartupItem = Kangou.Touch\Kangou.Touch.csproj
 	EndGlobalSection
 EndGlobal

@@ -12,6 +12,7 @@ namespace Kangou.Core.Services.DataStore
         public int Id { get; set; }
         
 		public string CreditCardNumber { get; set; }
-		public string ConektaId { get; set; }
+		public string CardId { get; set; }
+		public string TypeCardId { get; set; }
     }
 }

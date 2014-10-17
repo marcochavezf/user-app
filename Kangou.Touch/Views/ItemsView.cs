@@ -11,45 +11,53 @@ namespace Kangou.Touch.Views
 	[Register("ItemsView")]
 	public class ItemsView : MvxViewController
 	{
-		UITextView itemsTextField;
+		UITextField itemsTextField;
 
 		public override void ViewDidLoad()
 		{
 			View = new UIView(){ BackgroundColor = UIColor.White};
 			base.ViewDidLoad();
 
-			// ios7 layout
-			if (RespondsToSelector(new Selector("edgesForExtendedLayout")))
-				EdgesForExtendedLayout = UIRectEdge.None;
-
 			//Constants
 			var WIDTH = UIScreen.MainScreen.Bounds.Width;
 			var HEIGHT = UIScreen.MainScreen.Bounds.Height;
 			var MARGIN_SUBVIEWS = WIDTH / 8; 
+			var MARGIN_TEXTFIELD = WIDTH * 0.05f;
 
-			var PADDING_BTWN_ELEMENT = 90;
-			var PADDING_SECTION = 100;
-			var HEIGHT_BUTTON = 50;
-			var HEIGHT_TEXTVIEWS = 80;
+			var PADDING_BTWN_ELEMENT = HEIGHT * 0.2f;
+			var HEIGHT_TEXTVIEWS = HEIGHT * 0.2f;
 
 			var LABEL_FONT_SIZE = 15f;
-			var BUTTON_FONT_SIZE = 15f;
 			var LABEL_FONT = "Arial-BoldMT";
-			var BUTTON_FONT = "Arial-BoldMT";
 
-			var pY = 40f;
+			var pYoffset = HEIGHT * 0.05f;
+
+			//Info Pick Up Label
+			var infoPickUpLabel = new UITextView(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_TEXTVIEWS * 1.25f));
+			infoPickUpLabel.Text = "Escribe en la parte de abajo los productos a traer o comprar.";
+			infoPickUpLabel.Font = UIFont.FromName(LABEL_FONT, 12f);
+			infoPickUpLabel.TextColor = UIColor.Gray;
+			infoPickUpLabel.TextAlignment = UITextAlignment.Center;
+			infoPickUpLabel.Editable = false;
+			Add (infoPickUpLabel);
 
 			//Items Text Field
-			itemsTextField = new UITextView(new RectangleF(MARGIN_SUBVIEWS, pY, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_TEXTVIEWS));
-			itemsTextField.Text = "Agrega aquí los productos a comprar o traer";
+			pYoffset += PADDING_BTWN_ELEMENT;
+			itemsTextField = new UITextField(new RectangleF(MARGIN_TEXTFIELD, pYoffset, WIDTH-MARGIN_TEXTFIELD*2, HEIGHT_TEXTVIEWS));
+			itemsTextField.Placeholder = "Agrega aquí el/los producto(s)";
 			itemsTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			itemsTextField.TextColor = UIColor.Gray;
-			itemsTextField.TextAlignment = UITextAlignment.Left;
+			itemsTextField.TextAlignment = UITextAlignment.Center;
+			itemsTextField.ClipsToBounds = true;
 			itemsTextField.Layer.BorderColor = UIColor.DarkGray.CGColor;
-			itemsTextField.Layer.BorderWidth = 0.5f;
-			itemsTextField.Editable = true;
-			Add(itemsTextField);
-			pY += PADDING_BTWN_ELEMENT;
+			itemsTextField.Layer.BorderWidth = 0.0f;
+			View.Add(itemsTextField);
+			pYoffset += PADDING_BTWN_ELEMENT;
+
+			var tapGesture = new UITapGestureRecognizer ((g) => {
+				itemsTextField.ResignFirstResponder();
+			});
+			View.AddGestureRecognizer (tapGesture);
 
 			//Toolbar with Done Button
 			var toolbar = new UIToolbar (new RectangleF (0.0f, 0.0f, this.View.Frame.Size.Width, 44.0f));
@@ -60,35 +68,11 @@ namespace Kangou.Touch.Views
 					itemsTextField.ResignFirstResponder();
 				})
 			};
-
-			//Info Pick Up Label
-			var infoPickUpLabel = new UITextView(new RectangleF(MARGIN_SUBVIEWS, pY, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_TEXTVIEWS*1.5f));
-			infoPickUpLabel.Text = "*Buscaremos lo que necesites, no te preocupes por la dirección.\n\nEn caso de ser un lugar específico, indícanos a donde ir:";
-			infoPickUpLabel.Font = UIFont.FromName(LABEL_FONT, 12f);
-			infoPickUpLabel.TextColor = UIColor.Gray;
-			infoPickUpLabel.TextAlignment = UITextAlignment.Justified;
-			infoPickUpLabel.Editable = false;
-			var tapGesture = new UITapGestureRecognizer ((g) => {
-				itemsTextField.ResignFirstResponder();
-			});
-			infoPickUpLabel.AddGestureRecognizer (tapGesture);
-			Add(infoPickUpLabel);
-			pY += PADDING_SECTION;
-
-			//Add Pick Up Address Button
-			var addPickUpAddressButton = new UIButton (UIButtonType.RoundedRect);
-			addPickUpAddressButton.SetTitle ("Agregar dirección (Opcional)", UIControlState.Normal);
-			addPickUpAddressButton.Font = UIFont.FromName(BUTTON_FONT, BUTTON_FONT_SIZE);
-			addPickUpAddressButton.Frame = new RectangleF(MARGIN_SUBVIEWS, pY, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_BUTTON);
-			addPickUpAddressButton.Layer.BorderColor = UIColor.Gray.CGColor;
-			addPickUpAddressButton.Layer.BorderWidth = 0.5f;
-			Add (addPickUpAddressButton);
+				
 
 			//View Model Binding
 			var set = this.CreateBindingSet<ItemsView, ItemsViewModel>();
 			set.Bind(itemsTextField).To(vm => vm.Items);
-			set.Bind(addPickUpAddressButton).To(vm => vm.AddPickUpAddressCommand);
-			set.Bind(addPickUpAddressButton).For("Title").To(vm => vm.PickUpAddress);
 			set.Apply();
 
 			//Add Button
@@ -105,7 +89,6 @@ namespace Kangou.Touch.Views
 						var viewModel = (ItemsViewModel)ViewModel;
 						viewModel.PublishData ();
 						NavigationController.PopViewControllerAnimated(true);
-
 					}
 
 				})

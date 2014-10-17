@@ -66,5 +66,13 @@
 		<string>Icon-Small-40</string>
 		<string>Icon-Small-40@2x</string>
 	</array>
+	<key>Foreground Location</key>
+	<string>NSLocationWhenInUseUsageDescription</string>
+	<key>Background Location</key>
+	<string>NSLocationAlwaysUsageDescription</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 </dict>
 </plist>

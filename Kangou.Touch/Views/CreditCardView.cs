@@ -23,9 +23,9 @@ namespace Kangou.Touch.Views
 			var WIDTH = UIScreen.MainScreen.Bounds.Width;
 			var HEIGHT = UIScreen.MainScreen.Bounds.Height;
 			var MARGIN_WIDTH_SUBVIEWS = WIDTH / 8; 
-			var MARGIN_HEIGHT_SUBVIEWS = MARGIN_WIDTH_SUBVIEWS * 0.5f;
-			var HEIGHT_TEXTFIELD = 40f;
-			var HEIGHT_TEXTVIEW = 70f;
+			var MARGIN_WIDTH_TEXTVIEW = MARGIN_WIDTH_SUBVIEWS * 1.5f;
+			var HEIGHT_TEXTFIELD = HEIGHT * 0.075f;
+			var HEIGHT_TEXTVIEW = HEIGHT * 0.3f;
 			var LABEL_FONT_SIZE = 15f;
 			var LABEL_FONT = "Arial-BoldMT";
 
@@ -33,11 +33,7 @@ namespace Kangou.Touch.Views
 			View = new UIView(){ BackgroundColor = UIColor.White};
 			base.ViewDidLoad();
 
-			// ios7 layout
-			if (RespondsToSelector(new Selector("edgesForExtendedLayout")))
-				EdgesForExtendedLayout = UIRectEdge.None;
-
-			var pYoffset = MARGIN_HEIGHT_SUBVIEWS;
+			var pYoffset = HEIGHT * 0.22f;
 
 			//CreditCard Number
 			var creditCardNumberTextField = new UITextField(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
@@ -90,11 +86,11 @@ namespace Kangou.Touch.Views
 					cvvTextField.Text = cvvString.Remove(4);
 			};
 			Add (cvvTextField);
-			pYoffset += HEIGHT_TEXTFIELD * 1.5f;
+			pYoffset += HEIGHT_TEXTFIELD * 1.85f;
 
 			//Info Pick Up Text View
-			var aboutChargeTextView = new UITextView(new RectangleF(MARGIN_WIDTH_SUBVIEWS-7.5f, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD*1.5f));
-			aboutChargeTextView.Text = "*No se realizará el cargo a la tarjeta hasta que el Kangou haya entregado el envío.";
+			var aboutChargeTextView = new UITextView(new RectangleF(MARGIN_WIDTH_TEXTVIEW, pYoffset, WIDTH-MARGIN_WIDTH_TEXTVIEW*2, HEIGHT_TEXTVIEW));
+			aboutChargeTextView.Text = "Se realizará el cargo del envío una vez que se haya confirmado la orden.\n\nEn caso de compra, se realizará un segundo cargo con: el costo total de la compra más la comisión (El Kangou te avisará del monto total antes de hacer la compra).";
 			aboutChargeTextView.Font = UIFont.FromName(LABEL_FONT, 12f);
 			aboutChargeTextView.TextColor = UIColor.Gray;
 			aboutChargeTextView.TextAlignment = UITextAlignment.Justified;
@@ -203,8 +199,6 @@ namespace Kangou.Touch.Views
 					});
 
 				});
-
-
 			}
 
 		}

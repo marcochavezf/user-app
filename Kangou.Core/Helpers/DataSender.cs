@@ -15,7 +15,7 @@ namespace Kangou.Core
 	public class DataSender
 	{
 
-		public static void SendOrderData(ItemsData itemsData, DropOffData dropOffData, UserData userData, String idCreditCard, Action<string> succesAction, Action<string> errorAction)
+		public static void SendOrderData(ItemsData itemsData, PickUpData pickUpData, DropOffData dropOffData, UserData userData, String idCreditCard, Action<string> succesAction, Action<string> errorAction)
 		{
 
 			/* Preparing Data. */
@@ -23,26 +23,15 @@ namespace Kangou.Core
 			request.ContentType = "application/x-www-form-urlencoded";
 			request.Method = "POST";
 
-			var pickupAddress 	 = "";
-			var pickupReferences = "";
-			var pickupFullname 	 = "";
-
 			idCreditCard = idCreditCard ?? "cash";
-
-			if (itemsData.PickUpData != null) 
-			{
-				pickupAddress 	 = itemsData.PickUpData.Address;
-				pickupReferences = itemsData.PickUpData.References;
-				pickupFullname 	 = itemsData.PickUpData.FullName;
-			}
 
 			string postData = 
 				"credit_card_id=" 		+ idCreditCard +
 				"&list_items=" 			+ itemsData.Items +
-				"&pickup_address=" 		+ pickupAddress +
-				"&pickup_references=" 	+ pickupReferences +
-				"&pickup_fullname=" 	+ pickupFullname +
-				"&dropoff_address=" 	+ dropOffData.Address +
+				"&pickup_address=" 		+ pickUpData.Street +
+				"&pickup_references=" 	+ pickUpData.References +
+				"&pickup_fullname=" 	+ pickUpData.FullName +
+				"&dropoff_address=" 	+ dropOffData.Street +
 				"&dropoff_references=" 	+ dropOffData.References +
 				"&dropoff_fullname=" 	+ dropOffData.FullName +
 				"&client_name=" 		+ userData.Name + 

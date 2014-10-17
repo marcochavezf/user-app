@@ -55,7 +55,7 @@ namespace Kangou.Droid.Views
 						Address address = addresses.First();
 						String street = address.GetAddressLine(0);
 						String city = address.GetAddressLine(1);
-						viewModel.Address = street + ", " + city;
+						viewModel.Street = street + ", " + city;
 					}catch(Exception exception){
 						System.Diagnostics.Debug.WriteLine("Exception: {0}",exception.ToString());
 					};

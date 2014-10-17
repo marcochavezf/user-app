@@ -12,6 +12,11 @@ namespace Kangou.Touch
 		{
 		}
 
+		public Setup(MvxApplicationDelegate applicationDelegate, MvxSlidingPanelsTouchViewPresenter presenter)
+			: base(applicationDelegate, presenter)
+		{
+		}
+
 		protected override IMvxApplication CreateApp ()
 		{
 			return new Core.App();

@@ -11,8 +11,7 @@ namespace Kangou.Core
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 				
-			RegisterAppStart<Kangou.Core.ViewModels.RegisterOrderViewModel>();
+			RegisterAppStart<ViewModels.RegisterOrderViewModel>();
         }
-
     }
 }

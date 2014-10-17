@@ -16,10 +16,6 @@ namespace Kangou.Touch.Views
 			View = new UIView(){ BackgroundColor = UIColor.White};
 			base.ViewDidLoad();
 
-			// ios7 layout
-			if (RespondsToSelector(new Selector("edgesForExtendedLayout")))
-				EdgesForExtendedLayout = UIRectEdge.None;
-
 			//Constants
 			var WIDTH = UIScreen.MainScreen.Bounds.Width;
 			var HEIGHT = UIScreen.MainScreen.Bounds.Height;

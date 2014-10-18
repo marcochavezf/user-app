@@ -1,5 +1,6 @@
 mscorlib.dll
 System.dll
+System.Xml.dll
 System.Core.dll
 Mono.Dynamic.Interpreter.dll
 Kangou.Core.dll
@@ -21,7 +22,10 @@ SlidingPanels.Lib.dll
 Cirrious.MvvmCross.Plugins.Location.Touch.dll
 Cirrious.MvvmCross.Plugins.Json.dll
 Newtonsoft.Json.dll
+System.Xml.Linq.dll
 System.Runtime.Serialization.dll
+Microsoft.CSharp.dll
+Mono.CSharp.dll
 Cirrious.MvvmCross.Plugins.DownloadCache.dll
 Cirrious.MvvmCross.Plugins.File.dll
 Cirrious.MvvmCross.Plugins.DownloadCache.Touch.dll

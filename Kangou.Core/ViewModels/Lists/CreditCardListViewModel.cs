@@ -16,7 +16,6 @@ namespace Kangou.Core.ViewModels
 	public class CreditCardListViewModel
 		: MvxViewModel, IDelete
     {
-
 		private readonly IDataService _dataService;
 		private readonly IMvxMessenger _messenger;
 

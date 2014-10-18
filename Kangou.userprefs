@@ -2,18 +2,18 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.0" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Kangou.Core/WebClients/Kangou/KangouClient.cs">
     <Files>
-      <File FileName="Kangou.Core/ViewModels/RegisterOrderViewModel.cs" Line="30" Column="30" />
-      <File FileName="Kangou.Touch/Views/RegisterOrderView.cs" Line="11" Column="11" />
-      <File FileName="Kangou.Core/ViewModels/ItemsViewModel.cs" Line="50" Column="50" />
-      <File FileName="Kangou.Core/ViewModels/Lists/PickUpListViewModel.cs" Line="4" Column="4" />
-      <File FileName="Kangou.Core/ViewModels/Lists/ActiveOrdersListViewModel.cs" Line="67" Column="67" />
-      <File FileName="Kangou.Touch/Views/PickUpListView.cs" Line="155" Column="155" />
-      <File FileName="Kangou.Touch/Views/PickUpView.cs" Line="6" Column="6" />
-      <File FileName="Kangou.Touch/Views/DropOffView.cs" Line="55" Column="55" />
+      <File FileName="Kangou.Core/ViewModels/RegisterOrderViewModel.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Touch/Views/RegisterOrderView.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Core/ViewModels/ItemsViewModel.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Core/ViewModels/Lists/PickUpListViewModel.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Core/ViewModels/Lists/ActiveOrdersListViewModel.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Touch/Views/PickUpListView.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Touch/Views/PickUpView.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Touch/Views/DropOffView.cs" Line="1" Column="1" />
       <File FileName="Kangou.Touch/Views/CreditCardView.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/Helpers/StringMessages.cs" Line="93" Column="93" />
+      <File FileName="Kangou.Core/Helpers/StringMessages.cs" Line="1" Column="1" />
       <File FileName="Kangou.Core/WebClients/Kangou/OrderStructureJson.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/WebClients/Kangou/KangouClient.cs" Line="18" Column="18" />
+      <File FileName="Kangou.Core/WebClients/Kangou/KangouClient.cs" Line="14" Column="14" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

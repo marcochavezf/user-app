@@ -1,6 +1,7 @@
 using System;
 using Cirrious.MvvmCross.ViewModels;
 using System.Windows.Input;
+using Kangou.Core;
 
 namespace Kangou.Core.ViewModels
 {
@@ -31,7 +32,7 @@ namespace Kangou.Core.ViewModels
 
 		void NavigateToActiveOrdersList ()
 		{
-			//ShowViewModel(typeof(ActiveOrdersListViewModel));
+			ShowViewModel(typeof(ActiveOrderListViewModel));
 		}
 
 

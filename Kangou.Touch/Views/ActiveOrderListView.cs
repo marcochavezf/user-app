@@ -6,6 +6,7 @@ using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using Kangou.Core;
 using Cirrious.MvvmCross.Binding.Touch.Views;
+using Kangou.Core.ViewModels;
 
 namespace Kangou.Touch.Views
 {
@@ -26,12 +27,11 @@ namespace Kangou.Touch.Views
 
 			_bindableProgress = new BindableProgress(TableView);
 
-
 			//Binding
 			var set = this.CreateBindingSet<ActiveOrderListView, ActiveOrderListViewModel>();
 
 			set.Bind(source).To(vm => vm.ActiveOrderList);
-			set.Bind(source).For(s => s.SelectionChangedCommand).To(vm => vm.SelectDataCommand);
+			set.Bind(source).For(s => s.SelectionChangedCommand).To(vm => vm.SelectActiveOrderCommand);
 			set.Bind(_bindableProgress).For(b => b.Visible).To(vm => vm.IsBusy);
 			set.Apply();
 		}

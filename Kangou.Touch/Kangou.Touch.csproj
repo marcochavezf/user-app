@@ -163,6 +163,8 @@
     <BundleResource Include="Resources\Default-Landscape%402x.png" />
     <BundleResource Include="Resources\SlideLeft40.png" />
     <BundleResource Include="Resources\SlideRight40.png" />
+    <BundleResource Include="Resources\starReviewOff.png" />
+    <BundleResource Include="Resources\starReviewOn.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -202,6 +204,10 @@
     <Compile Include="LinkerPleaseInclude.cs" />
     <Compile Include="Views\ActiveOrderListView.cs" />
     <Compile Include="Helpers\RootMvxTableViewController.cs" />
+    <Compile Include="Views\StatusOrderView.cs" />
+    <Compile Include="Helpers\Constants.cs" />
+    <Compile Include="Views\ReviewView.cs" />
+    <Compile Include="Helpers\BusyMvxViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <ItemGroup>

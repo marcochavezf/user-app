@@ -1,11 +1,18 @@
 using System;
 using Cirrious.MvvmCross.ViewModels;
 using System.Windows.Input;
+using System.Diagnostics;
 
 namespace Kangou.Core.ViewModels
 {
+
 	public class ActiveOrderViewModel : MvxViewModel
 	{
+		public void Init(ActiveOrder activeOrder)
+		{
+			Debug.WriteLine ("ActiveORder: {0}",activeOrder);
+		}
+
 		private string _centerText;
 		public string CenterText
 		{

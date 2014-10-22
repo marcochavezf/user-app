@@ -38,3 +38,10 @@
 /Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/System.Net.Http.Primitives.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/System.Net.Http.Extensions.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Newtonsoft.Json.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Xamarin.Socket.IO.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Xamarin.Socket.IO.dll.mdb
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/WebSocket4Net.MonoTouch.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Microsoft.Threading.Tasks.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/SuperSocket.ClientEngine.Core.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/SuperSocket.ClientEngine.Protocol.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/SuperSocket.ClientEngine.Common.dll

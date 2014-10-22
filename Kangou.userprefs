@@ -1,20 +1,30 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.0" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Kangou.Core/WebClients/Kangou/KangouClient.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Kangou.Core/ViewModels/Lists/ActiveOrderListViewModel.cs">
     <Files>
-      <File FileName="Kangou.Core/ViewModels/RegisterOrderViewModel.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Touch/Views/RegisterOrderView.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/ViewModels/ItemsViewModel.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/ViewModels/Lists/PickUpListViewModel.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/ViewModels/Lists/ActiveOrdersListViewModel.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Touch/Views/PickUpListView.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Touch/Views/PickUpView.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Touch/Views/DropOffView.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Touch/Views/CreditCardView.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/Helpers/StringMessages.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/WebClients/Kangou/OrderStructureJson.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/WebClients/Kangou/KangouClient.cs" Line="14" Column="14" />
+      <File FileName="Kangou.Core/ViewModels/Lists/ActiveOrderListViewModel.cs" Line="4" Column="4" />
+      <File FileName="Kangou.Touch/Views/StatusOrderView.cs" Line="42" Column="42" />
+      <File FileName="Kangou.Core/ViewModels/StatusOrderViewModel.cs" Line="4" Column="4" />
+      <File FileName="Kangou.Core/ViewModels/ActiveOrderViewModel.cs" Line="4" Column="4" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Kangou.Core" expanded="True">
+            <Node name="ViewModels" expanded="True">
+              <Node name="Lists" expanded="True">
+                <Node name="ActiveOrderListViewModel.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+          <Node name="Kangou.Touch" expanded="True">
+            <Node name="ComponentReferenceFolder" expanded="True" />
+            <Node name="Helpers" expanded="True" />
+            <Node name="Views" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

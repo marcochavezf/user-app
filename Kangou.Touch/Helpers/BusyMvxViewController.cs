@@ -38,7 +38,6 @@ namespace Kangou.Touch
 		}
 
 		private void PopNextToLastViewController(){
-		
 			var ViewControllers = NavigationController.ViewControllers;
 			UIViewController[] newViewControllers = new UIViewController[ViewControllers.Length-1];
 

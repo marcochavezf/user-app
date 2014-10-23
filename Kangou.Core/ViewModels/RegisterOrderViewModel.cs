@@ -14,6 +14,7 @@ using Kangou.Core.WebClients;
 using Cirrious.CrossCore.Core;
 using Cirrious.CrossCore;
 using Kangou.Core.Helpers;
+using System.Threading.Tasks;
 
 
 namespace Kangou.Core.ViewModels
@@ -75,9 +76,6 @@ namespace Kangou.Core.ViewModels
 			DropOffAddress = "Seleccionar una dirección";
 			InfoPaymentMethod = "Seleccionar forma de pago";
 			PromoCode = "Código de promoción";
-
-			if (DisableButtons != null)
-				DisableButtons ();
 		}
 
 		private void UpdateItems(ItemsDataMessage itemsDataMessage){
@@ -289,15 +287,18 @@ namespace Kangou.Core.ViewModels
 			EnablePUKButton ();
 		}
 
-		public void ConfirmOrder(Action<string> successAction, Action<string> errorAction)
+		public void ConfirmOrder(Action<int> successAction, Action<string> errorAction)
 		{
 			var userData = _dataService.GetUserData ();
-				
+
 			_kangouClient.SendOrderData(_itemsData, _pickUpData, _dropOffData, _creditCardData, userData, 
 				(response) =>
 				{
-					successAction(response);
-					ShowViewModel <ConfirmationOrderViewModel> ();
+					ActiveOrder.LAST_ORDER_PLACED_ID = response;
+					successAction(ActiveOrder.LAST_ORDER_PLACED_ID);
+					ShowViewModel <ActiveOrderListViewModel> ();
+					ResetOrderData (null);
+					DisableButtons ();
 				},
 				(error) =>
 				{

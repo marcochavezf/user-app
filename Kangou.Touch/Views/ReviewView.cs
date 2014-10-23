@@ -22,6 +22,7 @@ namespace Kangou.Touch
         public override void ViewDidLoad()
         {
 			_popNextToLastViewController = true; 
+			_hideBackButton = true;
 			base.ViewDidLoad ();
 			var viewModel = (ReviewViewModel)ViewModel;
 

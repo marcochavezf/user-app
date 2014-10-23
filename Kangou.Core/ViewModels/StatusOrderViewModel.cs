@@ -45,7 +45,7 @@ namespace KangouMessenger.Core
 				ConnectionManager.Off(SocketEvents.OrderSignedByClient);
 				SetOrderSignedByClient();
 			});
-
+				
 			switch (ActiveOrder.Status) {
 
 			case StatusOrder.KangouGoingToPickUp:
@@ -74,33 +74,49 @@ namespace KangouMessenger.Core
 			}
 		}
 
+		public void TurnOffConnectionManager(){
+			ConnectionManager.Off(SocketEvents.KangouGoingToPickUp);
+			ConnectionManager.Off(SocketEvents.KangouWaitingToPickUp);
+			ConnectionManager.Off(SocketEvents.KangouGoingToDropOff);
+			ConnectionManager.Off(SocketEvents.KangouWaitingToDropOff);
+			ConnectionManager.Off(SocketEvents.OrderSignedByClient);
+		}
+
 		private void SetKangouGoingToPickUp(){
 			Status = "Un kangou va en camino a recoger";
+			ActiveOrder.Status = StatusOrder.KangouGoingToPickUp;
 		}
 
 		private void SetKangouWaitingToPickUp(){
 			Status = "El kangou está esperando para recoger lo pedido";
 			Distance = "Ya está en el lugar para recoger";
+			ActiveOrder.Status = StatusOrder.KangouWaitingToPickUp;
 		}
 
 		private void SetKangouGoingToDropOff(){
 			Status = "El kangou está en camino a entregar";
+			ActiveOrder.Status = StatusOrder.KangouGoingToDropOff;
 		}
 
 		private void SetKangouWaitingToDropOff(){
 			Status = "El kangou está esperando para entregar lo pedido";
 			Distance = "Favor de firmarle como recibido";
+			ActiveOrder.Status = StatusOrder.KangouWaitingToDropOff;
 		}
 
 		private void SetOrderSignedByClient(){
 			Status = "La orden ha finalizado";
 			Distance = "";
-			ShowViewModel<ReviewViewModel> ();
+			ActiveOrder.Status = StatusOrder.OrderSignedByClient;
+			Task.Run (delegate {
+				ShowViewModel<ReviewViewModel> ();
+			});
 		}
 
 		private void SetOrderReviewed(){
 			Status = "La orden ha finalizado";
 			Distance = "";
+			ActiveOrder.Status = StatusOrder.OrderReviewed;
 		}
 
 		public ActiveOrder ActiveOrder { get; private set; }

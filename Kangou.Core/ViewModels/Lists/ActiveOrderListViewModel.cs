@@ -12,43 +12,62 @@ using System;
 using System.Threading.Tasks;
 using Kangou.Core.ViewModels;
 using KangouMessenger.Core;
+using Cirrious.CrossCore.Platform;
+using Kangou.Core.WebClients;
 
 namespace Kangou.Core.ViewModels
 {
 	public class ActiveOrderListViewModel
 		: MvxViewModel
     {
+		private KangouClient _kangouClient;
+		private UserData _userData;
+
 		private bool _isBusy;
 		public bool IsBusy
 		{   
 			get { return _isBusy; }
-			set { _isBusy = value; RaisePropertyChanged(() => IsBusy); }
+			set { 
+				if (IsBusy != value) {
+					_isBusy = value; 
+					RaisePropertyChanged (() => IsBusy); 
+				}
+			}
 		}
 	
-		public ActiveOrderListViewModel (IDataService dataService, IMvxMessenger messenger)
+		public ActiveOrderListViewModel (IDataService dataService, IMvxMessenger messenger, IMvxJsonConverter _jsonConverter)
 		{
+			_kangouClient = new KangouClient (_jsonConverter);
+			_userData = dataService.GetUserData ();
+
 			IsBusy = true;
-			Task.Run (() => {
-
-				for(int i=0; i<500; i++)
-					Debug.WriteLine(i);
-
-				InvokeOnMainThread (delegate {  
-
-					var activeOrderList = new List<ActiveOrder> ();
-					activeOrderList.Add (new ActiveOrder (){ Id = 234, Date = DateTime.Now });
-					activeOrderList.Add (new ActiveOrder (){ Id = 235, Date = DateTime.Now });
-					ActiveOrderList = activeOrderList;
-
-					IsBusy = false;
-				});
-			});
 
 			ConnectionManager.FailedToConnect (()=>{
 				Debug.WriteLine("FailedToConnect");
 				InvokeOnMainThread (delegate {
 					IsBusy = false;
 				});
+			});
+		}
+
+		public void PopulateListFromServer (){
+
+			if (ActiveOrder.LAST_ORDER_PLACED_ID > 0) {
+				var orderId = ActiveOrder.LAST_ORDER_PLACED_ID;
+				ActiveOrder.LAST_ORDER_PLACED_ID = -1;
+				OpenActiveOrder (orderId);
+				return;
+			}
+
+			Task.Run (() => {
+				_kangouClient.GetActiveOrderList (_userData.Id, 
+					(activeOrderList) => {
+						ActiveOrderList = activeOrderList;
+						IsBusy = false;
+					},
+					(error) => {
+						Debug.WriteLine ("error: {0}", error);
+					});
 			});
 		}
 
@@ -59,39 +78,45 @@ namespace Kangou.Core.ViewModels
 			set { _activeOrderList = value; RaisePropertyChanged(() => ActiveOrderList); }
 		}
 
-		private MvxCommand<ActiveOrder> _selectActiveOrder;
 		public ICommand SelectActiveOrderCommand
 		{
 			get
 			{
-				_selectActiveOrder = _selectActiveOrder ?? new MvxCommand<ActiveOrder>(activeOrder => {
-					IsBusy = true;
-					Task.Run (()=>{
-						System.Diagnostics.Debug.WriteLine ("ConnectAsync");
-						ConnectionManager.Connect();
-					});
-
-					ConnectionManager.On(SocketEvents.Connected, (data) => {
-						ConnectionManager.Off(SocketEvents.Connected);
-						System.Diagnostics.Debug.WriteLine ("connected On: {0}", data["isSuccesful"] );
-						ConnectionManager.Emit( SocketEvents.ActiveOrder, ConnectionManager.OrderIdJsonString(activeOrder.Id));
-					});
-
-					ConnectionManager.On (SocketEvents.ActiveOrder, (data) => {
-						Debug.WriteLine ("ActiveOrder On: {0}", data["status"] );
-						ConnectionManager.Off(SocketEvents.ActiveOrder);
-						if(IsBusy){
-							InvokeOnMainThread (delegate {
-								IsBusy = false;
-							});
-							Debug.WriteLine ("Opening On StatusOrderViewModel" );
-							//TODO if it's succesful and order is active, then open Status Order View
-							ShowViewModel<StatusOrderViewModel>(activeOrder);
-						}
-					});
+				return new MvxCommand<ActiveOrder>(activeOrder => {
+					OpenActiveOrder(activeOrder.Id);
 				});
-				return _selectActiveOrder;
 			}
+		}
+
+		private void OpenActiveOrder(int orderId){
+			IsBusy = true;
+			Task.Run (()=>{
+				System.Diagnostics.Debug.WriteLine ("ConnectAsync");
+				ConnectionManager.Connect();
+			});
+
+			ConnectionManager.On(SocketEvents.Connected, (data) => {
+				ConnectionManager.Off(SocketEvents.Connected);
+				System.Diagnostics.Debug.WriteLine ("connected On: {0}", data["isSuccesful"] );
+				ConnectionManager.Emit( SocketEvents.ActiveOrder, ConnectionManager.OrderIdJsonString(orderId));
+			});
+
+			ConnectionManager.On (SocketEvents.ActiveOrder, (data) => {
+				ConnectionManager.Off (SocketEvents.ActiveOrder);
+				Debug.WriteLine ("ActiveOrder On: {0}", data["status"] );
+				ConnectionManager.Off(SocketEvents.ActiveOrder);
+				if(IsBusy){
+					Debug.WriteLine ("Opening On StatusOrderViewModel" );
+					ShowViewModel<StatusOrderViewModel>(new ActiveOrder(){
+						Id = Convert.ToInt32(data["id"].ToString()),
+						Status = data["status"].ToString(),
+						Date = data["date"].ToString()
+					});
+					InvokeOnMainThread (delegate {
+						IsBusy = false;
+					});
+				}
+			});
 		}
 	}
 }

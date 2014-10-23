@@ -7,6 +7,9 @@ using MonoTouch.Foundation;
 using Kangou.Core;
 using Cirrious.MvvmCross.Binding.Touch.Views;
 using Kangou.Core.ViewModels;
+using System;
+using SlidingPanels.Lib;
+using SlidingPanels.Lib.PanelContainers;
 
 namespace Kangou.Touch.Views
 {
@@ -14,11 +17,12 @@ namespace Kangou.Touch.Views
 	public class ActiveOrderListView : RootMvxTableViewController
 	{
 		private BindableProgress _bindableProgress;
+		private ActiveOrderListViewModel _viewModel;
 
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
-			var viewModel = (ActiveOrderListViewModel)ViewModel;
+			_viewModel = (ActiveOrderListViewModel)ViewModel;
 
 			//Creating Table
 			var source = new MvxStandardTableViewSource (TableView, UITableViewCellStyle.Subtitle, new NSString("Id"), "TitleText Format", UITableViewCellAccessory.None);
@@ -34,6 +38,18 @@ namespace Kangou.Touch.Views
 			set.Bind(source).For(s => s.SelectionChangedCommand).To(vm => vm.SelectActiveOrderCommand);
 			set.Bind(_bindableProgress).For(b => b.Visible).To(vm => vm.IsBusy);
 			set.Apply();
+		}
+
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+			_viewModel.IsBusy = true;
+		}
+
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear (animated);
+			_viewModel.PopulateListFromServer ();
 		}
 	}
 }

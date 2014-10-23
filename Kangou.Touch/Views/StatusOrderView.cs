@@ -12,12 +12,14 @@ using MonoTouch.MapKit;
 using MonoTouch.CoreLocation;
 using Kangou.Core;
 using Kangou.Touch;
+using System.Diagnostics;
 
 namespace KangouMessenger.Touch
 {
 	[Register("PickUpRouteView")]
 	public class StatusOrderView : MvxViewController
     {
+		private StatusOrderViewModel _viewModel;
 	
         public override void ViewDidLoad()
         {
@@ -28,10 +30,10 @@ namespace KangouMessenger.Touch
 
 			//Load Root View
 			base.ViewDidLoad();
-
+		
 			//Setting origin and destiny directions
 			var origin = new CLLocationCoordinate2D (19.4361727,-99.1954972);
-			var viewModel = (StatusOrderViewModel)ViewModel;
+			_viewModel = (StatusOrderViewModel)ViewModel;
 
 			//Adding map
 			var widthMap = CONTAINER_SIZE.Width;
@@ -72,12 +74,12 @@ namespace KangouMessenger.Touch
 			set.Bind(distanceTextView).To(vm => vm.Distance);
 			set.Apply();
 
-			Console.WriteLine (viewModel.ActiveOrder.Status);
+			Console.WriteLine (_viewModel.ActiveOrder.Status);
 
-			if(viewModel.ActiveOrder.Status == StatusOrder.SearchingForKangou)
+			if(_viewModel.ActiveOrder.Status == StatusOrder.SearchingForKangou)
 				new UIAlertView ("Tu orden ha sido confirmada, estamos buscando al kangou más cercano para brindarte servicio.", "", null, "Ok").Show();
 				
-			if (viewModel.ActiveOrder.Status == StatusOrder.OrderReviewed) {
+			if (_viewModel.ActiveOrder.Status == StatusOrder.OrderReviewed) {
 				var orderFinishedAlert = new UIAlertView ("Esta orden ya ha finalizado", "¡Muchas gracias por usar Kangou!", null, "Ok");
 				orderFinishedAlert.Clicked += (object alertSender, UIButtonEventArgs eventArgsAlert) => {
 					ConnectionManager.Disconnect();
@@ -85,12 +87,15 @@ namespace KangouMessenger.Touch
 				};
 				orderFinishedAlert.Show ();
 			}
+		}
 
-			this.NavigationItem.SetLeftBarButtonItem(
-				new UIBarButtonItem(UIBarButtonSystemItem.Stop, (sender,args) => {
-					ConnectionManager.Disconnect();
-					NavigationController.PopViewControllerAnimated(true);
-				}), true);
+		public override void ViewWillDisappear (bool animated)
+		{
+			base.ViewWillDisappear (animated);
+			if (_viewModel.ActiveOrder.Status != StatusOrder.OrderSignedByClient) {
+				ConnectionManager.Disconnect ();
+			}
+			_viewModel.TurnOffConnectionManager ();
 		}
     }
 }

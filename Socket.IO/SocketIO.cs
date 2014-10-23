@@ -472,7 +472,6 @@ namespace Xamarin.Socket.IO
 		void SocketMessageReceivedFunction (object o, MessageReceivedEventArgs e)
 		{
 			Debug.WriteLine ("Received Message: {0}", e.Message);
-
 			TimeoutTimer.Change (TimeoutTime, Timeout.Infinite);
 
 			var match = Regex.Match (e.Message, socketIOEncodingPattern);

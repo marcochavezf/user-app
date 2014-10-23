@@ -24,6 +24,8 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoTouch.UIKit;
 using SlidingPanels.Lib.PanelContainers;
+using Kangou.Core.ViewModels;
+using Kangou.Core;
 
 namespace SlidingPanels.Lib
 {
@@ -247,6 +249,8 @@ namespace SlidingPanels.Lib
 		/// <param name="type">Type.</param>
 		public void TogglePanel(PanelType type)
 		{
+			Console.WriteLine ("********** TogglePanel ***********");
+
 			PanelContainer container = ExistingContainerForType(type);
 			if (container.IsVisible) 
 			{
@@ -260,7 +264,11 @@ namespace SlidingPanels.Lib
 					HidePanel (CurrentActivePanelContainer);
 				}
 
-				ShowPanel (container);
+				/* Global variable from Kangou.Core, sorry but it's necessary.  */
+				if(ActiveOrder.LAST_ORDER_PLACED_ID < 0)
+					ShowPanel (container);
+				Console.WriteLine ("container: {0} Id:{1}",container,ActiveOrder.LAST_ORDER_PLACED_ID);
+
 			}
 		}
 

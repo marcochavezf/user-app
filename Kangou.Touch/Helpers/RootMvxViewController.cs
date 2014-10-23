@@ -4,6 +4,8 @@ using MonoTouch.UIKit;
 using SlidingPanels.Lib.PanelContainers;
 using System.Drawing;
 using SlidingPanels.Lib;
+using Kangou.Core.ViewModels;
+using Kangou.Core;
 
 namespace Kangou.Touch
 {

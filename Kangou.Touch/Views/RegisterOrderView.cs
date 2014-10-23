@@ -171,14 +171,14 @@ namespace Kangou.Touch.Views
 			set.Bind(paymentMethodButton).To(vm => vm.AddCreditCardCommand);
 			set.Apply();
 
-			_viewModel.EnablePickUpButton = ()=>{
+			_viewModel.EnablePickUpButton = delegate {
 				InvokeOnMainThread (delegate {  
 					pickUpButton.Enabled = true;
 					pickUpLabel.TextColor = UIColor.Gray;
 				});
 			};
 
-			_viewModel.EnableDropOffButton = ()=>{
+			_viewModel.EnableDropOffButton = delegate {
 				_viewModel.EnablePickUpButton();
 				InvokeOnMainThread (delegate {
 					dropOffButton.Enabled = true;
@@ -186,7 +186,7 @@ namespace Kangou.Touch.Views
 				});
 			};
 
-			_viewModel.EnablePaymentMethodButton = ()=>{
+			_viewModel.EnablePaymentMethodButton = delegate {
 				_viewModel.EnableDropOffButton();
 				InvokeOnMainThread (delegate {  
 					paymentMethodButton.Enabled = true;
@@ -194,24 +194,25 @@ namespace Kangou.Touch.Views
 				});
 			};
 
-			_viewModel.EnablePUKButton = ()=>{
+			_viewModel.EnablePUKButton = delegate {
 				_viewModel.EnablePaymentMethodButton ();
 				InvokeOnMainThread (delegate {  
 					pideUnKangouButton.Enabled = true;
 				});
 			};
 
-			_viewModel.DisableButtons = () => {
-				pickUpButton.Enabled = false;
-				dropOffButton.Enabled = false;
-				paymentMethodButton.Enabled = false;
-				pideUnKangouButton.Enabled = false;
+			_viewModel.DisableButtons = delegate {
+				InvokeOnMainThread (delegate {  
+					pickUpButton.Enabled = false;
+					dropOffButton.Enabled = false;
+					paymentMethodButton.Enabled = false;
+					pideUnKangouButton.Enabled = false;
 
-				pickUpLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
-				dropOffLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
-				paymentMethodLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
+					pickUpLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
+					dropOffLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
+					paymentMethodLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
+				});
 			};
-
 			_viewModel.DisableButtons ();
 		}
 

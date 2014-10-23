@@ -49,4 +49,10 @@
     <Compile Include="PanelContainers\PanelType.cs" />
     <Compile Include="SlidingGestureEventArgs.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Kangou.Core\Kangou.Core.csproj">
+      <Project>{78F2CC87-F3C7-4DF1-8D20-61E582B23BFF}</Project>
+      <Name>Kangou.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

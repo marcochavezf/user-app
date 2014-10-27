@@ -31,7 +31,7 @@ namespace Kangou.Touch.Views
 				{
 					_progress = new MTMBProgressHUD(_parent)
 					{
-						LabelText = "Procesando datos...",
+						LabelText = "Cargando...",
 						RemoveFromSuperViewOnHide = true
 					};
 					_parent.AddSubview(_progress);

@@ -14,6 +14,7 @@ using MonoTouch.CoreGraphics;
 using MonoTouch.CoreLocation;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using SlidingPanels.Lib;
 
 namespace Kangou.Touch.Views
 {
@@ -216,6 +217,18 @@ namespace Kangou.Touch.Views
 			_viewModel.DisableButtons ();
 		}
 
+
+		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations ()
+		{
+			return UIInterfaceOrientationMask.Portrait ;
+
+		}
+
+		public override bool ShouldAutorotate ()
+		{
+			return false;
+		}
+
 		private void ConfirmOrderClicked()
 		{
 			//Check if Internet is available
@@ -263,5 +276,6 @@ namespace Kangou.Touch.Views
 			}
 
 		}
+			
 	}
 }

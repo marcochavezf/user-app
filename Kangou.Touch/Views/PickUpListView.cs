@@ -9,6 +9,7 @@ using Cirrious.MvvmCross.Binding.Touch.Views;
 using System.Windows.Input;
 using System.Collections.Generic;
 using Cirrious.MvvmCross.Binding.Bindings;
+using SlidingPanels.Lib;
 
 namespace Kangou.Touch.Views
 {
@@ -52,6 +53,19 @@ namespace Kangou.Touch.Views
 			},true);
 
 		}
+
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+			SlidingGestureRecogniser.EnableGesture = false;
+		}
+
+		public override void ViewDidDisappear (bool animated)
+		{
+			base.ViewDidDisappear (animated);
+			SlidingGestureRecogniser.EnableGesture = true;
+		}
+
 
 	}
 

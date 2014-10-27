@@ -5,6 +5,7 @@ using MonoTouch.ObjCRuntime;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using Kangou.Core.ViewModels;
+using SlidingPanels.Lib;
 
 namespace Kangou.Touch.Views
 {
@@ -48,5 +49,18 @@ namespace Kangou.Touch.Views
 			},true);
 
 		}
+
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+			SlidingGestureRecogniser.EnableGesture = false;
+		}
+
+		public override void ViewDidDisappear (bool animated)
+		{
+			base.ViewDidDisappear (animated);
+			SlidingGestureRecogniser.EnableGesture = true;
+		}
+
 	}
 }

@@ -13,6 +13,7 @@ using MonoTouch.CoreLocation;
 using Kangou.Core;
 using Kangou.Touch;
 using System.Diagnostics;
+using SlidingPanels.Lib;
 
 namespace KangouMessenger.Touch
 {
@@ -89,13 +90,27 @@ namespace KangouMessenger.Touch
 			}
 		}
 
-		public override void ViewWillDisappear (bool animated)
+		public override void ViewWillAppear (bool animated)
 		{
-			base.ViewWillDisappear (animated);
+			base.ViewWillAppear (animated);
+			SlidingGestureRecogniser.EnableGesture = false;
+		}
+
+		public override void ViewDidDisappear (bool animated)
+		{
+			base.ViewDidDisappear (animated);
+			SlidingGestureRecogniser.EnableGesture = true;
 			if (_viewModel.ActiveOrder.Status != StatusOrder.OrderSignedByClient) {
 				ConnectionManager.Disconnect ();
 			}
 			_viewModel.TurnOffConnectionManager ();
+		}
+
+
+		public override void ViewWillDisappear (bool animated)
+		{
+			base.ViewWillDisappear (animated);
+			Console.WriteLine ("ViewWillDisappear Status");
 		}
     }
 }

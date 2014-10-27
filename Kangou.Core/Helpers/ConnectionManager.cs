@@ -24,6 +24,12 @@ namespace Kangou.Core
 			};
 		}
 
+		public static void SocketDisconnected(Action action){
+			Instance.Socket.SocketDisconnected += delegate {
+				action();
+			};
+		}
+
 		public static void On(string name, Action <JToken> handler){
 			Instance.Socket.On (name, handler);
 		}

@@ -10,6 +10,7 @@ using Kangou.Core.ViewModels;
 using System;
 using SlidingPanels.Lib;
 using SlidingPanels.Lib.PanelContainers;
+using Kangou.Helpers;
 
 namespace Kangou.Touch.Views
 {
@@ -38,6 +39,27 @@ namespace Kangou.Touch.Views
 			set.Bind(source).For(s => s.SelectionChangedCommand).To(vm => vm.SelectActiveOrderCommand);
 			set.Bind(_bindableProgress).For(b => b.Visible).To(vm => vm.IsBusy);
 			set.Apply();
+
+			var navigationController = NavigationController as SlidingPanelsNavigationViewController;
+
+			if (Reachability.RemoteHostStatus () == NetworkStatus.NotReachable) {
+				var internetErorAlert = new UIAlertView ("No hay conexión a Iternet", ""
+					, null, "Ok", null);
+				internetErorAlert.Clicked += delegate {
+					navigationController.TogglePanel(PanelType.LeftPanel);
+				};
+				internetErorAlert.Show ();
+			}
+
+			ConnectionManager.SocketDisconnected (delegate {
+				InvokeOnMainThread(delegate {
+					var conecctionLostAlert = new UIAlertView ("Se ha perdido la conexión", "\nVerifica la conexión a internet", null, "Ok");
+					conecctionLostAlert.Clicked += delegate {
+						navigationController.TogglePanel(PanelType.LeftPanel);
+					};
+					conecctionLostAlert.Show();
+				});
+			});
 		}
 
 		public override void ViewWillAppear (bool animated)

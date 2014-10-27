@@ -108,6 +108,13 @@ namespace Kangou.Touch
 			set.Apply();
 
 
+			var navigationController = NavigationController as SlidingPanelsNavigationViewController;
+
+			if (String.IsNullOrWhiteSpace (viewModel.Name)) {
+				NavigationItem.LeftBarButtonItem.Enabled = false;
+				SlidingGestureRecogniser.EnableGesture = false;
+			}
+
 			//Add Button
 			this.NavigationItem.SetRightBarButtonItem(
 				new UIBarButtonItem(UIBarButtonSystemItem.Add, (sender,args) => {
@@ -149,6 +156,11 @@ namespace Kangou.Touch
 								viewModel.SaveData();
 								var alert = new UIAlertView("Tu información se ha guardado", ""
 									, null, "Ok", null);
+								alert.Clicked += delegate {
+									navigationController.TogglePanel(PanelType.LeftPanel);
+									NavigationItem.LeftBarButtonItem.Enabled = true;
+									SlidingGestureRecogniser.EnableGesture = true;
+								};
 								alert.Show();
 							}
 				})

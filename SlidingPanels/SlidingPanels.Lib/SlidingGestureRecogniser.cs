@@ -34,6 +34,7 @@ namespace SlidingPanels.Lib
 	public class SlidingGestureRecogniser : UIPanGestureRecognizer
 	{
 		#region Data Members
+		public volatile static bool EnableGesture;
 
 		/// <summary>
 		/// The list of panels that need to be monitored for gestures
@@ -102,6 +103,8 @@ namespace SlidingPanels.Lib
 
 				return shouldReceiveTouch(sender, touch);
 			};
+
+			EnableGesture = true;
 		}
 
 		#endregion
@@ -116,6 +119,11 @@ namespace SlidingPanels.Lib
 		public override void TouchesBegan (MonoTouch.Foundation.NSSet touches, UIEvent evt)
 		{
 			base.TouchesBegan (touches, evt);
+
+			Console.WriteLine ("EnableGesture: {0}", EnableGesture);
+
+			if (!EnableGesture)
+				return;
 
 			PointF touchPt;
 			UITouch touch = touches.AnyObject as UITouch;
@@ -153,6 +161,9 @@ namespace SlidingPanels.Lib
 		{
 			base.TouchesMoved (touches, evt);
 
+			if (!EnableGesture)
+				return;
+
 			if (CurrentActivePanelContainer == null)
 			{
 				return;
@@ -181,6 +192,9 @@ namespace SlidingPanels.Lib
 		public override void TouchesEnded (MonoTouch.Foundation.NSSet touches, UIEvent evt)
 		{
 			base.TouchesEnded (touches, evt);
+
+			if (!EnableGesture)
+				return;
 
 			if (CurrentActivePanelContainer == null)
 			{

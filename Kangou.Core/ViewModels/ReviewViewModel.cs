@@ -20,6 +20,11 @@ namespace Kangou.Core
 				IsBusy = false;
 				Close(this);
 			});
+
+			ConnectionManager.SocketDisconnected (delegate {
+				Debug.WriteLine("SocketDisconnected");
+				Close(this);
+			});
 		}
 
 		private bool _isBusy;

@@ -62,10 +62,13 @@ namespace Kangou.Core.ViewModels
 			Task.Run (() => {
 				_kangouClient.GetActiveOrderList (_userData.Id, 
 					(activeOrderList) => {
-						ActiveOrderList = activeOrderList;
-						IsBusy = false;
+						InvokeOnMainThread (delegate {
+							ActiveOrderList = activeOrderList;
+							IsBusy = false;
+						});
 					},
 					(error) => {
+						ActiveOrderList = new List<ActiveOrder> ();
 						Debug.WriteLine ("error: {0}", error);
 					});
 			});
@@ -107,12 +110,14 @@ namespace Kangou.Core.ViewModels
 				ConnectionManager.Off(SocketEvents.ActiveOrder);
 				if(IsBusy){
 					Debug.WriteLine ("Opening On StatusOrderViewModel" );
+
 					ShowViewModel<StatusOrderViewModel>(new ActiveOrder(){
 						Id = Convert.ToInt32(data["id"].ToString()),
 						Status = data["status"].ToString(),
 						Date = data["date"].ToString()
 					});
 					InvokeOnMainThread (delegate {
+						ActiveOrderList = new List<ActiveOrder> ();
 						IsBusy = false;
 					});
 				}

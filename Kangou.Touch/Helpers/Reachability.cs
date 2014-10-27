@@ -111,17 +111,21 @@ namespace Kangou.Helpers
 				// Need to probe before we queue, or we wont get any meaningful values
 				// this only happens when you create NetworkReachability from a hostname
 				reachable = remoteHostReachability.TryGetFlags(out flags);
-
+				remoteHostReachability.GetFlags (out flags);
 				remoteHostReachability.SetNotification(OnChange);
 				remoteHostReachability.Schedule(CFRunLoop.Current, CFRunLoop.ModeDefault);
 			}
 			else
-				reachable = remoteHostReachability.TryGetFlags(out flags);			
+				reachable = remoteHostReachability.TryGetFlags(out flags);
+
+			/* This value's flag changed when is reconnected. */
+			if (flags == 0)
+				flags = NetworkReachabilityFlags.Reachable;
 
 			if (!reachable)
 				return NetworkStatus.NotReachable;
 
-			if (!IsReachableWithoutRequiringConnection(flags))
+			if (!IsReachableWithoutRequiringConnection (flags))
 				return NetworkStatus.NotReachable;
 
 			if ((flags & NetworkReachabilityFlags.IsWWAN) != 0)

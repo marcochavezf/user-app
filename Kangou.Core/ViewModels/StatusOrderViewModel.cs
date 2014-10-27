@@ -45,6 +45,10 @@ namespace KangouMessenger.Core
 				ConnectionManager.Off(SocketEvents.OrderSignedByClient);
 				SetOrderSignedByClient();
 			});
+
+			ConnectionManager.SocketDisconnected (delegate {
+				Close(this);
+			});
 				
 			switch (ActiveOrder.Status) {
 

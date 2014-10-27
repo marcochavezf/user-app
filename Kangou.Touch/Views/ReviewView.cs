@@ -11,6 +11,7 @@ using System.Threading;
 using System.Collections.Generic;
 using Kangou.Core;
 using Kangou.Touch.Views;
+using SlidingPanels.Lib;
 
 namespace Kangou.Touch
 {
@@ -111,6 +112,19 @@ namespace Kangou.Touch
 			set.Bind(_bindableProgress).For(b => b.Visible).To(vm => vm.IsBusy);
             set.Apply();
         }
+
+		public override void ViewDidAppear (bool animated)
+		{
+			base.ViewDidAppear (animated);
+			SlidingGestureRecogniser.EnableGesture = false;
+		}
+
+		public override void ViewDidDisappear (bool animated)
+		{
+			base.ViewDidDisappear (animated);
+			SlidingGestureRecogniser.EnableGesture = true;
+		}
+
 
 		private void AddReviewStars (float WIDTH, float pY, ReviewViewModel viewModel)
 		{

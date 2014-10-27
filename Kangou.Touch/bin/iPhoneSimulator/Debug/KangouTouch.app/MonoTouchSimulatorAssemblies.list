@@ -16,9 +16,6 @@ SuperSocket.ClientEngine.Common.dll
 SuperSocket.ClientEngine.Protocol.dll
 System.Runtime.Serialization.dll
 Newtonsoft.Json.dll
-System.Xml.Linq.dll
-Microsoft.CSharp.dll
-Mono.CSharp.dll
 System.Net.Http.dll
 Microsoft.Threading.Tasks.dll
 ModernHttpClient.dll

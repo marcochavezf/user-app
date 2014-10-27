@@ -47,8 +47,21 @@ namespace KangouMessenger.Touch
 			mapView.ShowsUserLocation = true;
 			Add (mapView);
 
+			var annotation = new MKPointAnnotation () {
+				Title = "Kangou"
+			};
+			mapView.AddAnnotation (annotation);
+			ConnectionManager.On (SocketEvents.KangouPosition, (data) => {
+				var lat = Convert.ToDouble(data["lat"]);
+				var lng = Convert.ToDouble(data["lng"]);
+				var coordinate = new CLLocationCoordinate2D(lat, lng);
+				InvokeOnMainThread(delegate {
+					annotation.Coordinate = coordinate;
+				});
+			});
+
 			//Address Text View
-			var widthTextView = WIDTH;
+			var widthTextView = WIDTH; 
 			var heightTextView = Constants.HEIGHT_TEXTVIEW * 1.25f;
 			var posYinst = NavigationController.NavigationBar.Frame.Y + NavigationController.NavigationBar.Frame.Height;
 			var posXOffsetInst = 0f;

@@ -53,6 +53,8 @@ namespace Kangou.Touch.Views
 
 			ConnectionManager.SocketDisconnected (delegate {
 				InvokeOnMainThread(delegate {
+					if(ReviewViewModel.HasBeenClosedByUser)
+						return;
 					var conecctionLostAlert = new UIAlertView ("Se ha perdido la conexión", "\nVerifica la conexión a internet", null, "Ok");
 					conecctionLostAlert.Clicked += delegate {
 						navigationController.TogglePanel(PanelType.LeftPanel);
@@ -72,6 +74,11 @@ namespace Kangou.Touch.Views
 		{
 			base.ViewDidAppear (animated);
 			_viewModel.PopulateListFromServer ();
+			if (ReviewViewModel.HasBeenClosedByUser) {
+				var navigationController = NavigationController as SlidingPanelsNavigationViewController;
+				navigationController.TogglePanel(PanelType.LeftPanel);
+			}
+
 		}
 	}
 }

@@ -13,6 +13,7 @@ namespace Kangou.Core
 		public const string OrderSignedByClient 	= "order_signed_by_client";
 		public const string OrderReviewedByClient 	= "order_reviewed_by_client";
 		public const string ReviewAcceptedByClient 	= "review_accepted_by_client";
+		public const string KangouPosition		 	= "kangou_position";
 	}
 }
 

@@ -12,18 +12,29 @@ namespace Kangou.Core
 	public class ReviewViewModel
 		: MvxViewModel
     {
+		public static bool HasBeenClosedByUser;
+
 		public ReviewViewModel(){
+			HasBeenClosedByUser = false;
+
 			ConnectionManager.On  ( SocketEvents.ReviewAcceptedByClient, (data) => {
 				ConnectionManager.Off  ( SocketEvents.ReviewAcceptedByClient );
+				HasBeenClosedByUser = true;
 				Debug.WriteLine("ReviewAcceptedByClient");
 				ConnectionManager.Disconnect();
-				IsBusy = false;
 				Close(this);
+				IsBusy = false;
+			});
+
+			ConnectionManager.FailedToConnect (delegate {
+				IsBusy = false;
 			});
 
 			ConnectionManager.SocketDisconnected (delegate {
-				Debug.WriteLine("SocketDisconnected");
-				Close(this);
+				if(!HasBeenClosedByUser){
+					Debug.WriteLine("SocketDisconnected");
+					Close(this);
+				}
 			});
 		}
 

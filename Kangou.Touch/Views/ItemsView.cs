@@ -60,24 +60,10 @@ namespace Kangou.Touch.Views
 			infoPickUpLabel.Alpha = 0.75f;
 			Add (infoPickUpLabel);
 
-
 			var tapGesture = new UITapGestureRecognizer ((g) => {
 				itemsTextField.ResignFirstResponder();
 			});
 			View.AddGestureRecognizer (tapGesture);
-
-			//Toolbar with Done Button
-			var toolbar = new UIToolbar (new RectangleF (0.0f, 0.0f, this.View.Frame.Size.Width, 44.0f));
-			itemsTextField.InputAccessoryView = toolbar;
-			var doneButton = new UIBarButtonItem (UIBarButtonSystemItem.Done, delegate {
-				itemsTextField.ResignFirstResponder ();
-			});
-			doneButton.TintColor = Constants.TINT_COLOR;
-			toolbar.Items = new UIBarButtonItem[]{
-				new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-				doneButton
-			};
-				
 
 			//View Model Binding
 			var set = this.CreateBindingSet<ItemsView, ItemsViewModel>();
@@ -85,22 +71,18 @@ namespace Kangou.Touch.Views
 			set.Apply();
 
 			//Add Button
-			var rightButton = new UIBarButtonItem (UIBarButtonSystemItem.Save, (sender, args) => {
-
+			var rightButton = new UIBarButtonItem ("Guardar", UIBarButtonItemStyle.Done, (sender, args) => {
 				if (itemsTextField.Text.ToString ().Trim ().Equals ("")) {    
-
 					new UIAlertView ("¿Olvidaste, apeteces o necesitas algo?", "Favor de escribir sus productos"
 						, null, "Ok", null).Show ();
 
 				} else {
-
 					var viewModel = (ItemsViewModel)ViewModel;
 					viewModel.PublishData ();
 					NavigationController.PopViewControllerAnimated (true);
 				}
-
 			});
-			this.NavigationItem.SetRightBarButtonItem(rightButton, true);
+			NavigationItem.SetRightBarButtonItem(rightButton, true);
 		}
 
 		public override void ViewWillAppear (bool animated)

@@ -105,35 +105,12 @@ namespace Kangou.Touch.Views
 			aboutChargeTextView.Layer.BorderWidth = 0.5f;
 			Add(aboutChargeTextView);
 
-			//Toolbar with Done Button for FullName
-			var toolbarFullName = new UIToolbar (new RectangleF (0.0f, 0.0f, this.View.Frame.Size.Width, 44.0f));
-			toolbarFullName.Items = new UIBarButtonItem[]{
-				new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-				new UIBarButtonItem(UIBarButtonSystemItem.Done, delegate {
-					expirationDateTextField.BecomeFirstResponder();
-				})
-			};
-			creditCardNumberTextField.InputAccessoryView = toolbarFullName;
-
-			//Toolbar with Done Button for PhoneNumber
-			var toolbarPhoneNumber = new UIToolbar (new RectangleF (0.0f, 0.0f, this.View.Frame.Size.Width, 44.0f));
-			toolbarPhoneNumber.Items = new UIBarButtonItem[]{
-				new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-				new UIBarButtonItem(UIBarButtonSystemItem.Done, delegate {
-					cvvTextField.BecomeFirstResponder();
-				})
-			};
-			expirationDateTextField.InputAccessoryView = toolbarPhoneNumber;
-
-			//Toolbar with Done Button for Email
-			var toolbarEmail = new UIToolbar (new RectangleF (0.0f, 0.0f, this.View.Frame.Size.Width, 44.0f));
-			toolbarEmail.Items = new UIBarButtonItem[]{
-				new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-				new UIBarButtonItem(UIBarButtonSystemItem.Done, delegate {
-					cvvTextField.ResignFirstResponder();
-				})
-			};
-			cvvTextField.InputAccessoryView = toolbarEmail;
+			var tapGesture = new UITapGestureRecognizer ((g) => {
+				expirationDateTextField.ResignFirstResponder();
+				creditCardNumberTextField.ResignFirstResponder();
+				cvvTextField.ResignFirstResponder();
+			});
+			View.AddGestureRecognizer (tapGesture);
 
 			_bindableProgress = new BindableProgress(View);
 
@@ -147,7 +124,7 @@ namespace Kangou.Touch.Views
 
 			//Add Button
 			this.NavigationItem.SetRightBarButtonItem(
-				new UIBarButtonItem(UIBarButtonSystemItem.Save, (sender,args) => {
+				new UIBarButtonItem("Guardar", UIBarButtonItemStyle.Done, (sender,args) => {
 
 					var creditCardString = creditCardNumberTextField.Text.Trim ();
 					var expirationDateString = expirationDateTextField.Text.Trim ();

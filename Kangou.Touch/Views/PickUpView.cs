@@ -69,25 +69,11 @@ namespace Kangou.Touch.Views
 			Add (addressTextField);
 			pYoffset += HEIGHT_TEXTVIEW + MARGIN_HEIGHT_SUBVIEWS;
 
-			//Toolbar with Done Button for FullName
-			var toolbarFullName = new UIToolbar (new RectangleF (0.0f, 0.0f, this.View.Frame.Size.Width, 44.0f));
-			toolbarFullName.Items = new UIBarButtonItem[]{
-				new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-				new UIBarButtonItem(UIBarButtonSystemItem.Done, delegate {
-					referencesTextField.BecomeFirstResponder();
-				})
-			};
-			fullNameTextField.InputAccessoryView = toolbarFullName;
-
-			//Toolbar with Done Button for PhoneNumber
-			var toolbarReferences = new UIToolbar (new RectangleF (0.0f, 0.0f, this.View.Frame.Size.Width, 44.0f));
-			toolbarReferences.Items = new UIBarButtonItem[]{
-				new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-				new UIBarButtonItem(UIBarButtonSystemItem.Done, delegate {
-					referencesTextField.ResignFirstResponder();
-				})
-			};
-			referencesTextField.InputAccessoryView = toolbarReferences;
+			var tapGesture = new UITapGestureRecognizer ((g) => {
+				fullNameTextField.ResignFirstResponder();
+				referencesTextField.ResignFirstResponder();
+			});
+			View.AddGestureRecognizer (tapGesture);
 
 			//Binding
 			var set = this.CreateBindingSet<PickUpView, PickUpViewModel>();
@@ -103,6 +89,8 @@ namespace Kangou.Touch.Views
 			mapView.ShowsBuildings = true;
 			mapView.PitchEnabled = true;
 			mapView.ShowsUserLocation = true;
+			mapView.Layer.BorderColor = UIColor.Gray.CGColor;
+			mapView.Layer.BorderWidth = 0.5f;
 			Add (mapView);
 			viewModel.AddressToDisplay = "Cargando...";
 			pYoffset += mapView.Frame.Height * 0.5f;
@@ -180,7 +168,7 @@ namespace Kangou.Touch.Views
 
 			//Add Button
 			this.NavigationItem.SetRightBarButtonItem(
-				new UIBarButtonItem(UIBarButtonSystemItem.Save, (sender,args) => {
+				new UIBarButtonItem("Guardar", UIBarButtonItemStyle.Done, (sender,args) => {
 
 					if(viewModel.AddressToDisplay.Trim().Contains("Cargando...")){
 						var alert = new UIAlertView("Ingresa una dirección válida", ""

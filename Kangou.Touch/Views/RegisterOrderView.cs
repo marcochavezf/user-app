@@ -32,7 +32,7 @@ namespace Kangou.Touch.Views
 			base.ViewDidLoad();
 
 			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
-			NavigationController.NavigationBar.TintColor = Constants.TINT_COLOR;
+			NavigationController.NavigationBar.TintColor = Constants.TINT_COLOR_SECONDARY;
 
 			locMgr = new CLLocationManager();
 			if (UIDevice.CurrentDevice.CheckSystemVersion (7, 8)) {
@@ -219,11 +219,11 @@ namespace Kangou.Touch.Views
 					paymentMethodButton.Enabled = false;
 					pideUnKangouButton.Enabled = false;
 
-					itemsButton.TintColor = Constants.TINT_COLOR;
-					pickUpButton.TintColor = Constants.TINT_COLOR;
-					dropOffButton.TintColor = Constants.TINT_COLOR;
-					paymentMethodButton.TintColor = Constants.TINT_COLOR;
-					pideUnKangouButton.TintColor = Constants.TINT_COLOR;
+					itemsButton.TintColor = Constants.TINT_COLOR_PRIMARY;
+					pickUpButton.TintColor = Constants.TINT_COLOR_PRIMARY;
+					dropOffButton.TintColor = Constants.TINT_COLOR_PRIMARY;
+					paymentMethodButton.TintColor = Constants.TINT_COLOR_PRIMARY;
+					pideUnKangouButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 
 					pickUpLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
 					dropOffLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
@@ -231,6 +231,8 @@ namespace Kangou.Touch.Views
 				});
 			};
 			_viewModel.DisableButtons ();
+
+			NavigationItem.BackBarButtonItem = new UIBarButtonItem ("Cancelar", UIBarButtonItemStyle.Plain, null); 
 		}
 
 

@@ -16,7 +16,8 @@ namespace Kangou.Touch
 		public static string BUTTON_FONT = "Arial-BoldMT";
 		public static float BUTTON_FONT_SIZE_A = 15f;
 		public static float BUTTON_FONT_SIZE_B = 20f;
-		public static UIColor TINT_COLOR = UIColor.FromRGB(255/255f, 150/255f, 11/255f);
+		public static UIColor TINT_COLOR_PRIMARY = UIColor.FromRGB(255/255f, 150/255f, 11/255f);
+		public static UIColor TINT_COLOR_SECONDARY = UIColor.FromRGB (204/255f, 102/255f, 0);
 		public static UIColor LABEL_BACKGROUND_COLOR = UIColor.FromWhiteAlpha (1f, 0.6f);
 	}
 }

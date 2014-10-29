@@ -54,7 +54,7 @@ namespace Kangou.Touch
 
 			showRegisterOrderViewButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
 			showRegisterOrderViewButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
-			showRegisterOrderViewButton.TintColor = Constants.TINT_COLOR;
+			showRegisterOrderViewButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 			showRegisterOrderViewButton.SetTitle ("      Crear Orden", UIControlState.Normal);
 			showRegisterOrderViewButton.Frame = new RectangleF (posXbutton, offsetYbutton, widthButton, heightButton);
 			showRegisterOrderViewButton.Layer.BorderColor = UIColor.Gray.CGColor;
@@ -63,7 +63,7 @@ namespace Kangou.Touch
 			showRegisterOrderViewButton.TouchUpInside += delegate {
 				viewModel.DoOpenRegisterOrder.Execute(null);
 				typeViewOpened = TypeViewOpened.REGISTER_ORDER;
-				showRegisterOrderViewButton.TintColor = Constants.TINT_COLOR;
+				showRegisterOrderViewButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 				showActiveOrdersViewButton.TintColor = UIColor.Gray;
 				showEditProfileViewButton.TintColor = UIColor.Gray;
 			};
@@ -83,7 +83,7 @@ namespace Kangou.Touch
 				viewModel.DoOpenActiveOrdersList.Execute(null);
 				typeViewOpened = TypeViewOpened.ACTIVE_ORDER_LIST;
 				showRegisterOrderViewButton.TintColor = UIColor.Gray;
-				showActiveOrdersViewButton.TintColor = Constants.TINT_COLOR;
+				showActiveOrdersViewButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 				showEditProfileViewButton.TintColor = UIColor.Gray;
 			};
 			Add (showActiveOrdersViewButton);
@@ -102,7 +102,7 @@ namespace Kangou.Touch
 				typeViewOpened = TypeViewOpened.EDIT_PROFILE;
 				showRegisterOrderViewButton.TintColor = UIColor.Gray;
 				showActiveOrdersViewButton.TintColor = UIColor.Gray;
-				showEditProfileViewButton.TintColor = Constants.TINT_COLOR;
+				showEditProfileViewButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 			};
 			Add (showEditProfileViewButton);
         }

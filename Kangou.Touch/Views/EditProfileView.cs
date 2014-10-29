@@ -33,7 +33,7 @@ namespace Kangou.Touch
 			base.ViewDidLoad();
 			var viewModel = (EditProfileViewModel)ViewModel;
 			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
-			NavigationController.NavigationBar.TintColor = Constants.TINT_COLOR;
+			NavigationController.NavigationBar.TintColor = Constants.TINT_COLOR_PRIMARY;
 
 			var pYoffset = NavigationController.NavigationBar.Frame.Y + NavigationController.NavigationBar.Frame.Height + MARGIN_WIDTH_SUBVIEWS;
 

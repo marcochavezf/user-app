@@ -33,6 +33,7 @@ namespace Kangou.Touch.Views
 			View = new UIView(){ BackgroundColor = UIColor.White};
 			base.ViewDidLoad();
 			var viewModel = (DropOffViewModel)ViewModel;
+			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
 
 			var pYoffset = HEIGHT * 0.175f;
 
@@ -100,10 +101,6 @@ namespace Kangou.Touch.Views
 			mapView.ShowsBuildings = true;
 			mapView.PitchEnabled = true;
 			mapView.ShowsUserLocation = true;
-			var tapGesture = new UITapGestureRecognizer ((g) => {
-				addressTextField.ResignFirstResponder();
-			});
-			mapView.AddGestureRecognizer (tapGesture);
 			Add (mapView);
 			viewModel.AddressToDisplay = "Cargando...";
 			pYoffset += mapView.Frame.Height * 0.5f;
@@ -181,7 +178,7 @@ namespace Kangou.Touch.Views
 
 			//Add Button
 			this.NavigationItem.SetRightBarButtonItem(
-				new UIBarButtonItem(UIBarButtonSystemItem.Add, (sender,args) => {
+				new UIBarButtonItem(UIBarButtonSystemItem.Save, (sender,args) => {
 
 					if(viewModel.AddressToDisplay.Trim().Contains("Cargando...")){
 						var alert = new UIAlertView("Ingresa una dirección válida", ""

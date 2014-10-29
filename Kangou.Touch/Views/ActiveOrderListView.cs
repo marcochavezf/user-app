@@ -29,6 +29,8 @@ namespace Kangou.Touch.Views
 			var source = new MvxStandardTableViewSource (TableView, UITableViewCellStyle.Subtitle, new NSString("Id"), "TitleText Format", UITableViewCellAccessory.None);
 			TableView.Source = source;
 			TableView.ReloadData();
+			TableView.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
+
 
 			_bindableProgress = new BindableProgress(TableView);
 
@@ -53,8 +55,13 @@ namespace Kangou.Touch.Views
 
 			ConnectionManager.SocketDisconnected (delegate {
 				InvokeOnMainThread(delegate {
+
+					if(StatusOrderViewModel.HasBeenClosedByUser)
+						return;
+
 					if(ReviewViewModel.HasBeenClosedByUser)
 						return;
+
 					var conecctionLostAlert = new UIAlertView ("Se ha perdido la conexión", "\nVerifica la conexión a internet", null, "Ok");
 					conecctionLostAlert.Clicked += delegate {
 						navigationController.TogglePanel(PanelType.LeftPanel);

@@ -52,6 +52,7 @@ namespace Kangou.Touch.Views
 				addButton,editButton
 			},true);
 
+			TableView.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
 		}
 
 		public override void ViewWillAppear (bool animated)

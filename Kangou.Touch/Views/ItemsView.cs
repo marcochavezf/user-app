@@ -18,42 +18,48 @@ namespace Kangou.Touch.Views
 		{
 			View = new UIView(){ BackgroundColor = UIColor.White};
 			base.ViewDidLoad();
+			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
 
 			//Constants
 			var WIDTH = UIScreen.MainScreen.Bounds.Width;
 			var HEIGHT = UIScreen.MainScreen.Bounds.Height;
-			var MARGIN_SUBVIEWS = WIDTH / 8; 
-			var MARGIN_TEXTFIELD = WIDTH * 0.05f;
+			var MARGIN_SUBVIEWS = WIDTH * 0.1f; 
 
-			var PADDING_BTWN_ELEMENT = HEIGHT * 0.2f;
+			var PADDING_BTWN_ELEMENT = MARGIN_SUBVIEWS;
 			var HEIGHT_TEXTVIEWS = HEIGHT * 0.2f;
+			var HEIGHT_LABEL = HEIGHT * 0.125f;
 
 			var LABEL_FONT_SIZE = 15f;
 			var LABEL_FONT = "Arial-BoldMT";
 
-			var pYoffset = HEIGHT * 0.05f;
-
-			//Info Pick Up Label
-			var infoPickUpLabel = new UITextView(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_TEXTVIEWS * 1.25f));
-			infoPickUpLabel.Text = "Escribe en la parte de abajo los productos a traer o comprar.";
-			infoPickUpLabel.Font = UIFont.FromName(LABEL_FONT, 12f);
-			infoPickUpLabel.TextColor = UIColor.Gray;
-			infoPickUpLabel.TextAlignment = UITextAlignment.Center;
-			infoPickUpLabel.Editable = false;
-			Add (infoPickUpLabel);
+			var pYoffset = NavigationController.NavigationBar.Frame.Y + NavigationController.NavigationBar.Frame.Height + MARGIN_SUBVIEWS;
 
 			//Items Text Field
-			pYoffset += PADDING_BTWN_ELEMENT;
-			itemsTextField = new UITextField(new RectangleF(MARGIN_TEXTFIELD, pYoffset, WIDTH-MARGIN_TEXTFIELD*2, HEIGHT_TEXTVIEWS));
+			itemsTextField = new UITextField(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_TEXTVIEWS));
 			itemsTextField.Placeholder = "Agrega aquí el/los producto(s)";
 			itemsTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
-			itemsTextField.TextColor = UIColor.Gray;
+			itemsTextField.TextColor = UIColor.Black;
 			itemsTextField.TextAlignment = UITextAlignment.Center;
-			itemsTextField.ClipsToBounds = true;
 			itemsTextField.Layer.BorderColor = UIColor.DarkGray.CGColor;
-			itemsTextField.Layer.BorderWidth = 0.0f;
+			itemsTextField.Layer.BorderWidth = 0.5f;
+			itemsTextField.BackgroundColor = UIColor.FromWhiteAlpha (1f, 0.5f);
 			View.Add(itemsTextField);
 			pYoffset += PADDING_BTWN_ELEMENT;
+
+			//Info Pick Up Label
+			pYoffset += HEIGHT_LABEL + PADDING_BTWN_ELEMENT;
+			var infoPickUpLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_LABEL));
+			infoPickUpLabel.Text = "Escribe en la parte de arriba los\nproductos a traer o comprar.";
+			infoPickUpLabel.Lines = 0;
+			infoPickUpLabel.Font = UIFont.FromName(LABEL_FONT, 12f);
+			infoPickUpLabel.TextColor = UIColor.Black;
+			infoPickUpLabel.TextAlignment = UITextAlignment.Center;
+			infoPickUpLabel.BackgroundColor = UIColor.FromWhiteAlpha (1f, 0.9f);
+			infoPickUpLabel.Layer.BorderColor = UIColor.DarkGray.CGColor;
+			infoPickUpLabel.Layer.BorderWidth = 0.5f;
+			infoPickUpLabel.Alpha = 0.75f;
+			Add (infoPickUpLabel);
+
 
 			var tapGesture = new UITapGestureRecognizer ((g) => {
 				itemsTextField.ResignFirstResponder();
@@ -63,11 +69,13 @@ namespace Kangou.Touch.Views
 			//Toolbar with Done Button
 			var toolbar = new UIToolbar (new RectangleF (0.0f, 0.0f, this.View.Frame.Size.Width, 44.0f));
 			itemsTextField.InputAccessoryView = toolbar;
+			var doneButton = new UIBarButtonItem (UIBarButtonSystemItem.Done, delegate {
+				itemsTextField.ResignFirstResponder ();
+			});
+			doneButton.TintColor = Constants.TINT_COLOR;
 			toolbar.Items = new UIBarButtonItem[]{
 				new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-				new UIBarButtonItem(UIBarButtonSystemItem.Done, delegate {
-					itemsTextField.ResignFirstResponder();
-				})
+				doneButton
 			};
 				
 
@@ -77,23 +85,22 @@ namespace Kangou.Touch.Views
 			set.Apply();
 
 			//Add Button
-			this.NavigationItem.SetRightBarButtonItem(
-				new UIBarButtonItem(UIBarButtonSystemItem.Add, (sender,args) => {
-				
-					if (itemsTextField.Text.ToString ().Trim ().Equals ("")) {    
+			var rightButton = new UIBarButtonItem (UIBarButtonSystemItem.Save, (sender, args) => {
 
-						new UIAlertView("¿Olvidaste, apeteces o necesitas algo?", "Favor de escribir sus productos"
-							, null, "Ok", null).Show();
-						 
-					}else{
+				if (itemsTextField.Text.ToString ().Trim ().Equals ("")) {    
 
-						var viewModel = (ItemsViewModel)ViewModel;
-						viewModel.PublishData ();
-						NavigationController.PopViewControllerAnimated(true);
-					}
+					new UIAlertView ("¿Olvidaste, apeteces o necesitas algo?", "Favor de escribir sus productos"
+						, null, "Ok", null).Show ();
 
-				})
-				, true);
+				} else {
+
+					var viewModel = (ItemsViewModel)ViewModel;
+					viewModel.PublishData ();
+					NavigationController.PopViewControllerAnimated (true);
+				}
+
+			});
+			this.NavigationItem.SetRightBarButtonItem(rightButton, true);
 		}
 
 		public override void ViewWillAppear (bool animated)

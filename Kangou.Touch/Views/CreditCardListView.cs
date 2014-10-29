@@ -47,6 +47,8 @@ namespace Kangou.Touch.Views
 			NavigationItem.SetRightBarButtonItems(new UIBarButtonItem[] {
 				addButton,editButton
 			},true);
+
+			TableView.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
 		}
 
 		public override void ViewWillAppear (bool animated)

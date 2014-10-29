@@ -33,6 +33,7 @@ namespace Kangou.Touch.Views
 			//Load Root View
 			View = new UIView(){ BackgroundColor = UIColor.White};
 			base.ViewDidLoad();
+			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
 
 			var pYoffset = HEIGHT * 0.22f;
 
@@ -41,6 +42,7 @@ namespace Kangou.Touch.Views
 			creditCardNumberTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			creditCardNumberTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			creditCardNumberTextField.Layer.BorderWidth = 0.5f;
+			creditCardNumberTextField.Layer.BackgroundColor = Constants.LABEL_BACKGROUND_COLOR.CGColor;
 			creditCardNumberTextField.TextAlignment = UITextAlignment.Center;
 			creditCardNumberTextField.Placeholder = "1234 5678 9012 3456";
 			creditCardNumberTextField.KeyboardType = UIKeyboardType.NumberPad;
@@ -59,6 +61,7 @@ namespace Kangou.Touch.Views
 			expirationDateTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			expirationDateTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			expirationDateTextField.Layer.BorderWidth = 0.5f;
+			expirationDateTextField.Layer.BackgroundColor = Constants.LABEL_BACKGROUND_COLOR.CGColor;
 			expirationDateTextField.TextAlignment = UITextAlignment.Center;
 			expirationDateTextField.Placeholder = "MM/YY";
 			expirationDateTextField.KeyboardType = UIKeyboardType.NumberPad;
@@ -77,6 +80,7 @@ namespace Kangou.Touch.Views
 			cvvTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			cvvTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			cvvTextField.Layer.BorderWidth = 0.5f;
+			cvvTextField.Layer.BackgroundColor = Constants.LABEL_BACKGROUND_COLOR.CGColor;
 			cvvTextField.TextAlignment = UITextAlignment.Center;
 			cvvTextField.Placeholder = "CVV";
 			cvvTextField.KeyboardType = UIKeyboardType.NumberPad;
@@ -90,12 +94,15 @@ namespace Kangou.Touch.Views
 			pYoffset += HEIGHT_TEXTFIELD * 1.85f;
 
 			//Info Pick Up Text View
-			var aboutChargeTextView = new UITextView(new RectangleF(MARGIN_WIDTH_TEXTVIEW, pYoffset, WIDTH-MARGIN_WIDTH_TEXTVIEW*2, HEIGHT_TEXTVIEW));
-			aboutChargeTextView.Text = "Se realizará el cargo del envío una vez que se haya confirmado la orden.\n\nEn caso de compra, se realizará un segundo cargo con: el costo total de la compra más la comisión (El Kangou te avisará del monto total antes de hacer la compra).";
+			var aboutChargeTextView = new UILabel(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTVIEW));
+			aboutChargeTextView.Text = "Se realizará el cargo del envío una vez que se haya confirmado la orden.\n\nEn caso de compra, se realizará un segundo cargo: la compra más la comisión del 5% de la misma.\n\nEl Kangou te avisará del monto total antes de hacer la compra.";
+			aboutChargeTextView.Lines = 0;
 			aboutChargeTextView.Font = UIFont.FromName(LABEL_FONT, 12f);
-			aboutChargeTextView.TextColor = UIColor.Gray;
-			aboutChargeTextView.TextAlignment = UITextAlignment.Justified;
-			aboutChargeTextView.Editable = false;
+			aboutChargeTextView.TextColor = UIColor.Black;
+			aboutChargeTextView.TextAlignment = UITextAlignment.Center;
+			aboutChargeTextView.BackgroundColor = UIColor.FromWhiteAlpha (1f, 0.5f);
+			aboutChargeTextView.Layer.BorderColor = UIColor.DarkGray.CGColor;
+			aboutChargeTextView.Layer.BorderWidth = 0.5f;
 			Add(aboutChargeTextView);
 
 			//Toolbar with Done Button for FullName
@@ -140,7 +147,7 @@ namespace Kangou.Touch.Views
 
 			//Add Button
 			this.NavigationItem.SetRightBarButtonItem(
-				new UIBarButtonItem(UIBarButtonSystemItem.Add, (sender,args) => {
+				new UIBarButtonItem(UIBarButtonSystemItem.Save, (sender,args) => {
 
 					var creditCardString = creditCardNumberTextField.Text.Trim ();
 					var expirationDateString = expirationDateTextField.Text.Trim ();

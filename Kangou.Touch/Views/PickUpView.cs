@@ -32,6 +32,7 @@ namespace Kangou.Touch.Views
 			View = new UIView(){ BackgroundColor = UIColor.White};
 			base.ViewDidLoad();
 			var viewModel = (PickUpViewModel)ViewModel;
+			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
 
 			var pYoffset = HEIGHT * 0.175f;
 
@@ -42,6 +43,7 @@ namespace Kangou.Touch.Views
 			fullNameTextField.Layer.BorderWidth = 0.5f;
 			fullNameTextField.TextAlignment = UITextAlignment.Center;
 			fullNameTextField.Placeholder = "Nombre de la persona o negocio";
+			fullNameTextField.BackgroundColor = Constants.LABEL_BACKGROUND_COLOR;
 			Add (fullNameTextField);
 			pYoffset += HEIGHT_TEXTFIELD-0.5f;
 
@@ -52,16 +54,18 @@ namespace Kangou.Touch.Views
 			referencesTextField.Layer.BorderWidth = 0.5f;
 			referencesTextField.TextAlignment = UITextAlignment.Center;
 			referencesTextField.Placeholder = "Referencias (puerta azul, esquina...)";
+			referencesTextField.BackgroundColor = Constants.LABEL_BACKGROUND_COLOR;
 			Add (referencesTextField);
 			pYoffset += HEIGHT_TEXTFIELD-0.5f;
 
 			//DropOff Address Text Field
-			var addressTextField = new UITextField(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTVIEW));
+			var addressTextField = new UILabel(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTVIEW));
 			addressTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			addressTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			addressTextField.Layer.BorderWidth = 0.5f;
 			addressTextField.TextAlignment = UITextAlignment.Center;
-			addressTextField.Enabled = false;
+			//addressTextField.Enabled = false;
+			addressTextField.BackgroundColor = Constants.LABEL_BACKGROUND_COLOR;
 			Add (addressTextField);
 			pYoffset += HEIGHT_TEXTVIEW + MARGIN_HEIGHT_SUBVIEWS;
 
@@ -99,10 +103,6 @@ namespace Kangou.Touch.Views
 			mapView.ShowsBuildings = true;
 			mapView.PitchEnabled = true;
 			mapView.ShowsUserLocation = true;
-			var tapGesture = new UITapGestureRecognizer ((g) => {
-				addressTextField.ResignFirstResponder();
-			});
-			mapView.AddGestureRecognizer (tapGesture);
 			Add (mapView);
 			viewModel.AddressToDisplay = "Cargando...";
 			pYoffset += mapView.Frame.Height * 0.5f;
@@ -180,7 +180,7 @@ namespace Kangou.Touch.Views
 
 			//Add Button
 			this.NavigationItem.SetRightBarButtonItem(
-				new UIBarButtonItem(UIBarButtonSystemItem.Add, (sender,args) => {
+				new UIBarButtonItem(UIBarButtonSystemItem.Save, (sender,args) => {
 
 					if(viewModel.AddressToDisplay.Trim().Contains("Cargando...")){
 						var alert = new UIAlertView("Ingresa una dirección válida", ""

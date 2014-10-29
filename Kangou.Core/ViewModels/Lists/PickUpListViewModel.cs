@@ -38,8 +38,8 @@ namespace Kangou.Core.ViewModels
 		public ICommand AddPIckUpDataCommand {
 			get {
 				_AddPickUpDataCommand = _AddPickUpDataCommand ?? new MvxCommand (() =>{
+					//Close(this);
 					ShowViewModel<PickUpViewModel>();
-					Close(this);
 				});
 				return _AddPickUpDataCommand;
 			}

@@ -5,7 +5,6 @@ using MonoTouch.ObjCRuntime;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using System;
-using KangouMessenger.Core;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
@@ -111,6 +110,8 @@ namespace Kangou.Touch
 			set.Bind(commentsAboutClientTextField).To(vm => vm.CommentsAboutClient);	
 			set.Bind(_bindableProgress).For(b => b.Visible).To(vm => vm.IsBusy);
             set.Apply();
+
+			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
         }
 
 		public override void ViewDidAppear (bool animated)

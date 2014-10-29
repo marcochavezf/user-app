@@ -31,6 +31,9 @@ namespace Kangou.Touch.Views
 			NavigationItem.Title = "Crear orden";
 			base.ViewDidLoad();
 
+			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
+			NavigationController.NavigationBar.TintColor = Constants.TINT_COLOR;
+
 			locMgr = new CLLocationManager();
 			if (UIDevice.CurrentDevice.CheckSystemVersion (7, 8)) {
 				locMgr.RequestWhenInUseAuthorization ();
@@ -45,9 +48,7 @@ namespace Kangou.Touch.Views
 			var PADDING_SECTION = HEIGHT * 0.1f;
 			var HEIGHT_BUTTON = HEIGHT * 0.035f;
 			var LABEL_FONT_SIZE = 15f;
-			var BUTTON_FONT_SIZE = 15f;
 			var LABEL_FONT = "Arial-BoldMT";
-			var BUTTON_FONT = "Arial-BoldMT";
 			var BORDER_WIDTH = 0.0f;
 			_viewModel = (RegisterOrderViewModel)ViewModel;
 
@@ -65,7 +66,8 @@ namespace Kangou.Touch.Views
 			//Items Button
 			var itemsButton = new UIButton (UIButtonType.RoundedRect);
 			itemsButton.SetTitle ("Agregar productos", UIControlState.Normal);
-			itemsButton.Font = UIFont.FromName(BUTTON_FONT, BUTTON_FONT_SIZE);
+			itemsButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
+			itemsButton.TintColor = UIColor.Orange;
 			itemsButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			itemsButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			itemsButton.Layer.BorderWidth = BORDER_WIDTH;
@@ -85,7 +87,8 @@ namespace Kangou.Touch.Views
 			//Items Button
 			var pickUpButton = new UIButton (UIButtonType.RoundedRect);
 			pickUpButton.SetTitle ("Agregar dirección", UIControlState.Normal);
-			pickUpButton.Font = UIFont.FromName(BUTTON_FONT, BUTTON_FONT_SIZE);
+			pickUpButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
+			pickUpButton.TintColor = UIColor.Orange;
 			pickUpButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			pickUpButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			pickUpButton.Layer.BorderWidth = BORDER_WIDTH;
@@ -104,7 +107,8 @@ namespace Kangou.Touch.Views
 			//Drop Off Button
 			var dropOffButton = new UIButton (UIButtonType.RoundedRect);
 			dropOffButton.SetTitle ("Agregar dirección", UIControlState.Normal);
-			dropOffButton.Font = UIFont.FromName(BUTTON_FONT, BUTTON_FONT_SIZE);
+			dropOffButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
+			dropOffButton.TintColor = UIColor.Orange;
 			dropOffButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			dropOffButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			dropOffButton.Layer.BorderWidth = BORDER_WIDTH;
@@ -114,7 +118,7 @@ namespace Kangou.Touch.Views
 
 			//Payment Method Label
 			var paymentMethodLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20));
-			paymentMethodLabel.Text = "4. Información de pago";
+			paymentMethodLabel.Text = "4. Medio de pago";
 			paymentMethodLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			paymentMethodLabel.TextColor = UIColor.Gray;
 			paymentMethodLabel.TextAlignment = UITextAlignment.Center;
@@ -124,7 +128,8 @@ namespace Kangou.Touch.Views
 			//Payment Method Button
 			var paymentMethodButton = new UIButton (UIButtonType.RoundedRect);
 			paymentMethodButton.SetTitle ("Seleccionar forma de pago", UIControlState.Normal);
-			paymentMethodButton.Font = UIFont.FromName(BUTTON_FONT, BUTTON_FONT_SIZE);
+			paymentMethodButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
+			paymentMethodButton.TintColor = UIColor.Orange;
 			paymentMethodButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			paymentMethodButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			paymentMethodButton.Layer.BorderWidth = BORDER_WIDTH;
@@ -148,7 +153,8 @@ namespace Kangou.Touch.Views
 			//Pedir un Kangou! Button
 			var pideUnKangouButton = new UIButton (UIButtonType.RoundedRect);
 			pideUnKangouButton.SetTitle ("Pedir un Kangou", UIControlState.Normal);
-			pideUnKangouButton.Font = UIFont.FromName(BUTTON_FONT, BUTTON_FONT_SIZE);
+			pideUnKangouButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
+			pideUnKangouButton.TintColor = UIColor.Orange;
 			pideUnKangouButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			pideUnKangouButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			pideUnKangouButton.Layer.BorderWidth = BORDER_WIDTH;
@@ -174,6 +180,7 @@ namespace Kangou.Touch.Views
 
 			_viewModel.EnablePickUpButton = delegate {
 				InvokeOnMainThread (delegate {  
+					itemsButton.TintColor = UIColor.Gray;
 					pickUpButton.Enabled = true;
 					pickUpLabel.TextColor = UIColor.Gray;
 				});
@@ -182,6 +189,7 @@ namespace Kangou.Touch.Views
 			_viewModel.EnableDropOffButton = delegate {
 				_viewModel.EnablePickUpButton();
 				InvokeOnMainThread (delegate {
+					pickUpButton.TintColor = UIColor.Gray;
 					dropOffButton.Enabled = true;
 					dropOffLabel.TextColor = UIColor.Gray;
 				});
@@ -190,6 +198,7 @@ namespace Kangou.Touch.Views
 			_viewModel.EnablePaymentMethodButton = delegate {
 				_viewModel.EnableDropOffButton();
 				InvokeOnMainThread (delegate {  
+					dropOffButton.TintColor = UIColor.Gray;
 					paymentMethodButton.Enabled = true;
 					paymentMethodLabel.TextColor = UIColor.Gray;
 				});
@@ -198,6 +207,7 @@ namespace Kangou.Touch.Views
 			_viewModel.EnablePUKButton = delegate {
 				_viewModel.EnablePaymentMethodButton ();
 				InvokeOnMainThread (delegate {  
+					paymentMethodButton.TintColor = UIColor.Gray;
 					pideUnKangouButton.Enabled = true;
 				});
 			};
@@ -208,6 +218,12 @@ namespace Kangou.Touch.Views
 					dropOffButton.Enabled = false;
 					paymentMethodButton.Enabled = false;
 					pideUnKangouButton.Enabled = false;
+
+					itemsButton.TintColor = Constants.TINT_COLOR;
+					pickUpButton.TintColor = Constants.TINT_COLOR;
+					dropOffButton.TintColor = Constants.TINT_COLOR;
+					paymentMethodButton.TintColor = Constants.TINT_COLOR;
+					pideUnKangouButton.TintColor = Constants.TINT_COLOR;
 
 					pickUpLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
 					dropOffLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);

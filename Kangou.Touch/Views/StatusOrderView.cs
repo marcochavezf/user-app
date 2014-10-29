@@ -5,7 +5,6 @@ using MonoTouch.ObjCRuntime;
 using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using System;
-using KangouMessenger.Core;
 using System.Threading.Tasks;
 using System.Threading;
 using MonoTouch.MapKit;
@@ -96,11 +95,19 @@ namespace KangouMessenger.Touch
 			if (_viewModel.ActiveOrder.Status == StatusOrder.OrderReviewed) {
 				var orderFinishedAlert = new UIAlertView ("Esta orden ya ha finalizado", "¡Muchas gracias por usar Kangou!", null, "Ok");
 				orderFinishedAlert.Clicked += (object alertSender, UIButtonEventArgs eventArgsAlert) => {
+					StatusOrderViewModel.HasBeenClosedByUser = true;
 					ConnectionManager.Disconnect();
 					NavigationController.PopViewControllerAnimated(true);
 				};
 				orderFinishedAlert.Show ();
 			}
+
+			_viewModel.StatusUpdated += (message) => {
+				Console.WriteLine("Scheduling Local Notification: {0}",message);
+				InvokeOnMainThread (delegate {  
+					ScheduleStatusOrderNotification(message);
+				});
+			};
 		}
 
 		public override void ViewWillAppear (bool animated)
@@ -114,6 +121,8 @@ namespace KangouMessenger.Touch
 			base.ViewDidDisappear (animated);
 			SlidingGestureRecogniser.EnableGesture = true;
 			if (_viewModel.ActiveOrder.Status != StatusOrder.OrderSignedByClient) {
+				//It's dissapearing because user has pressed back button
+				StatusOrderViewModel.HasBeenClosedByUser = true;
 				ConnectionManager.Disconnect ();
 			}
 			_viewModel.TurnOffConnectionManager ();
@@ -124,6 +133,16 @@ namespace KangouMessenger.Touch
 		{
 			base.ViewWillDisappear (animated);
 			Console.WriteLine ("ViewWillDisappear Status");
+		}
+
+		private void ScheduleStatusOrderNotification(string message){
+			var notification = new UILocalNotification();
+			notification.FireDate = DateTime.Now;
+			notification.AlertAction = "Aviso Kangou";
+			notification.AlertBody = message;
+			notification.ApplicationIconBadgeNumber = 1;
+			notification.SoundName = UILocalNotification.DefaultSoundName;
+			UIApplication.SharedApplication.ScheduleLocalNotification(notification);
 		}
     }
 }

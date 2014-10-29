@@ -165,6 +165,7 @@
     <BundleResource Include="Resources\SlideRight40.png" />
     <BundleResource Include="Resources\starReviewOff.png" />
     <BundleResource Include="Resources\starReviewOn.png" />
+    <BundleResource Include="Resources\background.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />

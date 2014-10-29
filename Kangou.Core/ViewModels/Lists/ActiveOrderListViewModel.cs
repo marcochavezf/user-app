@@ -11,7 +11,6 @@ using Kangou.Core.ViewModels.ObserverMessages;
 using System;
 using System.Threading.Tasks;
 using Kangou.Core.ViewModels;
-using KangouMessenger.Core;
 using Cirrious.CrossCore.Platform;
 using Kangou.Core.WebClients;
 

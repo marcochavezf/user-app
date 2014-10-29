@@ -23,9 +23,8 @@ namespace Kangou.Touch
 			var CONTAINER_SIZE = View.Bounds.Size;
 			var WIDTH = UIScreen.MainScreen.Bounds.Width;
 			var HEIGHT = UIScreen.MainScreen.Bounds.Height;
-			var MARGIN_WIDTH_SUBVIEWS = WIDTH / 8 * 0.5f; 
-			var MARGIN_HEIGHT_SUBVIEWS = HEIGHT * 0.2f;
-			var HEIGHT_TEXTFIELD = 60f;
+			var MARGIN_WIDTH_SUBVIEWS = WIDTH * 0.1f; 
+			var HEIGHT_TEXTFIELD = HEIGHT * 0.1f;
 			var LABEL_FONT_SIZE = 15f;
 			var LABEL_FONT = "Arial-BoldMT";
 
@@ -33,8 +32,10 @@ namespace Kangou.Touch
 			View = new UIView(){ BackgroundColor = UIColor.White};
 			base.ViewDidLoad();
 			var viewModel = (EditProfileViewModel)ViewModel;
+			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
+			NavigationController.NavigationBar.TintColor = Constants.TINT_COLOR;
 
-			var pYoffset = MARGIN_HEIGHT_SUBVIEWS;
+			var pYoffset = NavigationController.NavigationBar.Frame.Y + NavigationController.NavigationBar.Frame.Height + MARGIN_WIDTH_SUBVIEWS;
 
 			//FullName
 			var fullNameTextField = new UITextField(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
@@ -43,6 +44,7 @@ namespace Kangou.Touch
 			fullNameTextField.Layer.BorderWidth = 0.5f;
 			fullNameTextField.TextAlignment = UITextAlignment.Center;
 			fullNameTextField.Placeholder = "Nombre";
+			fullNameTextField.BackgroundColor = Constants.LABEL_BACKGROUND_COLOR;
 			Add (fullNameTextField);
 			pYoffset += HEIGHT_TEXTFIELD-0.5f;
 
@@ -54,6 +56,7 @@ namespace Kangou.Touch
 			phoneNumberTextField.TextAlignment = UITextAlignment.Center;
 			phoneNumberTextField.Placeholder = "Teléfono";
 			phoneNumberTextField.KeyboardType = UIKeyboardType.NumberPad;
+			phoneNumberTextField.BackgroundColor = Constants.LABEL_BACKGROUND_COLOR;
 			Add (phoneNumberTextField);
 			pYoffset += HEIGHT_TEXTFIELD-0.5f;
 
@@ -66,6 +69,7 @@ namespace Kangou.Touch
 			emailTextField.Placeholder = "Email";
 			emailTextField.KeyboardType = UIKeyboardType.EmailAddress;
 			emailTextField.AutocapitalizationType = UITextAutocapitalizationType.None;
+			emailTextField.BackgroundColor = Constants.LABEL_BACKGROUND_COLOR;
 			Add (emailTextField);
 			pYoffset += HEIGHT_TEXTFIELD-1;
 
@@ -117,7 +121,7 @@ namespace Kangou.Touch
 
 			//Add Button
 			this.NavigationItem.SetRightBarButtonItem(
-				new UIBarButtonItem(UIBarButtonSystemItem.Add, (sender,args) => {
+				new UIBarButtonItem(UIBarButtonSystemItem.Save, (sender,args) => {
 
 					var fullNameString = fullNameTextField.Text.Trim ();
 					var phoneNumberString = phoneNumberTextField.Text.Trim ();

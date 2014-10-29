@@ -29,7 +29,24 @@ namespace Kangou.Touch
 			startup.Start();
 
 			_window.MakeKeyAndVisible();
+
+			if (UIDevice.CurrentDevice.CheckSystemVersion (7, 8)) {
+				//Version 8
+				var settings = UIUserNotificationSettings.GetSettingsForTypes(
+					UIUserNotificationType.Alert
+					| UIUserNotificationType.Badge
+					| UIUserNotificationType.Sound,
+					new NSSet());
+				UIApplication.SharedApplication.RegisterUserNotificationSettings (settings);
+			}
+
 			return true;
+		}
+
+		public override void ReceivedLocalNotification(UIApplication application, UILocalNotification notification)
+		{
+			// reset our badge
+			UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
 		}
 
 	}

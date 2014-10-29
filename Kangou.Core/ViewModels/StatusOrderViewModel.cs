@@ -9,17 +9,21 @@ using System.Diagnostics;
 using Kangou.Core;
 
 
-namespace KangouMessenger.Core
+namespace Kangou.Core
 {
     public class StatusOrderViewModel 
 		: MvxViewModel
     {
+		public static bool HasBeenClosedByUser;
+
 		public void Init(ActiveOrder activeOrder)
 		{
 			Debug.WriteLine ("ActiveORder: {0}", activeOrder);
 			Status = "Buscando Kangou";
 			Distance = "El kangou se encuentra a 7 km de su destino";
 			ActiveOrder = activeOrder;
+
+			HasBeenClosedByUser = false;
 
 			ConnectionManager.On(SocketEvents.KangouGoingToPickUp, (data) => {
 				ConnectionManager.Off(SocketEvents.KangouGoingToPickUp);
@@ -87,31 +91,41 @@ namespace KangouMessenger.Core
 		}
 
 		private void SetKangouGoingToPickUp(){
-			Status = "Un kangou va en camino a recoger";
+			var message = "Un kangou va en camino a recoger";
+			Status = message;
 			ActiveOrder.Status = StatusOrder.KangouGoingToPickUp;
+			StatusUpdated (message);
 		}
 
 		private void SetKangouWaitingToPickUp(){
-			Status = "El kangou está esperando para recoger lo pedido";
+			var message = "El kangou está esperando para recoger lo pedido";
+			Status = message;
 			Distance = "Ya está en el lugar para recoger";
 			ActiveOrder.Status = StatusOrder.KangouWaitingToPickUp;
+			StatusUpdated (message);
 		}
 
 		private void SetKangouGoingToDropOff(){
-			Status = "El kangou está en camino a entregar";
+			var message = "El kangou está en camino a entregar";
+			Status = message;
 			ActiveOrder.Status = StatusOrder.KangouGoingToDropOff;
+			StatusUpdated (message);
 		}
 
 		private void SetKangouWaitingToDropOff(){
-			Status = "El kangou está esperando para entregar lo pedido";
+			var message = "El kangou está esperando para entregar lo pedido";
+			Status = message;
 			Distance = "Favor de firmarle como recibido";
 			ActiveOrder.Status = StatusOrder.KangouWaitingToDropOff;
+			StatusUpdated (message);
 		}
 
 		private void SetOrderSignedByClient(){
-			Status = "La orden ha finalizado";
+			var message = "La orden ha finalizado";
+			Status = message;
 			Distance = "";
 			ActiveOrder.Status = StatusOrder.OrderSignedByClient;
+			StatusUpdated (message);
 			Task.Run (delegate {
 				ShowViewModel<ReviewViewModel> ();
 			});
@@ -124,6 +138,7 @@ namespace KangouMessenger.Core
 		}
 
 		public ActiveOrder ActiveOrder { get; private set; }
+		public event Action<string> StatusUpdated = delegate {};
 
 		private string _status;
 		public string Status {

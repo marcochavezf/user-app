@@ -66,13 +66,12 @@ namespace Kangou.Touch.Views
 			//Items Button
 			var itemsButton = new UIButton (UIButtonType.RoundedRect);
 			itemsButton.SetTitle ("Agregar productos", UIControlState.Normal);
-			itemsButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
+			itemsButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
 			itemsButton.TintColor = UIColor.Orange;
 			itemsButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			itemsButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			itemsButton.Layer.BorderWidth = BORDER_WIDTH;
 			Add (itemsButton);
-
 			pYoffset += PADDING_SECTION;
 
 			//Items Label
@@ -153,7 +152,7 @@ namespace Kangou.Touch.Views
 			//Pedir un Kangou! Button
 			var pideUnKangouButton = new UIButton (UIButtonType.RoundedRect);
 			pideUnKangouButton.SetTitle ("Pedir un Kangou", UIControlState.Normal);
-			pideUnKangouButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
+			pideUnKangouButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_C);
 			pideUnKangouButton.TintColor = UIColor.Orange;
 			pideUnKangouButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			pideUnKangouButton.Layer.BorderColor = UIColor.Gray.CGColor;
@@ -180,8 +179,10 @@ namespace Kangou.Touch.Views
 
 			_viewModel.EnablePickUpButton = delegate {
 				InvokeOnMainThread (delegate {  
-					itemsButton.TintColor = UIColor.Gray;
+					itemsButton.TintColor = UIColor.DarkGray;
+					itemsButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
 					pickUpButton.Enabled = true;
+					pickUpButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
 					pickUpLabel.TextColor = UIColor.Gray;
 				});
 			};
@@ -189,8 +190,10 @@ namespace Kangou.Touch.Views
 			_viewModel.EnableDropOffButton = delegate {
 				_viewModel.EnablePickUpButton();
 				InvokeOnMainThread (delegate {
-					pickUpButton.TintColor = UIColor.Gray;
+					pickUpButton.TintColor = UIColor.DarkGray;
+					pickUpButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
 					dropOffButton.Enabled = true;
+					dropOffButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
 					dropOffLabel.TextColor = UIColor.Gray;
 				});
 			};
@@ -198,8 +201,10 @@ namespace Kangou.Touch.Views
 			_viewModel.EnablePaymentMethodButton = delegate {
 				_viewModel.EnableDropOffButton();
 				InvokeOnMainThread (delegate {  
-					dropOffButton.TintColor = UIColor.Gray;
+					dropOffButton.TintColor = UIColor.DarkGray;
+					dropOffButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
 					paymentMethodButton.Enabled = true;
+					paymentMethodButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
 					paymentMethodLabel.TextColor = UIColor.Gray;
 				});
 			};
@@ -207,7 +212,8 @@ namespace Kangou.Touch.Views
 			_viewModel.EnablePUKButton = delegate {
 				_viewModel.EnablePaymentMethodButton ();
 				InvokeOnMainThread (delegate {  
-					paymentMethodButton.TintColor = UIColor.Gray;
+					paymentMethodButton.TintColor = UIColor.DarkGray;
+					paymentMethodButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
 					pideUnKangouButton.Enabled = true;
 				});
 			};
@@ -224,6 +230,8 @@ namespace Kangou.Touch.Views
 					dropOffButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 					paymentMethodButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 					pideUnKangouButton.TintColor = Constants.TINT_COLOR_PRIMARY;
+
+					itemsButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
 
 					pickUpLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
 					dropOffLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);

@@ -121,7 +121,7 @@ namespace Kangou.Touch
 
 			//Add Button
 			this.NavigationItem.SetRightBarButtonItem(
-				new UIBarButtonItem(UIBarButtonSystemItem.Save, (sender,args) => {
+				new UIBarButtonItem("Guardar", UIBarButtonItemStyle.Done, (sender,args) => {
 
 					var fullNameString = fullNameTextField.Text.Trim ();
 					var phoneNumberString = phoneNumberTextField.Text.Trim ();

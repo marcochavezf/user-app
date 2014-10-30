@@ -36,22 +36,15 @@ namespace Kangou.Touch
 			var heightLabel = Constants.HEIGHT_BUTTON;
 			var posXtitle  = (WIDTH - widthLabel) * 0.5f;
 			var posYinst = NavigationController.NavigationBar.Frame.Y + NavigationController.NavigationBar.Frame.Height;
-			var posYoffset = posYinst + posXtitle;
+			var posYoffset = posYinst + posXtitle * 0.5f;
 
-			//Rating
-			var titleRatingLabel = new UILabel(new RectangleF(posXtitle, posYoffset, widthLabel, heightLabel));
-			titleRatingLabel.Text = "Calificación acerca del cliente";
-			titleRatingLabel.TextAlignment = UITextAlignment.Center;
-			Add(titleRatingLabel);
-
-			posYoffset += 40f;
-			AddReviewStars (WIDTH, posYoffset, viewModel);
 
 			//Commnents
-			posYoffset += 70f;
 			var titleCommentsLabel = new UILabel(new RectangleF(posXtitle, posYoffset, widthLabel, heightLabel));
 			titleCommentsLabel.Text = "Comentarios acerca del cliente";
 			titleCommentsLabel.TextAlignment = UITextAlignment.Center;
+			titleCommentsLabel.Font = UIFont.FromName(Constants.LABEL_BOLD_FONT, Constants.LABEL_FONT_SIZE);
+			titleCommentsLabel.TextColor = UIColor.Gray;
 			Add(titleCommentsLabel);
 
 			posYoffset += 50f;
@@ -59,38 +52,32 @@ namespace Kangou.Touch
 			var heightTextField = HEIGHT * 0.125f;
 			var posXtextField = (WIDTH - widthTextField) * 0.5f;
 			var commentsAboutClientTextField = new UITextView(new RectangleF(posXtextField, posYoffset, widthTextField, heightTextField));
-			commentsAboutClientTextField.Font =  UIFont.FromName(Constants.LABEL_NORMAL_FONT, Constants.LABEL_FONT_SIZE);
+			commentsAboutClientTextField.Font =  UIFont.FromName(Constants.LABEL_BOLD_FONT, Constants.LABEL_FONT_SIZE);
 			commentsAboutClientTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			commentsAboutClientTextField.Layer.BorderWidth = 0.5f;
-            Add(commentsAboutClientTextField);
+			commentsAboutClientTextField.BackgroundColor = Constants.LABEL_BACKGROUND_COLOR;
+			Add(commentsAboutClientTextField);
 
-			/*
-			if (!UIDevice.CurrentDevice.CheckSystemVersion (7, 8)) {
-				//Version 7 Toolbar with Done Button
-				Console.WriteLine ("Version 7");
-				var toolbar = new UIToolbar (new RectangleF (0.0f, 0.0f, this.View.Frame.Size.Width, 44.0f));
-				commentsAboutClientTextField.InputAccessoryView = toolbar;
-				toolbar.Items = new UIBarButtonItem[] {
-					new UIBarButtonItem (UIBarButtonSystemItem.FlexibleSpace),
-					new UIBarButtonItem (UIBarButtonSystemItem.Done, delegate {
-						commentsAboutClientTextField.ResignFirstResponder ();
-					})
-				};
-			}
-			*/
+			//Rating
+			posYoffset += 80f;
+			var titleRatingLabel = new UILabel(new RectangleF(posXtitle, posYoffset, widthLabel, heightLabel));
+			titleRatingLabel.Text = "Calificación acerca del cliente";
+			titleRatingLabel.TextAlignment = UITextAlignment.Center;
+			titleRatingLabel.Font = UIFont.FromName(Constants.LABEL_BOLD_FONT, Constants.LABEL_FONT_SIZE);
+			titleRatingLabel.TextColor = UIColor.Gray;
+			Add(titleRatingLabel);
+
+			posYoffset += 50f;
+			AddReviewStars (WIDTH, posYoffset, viewModel);
+
+			View.AddGestureRecognizer (new UITapGestureRecognizer ((g) => {
+				commentsAboutClientTextField.ResignFirstResponder();
+			}));
 
 			var errorHasntReviewedAlert = new UIAlertView ("Favor de calificar el servicio", "", null, "Ok");
 
-			//Accept Button
-			var widthButton = WIDTH * Constants.PROPORTION_BUTTON;
-			var posXbutton = (WIDTH - widthButton) * 0.5f;
-			var posYbutton = HEIGHT - Constants.HEIGHT_BUTTON * 2.5f;
-			var acceptButton = new UIButton (UIButtonType.RoundedRect);
-			acceptButton.SetTitle ("Aceptar", UIControlState.Normal);
-			acceptButton.Frame = new RectangleF (posXbutton, posYbutton, widthButton, Constants.HEIGHT_BUTTON);
-			acceptButton.Layer.BorderColor = UIColor.Gray.CGColor;
-			acceptButton.Layer.BorderWidth = 0.5f;
-			acceptButton.TouchUpInside += (object sender, EventArgs e) => {
+			//Add Button
+			var rightButton = new UIBarButtonItem ("Aceptar", UIBarButtonItemStyle.Done, (sender, args) => {
 				if(viewModel.RatingAboutClient > 0){
 
 					var reviewedFinishedAlert = new UIAlertView ("Orden finalizada", "\n¡Muchas gracias por usar nuestro servicio! ", null, "Ok");
@@ -102,8 +89,8 @@ namespace Kangou.Touch
 				} else { 
 					errorHasntReviewedAlert.Show();
 				}
-			};
-			Add (acceptButton);
+			});
+			NavigationItem.SetRightBarButtonItem(rightButton, true);
 
 			//Binding
 			var set = this.CreateBindingSet<ReviewView, ReviewViewModel>();
@@ -112,6 +99,7 @@ namespace Kangou.Touch
             set.Apply();
 
 			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
+
         }
 
 		public override void ViewDidAppear (bool animated)

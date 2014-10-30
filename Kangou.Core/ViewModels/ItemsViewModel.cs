@@ -28,12 +28,11 @@ namespace Kangou.Core.ViewModels
 		 * Items Property
 		 */
 
-		private string _items = "";
+		private string _items;
 		public string Items { 
 			get { return _items; }
 			set {
-				_items = value;
-				RaisePropertyChanged (() => Items);
+				_items = value; RaisePropertyChanged (() => Items);
 			}
 		}
 

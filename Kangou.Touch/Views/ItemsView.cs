@@ -28,26 +28,23 @@ namespace Kangou.Touch.Views
 			var PADDING_BTWN_ELEMENT = MARGIN_SUBVIEWS;
 			var HEIGHT_TEXTVIEWS = HEIGHT * 0.2f;
 			var HEIGHT_LABEL = HEIGHT * 0.125f;
-
+			var HEIGHT_TEXT_FIELD = HEIGHT * 0.15f;
 			var LABEL_FONT_SIZE = 15f;
 			var LABEL_FONT = "Arial-BoldMT";
 
 			var pYoffset = NavigationController.NavigationBar.Frame.Y + NavigationController.NavigationBar.Frame.Height + MARGIN_SUBVIEWS;
 
-			//Items Text Field
-			itemsTextField = new UITextField(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_TEXTVIEWS));
+			itemsTextField = new UITextField(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_TEXT_FIELD));
 			itemsTextField.Placeholder = "Agrega aquí el/los producto(s)";
 			itemsTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
-			itemsTextField.TextColor = UIColor.Black;
 			itemsTextField.TextAlignment = UITextAlignment.Center;
-			itemsTextField.Layer.BorderColor = UIColor.DarkGray.CGColor;
+			itemsTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			itemsTextField.Layer.BorderWidth = 0.5f;
 			itemsTextField.BackgroundColor = UIColor.FromWhiteAlpha (1f, 0.5f);
-			View.Add(itemsTextField);
-			pYoffset += PADDING_BTWN_ELEMENT;
+			Add(itemsTextField);
 
 			//Info Pick Up Label
-			pYoffset += HEIGHT_LABEL + PADDING_BTWN_ELEMENT;
+			pYoffset += HEIGHT_TEXT_FIELD + PADDING_BTWN_ELEMENT;
 			var infoPickUpLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_LABEL));
 			infoPickUpLabel.Text = "Escribe en la parte de arriba los\nproductos a traer o comprar.";
 			infoPickUpLabel.Lines = 0;

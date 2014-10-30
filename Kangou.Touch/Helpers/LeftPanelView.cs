@@ -92,7 +92,7 @@ namespace Kangou.Touch
 			showEditProfileViewButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
 			showEditProfileViewButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
 			showEditProfileViewButton.TintColor = UIColor.Gray;
-			showEditProfileViewButton.SetTitle ("      Editar Perfil", UIControlState.Normal);
+			showEditProfileViewButton.SetTitle ("      Datos personales", UIControlState.Normal);
 			showEditProfileViewButton.Frame = new RectangleF (posXbutton, offsetYbutton, widthButton, heightButton);
 			showEditProfileViewButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			showEditProfileViewButton.Layer.BorderWidth = 0.5f;

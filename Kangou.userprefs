@@ -1,19 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Kangou.Touch/Info.plist">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Kangou.Touch/Views/ItemsView.cs">
     <Files>
-      <File FileName="Kangou.Core/App.cs" Line="22" Column="22" />
-      <File FileName="Kangou.Touch/Views/EditProfileView.cs" Line="17" Column="17" />
-      <File FileName="Kangou.Touch/Views/ActiveOrderListView.cs" Line="72" Column="72" />
-      <File FileName="Kangou.Touch/Views/RegisterOrderView.cs" Line="16" Column="16" />
-      <File FileName="SlidingPanels/SlidingPanels.Lib/SlidingGestureRecogniser.cs" Line="4" Column="4" />
-      <File FileName="Kangou.Touch/Views/PickUpView.cs" Line="3" Column="3" />
-      <File FileName="Kangou.Touch/Views/ReviewView.cs" Line="6" Column="6" />
-      <File FileName="Kangou.Touch/Helpers/RootMvxViewController.cs" Line="53" Column="53" />
-      <File FileName="Socket.IO/SocketIO.cs" Line="76" Column="76" />
-      <File FileName="Kangou.Core/Helpers/ConnectionManager.cs" Line="40" Column="40" />
-      <File FileName="Kangou.Touch/Helpers/Reachability.cs" Line="19" Column="19" />
-      <File FileName="Kangou.Touch/Info.plist" />
+      <File FileName="Kangou.Core/ViewModels/PickUpViewModel.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Core/ViewModels/Lists/PickUpListViewModel.cs" Line="34" Column="34" />
+      <File FileName="Kangou.Core/ViewModels/Lists/DropOffListViewModel.cs" Line="8" Column="8" />
+      <File FileName="Kangou.Touch/Helpers/LeftPanelView.cs" Line="28" Column="28" />
+      <File FileName="Kangou.Touch/Views/EditProfileView.cs" Line="58" Column="58" />
+      <File FileName="Kangou.Touch/Views/PickUpView.cs" Line="4" Column="4" />
+      <File FileName="Kangou.Touch/Views/DropOffView.cs" Line="32" Column="32" />
+      <File FileName="Kangou.Touch/Views/CreditCardView.cs" Line="69" Column="69" />
+      <File FileName="Kangou.Touch/Views/RegisterOrderView.cs" Line="82" Column="82" />
+      <File FileName="Kangou.Touch/Views/ActiveOrderListView.cs" Line="82" Column="82" />
+      <File FileName="Kangou.Touch/Views/ItemsView.cs" Line="139" Column="139" />
+      <File FileName="Kangou.Touch/Views/ReviewView.cs" Line="51" Column="51" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

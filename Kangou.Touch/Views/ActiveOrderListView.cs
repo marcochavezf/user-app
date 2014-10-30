@@ -31,7 +31,7 @@ namespace Kangou.Touch.Views
 			TableView.ReloadData();
 			TableView.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
 
-
+			NavigationItem.Title = "Órdenes Activas";
 			_bindableProgress = new BindableProgress(TableView);
 
 			//Binding
@@ -69,6 +69,9 @@ namespace Kangou.Touch.Views
 					conecctionLostAlert.Show();
 				});
 			});
+
+			NavigationItem.BackBarButtonItem = new UIBarButtonItem ("Regresar", UIBarButtonItemStyle.Plain, null); 
+			NavigationController.NavigationBar.TintColor = Constants.TINT_COLOR_SECONDARY;
 		}
 
 		public override void ViewWillAppear (bool animated)

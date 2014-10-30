@@ -35,7 +35,7 @@ namespace Kangou.Touch.Views
 
 			//Add Button
 			var addButton = new UIBarButtonItem (UIBarButtonSystemItem.Add, (sender, args) => {
-				NavigationController.PopViewControllerAnimated (false);
+				PickUpView.HasBeenOpenedFromList = true;
 				viewModel.AddPIckUpDataCommand.Execute (null);
 			});
 
@@ -53,6 +53,7 @@ namespace Kangou.Touch.Views
 			},true);
 
 			TableView.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
+			NavigationItem.BackBarButtonItem = new UIBarButtonItem ("Cancelar", UIBarButtonItemStyle.Plain, null);
 		}
 
 		public override void ViewWillAppear (bool animated)

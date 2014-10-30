@@ -77,12 +77,14 @@ namespace Kangou.Touch.Views
 		public override void ViewWillAppear (bool animated)
 		{
 			base.ViewWillAppear (animated);
-			_viewModel.IsBusy = true;
+			//_viewModel.IsBusy = true;
+			_viewModel.PublishMessageViewOpened ();
 		}
 
 		public override void ViewDidAppear (bool animated)
 		{
 			base.ViewDidAppear (animated);
+			_viewModel.IsBusy = true;
 			_viewModel.PopulateListFromServer ();
 			if (ReviewViewModel.HasBeenClosedByUser) {
 				var navigationController = NavigationController as SlidingPanelsNavigationViewController;

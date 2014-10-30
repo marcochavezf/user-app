@@ -13,8 +13,10 @@ using SlidingPanels.Lib;
 namespace Kangou.Touch.Views
 {
 	[Register("PickUpView")]
-	public class PickUpView : MvxViewController
+	public class PickUpView : BusyMvxViewController
 	{
+		public static bool HasBeenOpenedFromList = false;
+
 		public override void ViewDidLoad()
 		{
 			//Constants
@@ -204,6 +206,15 @@ namespace Kangou.Touch.Views
 		{
 			base.ViewDidDisappear (animated);
 			SlidingGestureRecogniser.EnableGesture = true;
+		}
+
+		public override void ViewDidAppear (bool animated)
+		{
+			if (HasBeenOpenedFromList) {
+				HasBeenOpenedFromList = false;
+				_popNextToLastViewController = true;
+				base.ViewDidAppear (animated);
+			}
 		}
 
 	}

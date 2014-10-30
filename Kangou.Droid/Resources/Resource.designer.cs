@@ -418,31 +418,34 @@ namespace Kangou.Droid
 			public const int DropOffView = 2130903044;
 			
 			// aapt resource value: 0x7f030005
-			public const int Item_CreditCardData = 2130903045;
+			public const int FirstView = 2130903045;
 			
 			// aapt resource value: 0x7f030006
-			public const int Item_DropOffData = 2130903046;
+			public const int Item_CreditCardData = 2130903046;
 			
 			// aapt resource value: 0x7f030007
-			public const int Item_PickUpData = 2130903047;
+			public const int Item_DropOffData = 2130903047;
 			
 			// aapt resource value: 0x7f030008
-			public const int ItemsView = 2130903048;
+			public const int Item_PickUpData = 2130903048;
 			
 			// aapt resource value: 0x7f030009
-			public const int PickUpListView = 2130903049;
+			public const int ItemsView = 2130903049;
 			
 			// aapt resource value: 0x7f03000a
-			public const int PickUpView = 2130903050;
+			public const int PickUpListView = 2130903050;
 			
 			// aapt resource value: 0x7f03000b
-			public const int PromoCodeView = 2130903051;
+			public const int PickUpView = 2130903051;
 			
 			// aapt resource value: 0x7f03000c
-			public const int RegisterOrderView = 2130903052;
+			public const int PromoCodeView = 2130903052;
 			
 			// aapt resource value: 0x7f03000d
-			public const int SplashScreen = 2130903053;
+			public const int RegisterOrderView = 2130903053;
+			
+			// aapt resource value: 0x7f03000e
+			public const int SplashScreen = 2130903054;
 			
 			static Layout()
 			{

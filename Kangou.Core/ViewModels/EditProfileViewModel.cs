@@ -9,9 +9,13 @@ namespace Kangou.Core.ViewModels
 	public class EditProfileViewModel : MvxViewModel
 	{
 		private readonly IDataService _dataService;
-		public EditProfileViewModel (IDataService dataService)
+		private IMvxMessenger _messenger;
+
+		public EditProfileViewModel (IDataService dataService, IMvxMessenger messenger)
 		{
 			_dataService = dataService;
+			_messenger = messenger;
+
 			UserData userData = _dataService.GetUserData ();
 			if (userData != null) {
 				Name = userData.Name;
@@ -67,6 +71,11 @@ namespace Kangou.Core.ViewModels
 				Email =  this.Email
 			};
 			_dataService.AddOrUpdate(userData);
+		}
+
+		public void PublishMessageViewOpened()
+		{
+			_messenger.Publish<ChangeStateViewToggledMessage> (new ChangeStateViewToggledMessage(this, TypeRootViewOpened.EDIT_PROFILE));
 		}
 
 	}

@@ -13,9 +13,9 @@ using SlidingPanels.Lib;
 namespace Kangou.Touch.Views
 {
 	[Register("CreditCardView")]
-	public class CreditCardView : MvxViewController
+	public class CreditCardView : BusyMvxViewController
 	{
-		private BindableProgress _bindableProgress;
+		public static bool HasBeenOpenedFromList = false;
 
 		public override void ViewDidLoad()
 		{
@@ -165,6 +165,14 @@ namespace Kangou.Touch.Views
 			SlidingGestureRecogniser.EnableGesture = true;
 		}
 
+		public override void ViewDidAppear (bool animated)
+		{
+			if (HasBeenOpenedFromList) {
+				HasBeenOpenedFromList = false;
+				_popNextToLastViewController = true;
+				base.ViewDidAppear (animated);
+			}
+		}
 
 		private void processData(){
 

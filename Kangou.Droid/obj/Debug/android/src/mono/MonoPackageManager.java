@@ -42,7 +42,8 @@ public class MonoPackageManager {
 						new java.io.File (
 							android.os.Environment.getExternalStorageDirectory (),
 							"Android/data/" + context.getPackageName () + "/files/.__override__").getAbsolutePath (),
-						MonoPackageManager_Resources.Assemblies);
+						MonoPackageManager_Resources.Assemblies,
+						context.getPackageName ());
 				initialized = true;
 			}
 		}
@@ -67,26 +68,27 @@ public class MonoPackageManager {
 class MonoPackageManager_Resources {
 	public static final String[] Assemblies = new String[]{
 		"Kangou.dll",
+		"Cirrious.MvvmCross.Community.Plugins.Sqlite.dll",
+		"Cirrious.MvvmCross.Community.Plugins.Sqlite.Droid.dll",
+		"GooglePlayServicesFroyoLib.dll",
+		"Xamarin.Android.Support.v4.dll",
 		"Cirrious.CrossCore.Droid.dll",
 		"Cirrious.MvvmCross.Binding.Droid.dll",
 		"Cirrious.CrossCore.dll",
 		"Cirrious.MvvmCross.Binding.dll",
 		"Cirrious.MvvmCross.Localization.dll",
-		"Cirrious.MvvmCross.Droid.dll",
-		"Cirrious.MvvmCross.dll",
 		"Cirrious.MvvmCross.Plugins.Messenger.dll",
-		"Cirrious.MvvmCross.Droid.Fragging.dll",
 		"Cirrious.MvvmCross.Plugins.Location.dll",
 		"Cirrious.MvvmCross.Plugins.Location.Droid.dll",
-		"Cirrious.MvvmCross.Community.Plugins.Sqlite.dll",
-		"Cirrious.MvvmCross.Community.Plugins.Sqlite.Droid.dll",
+		"Newtonsoft.Json.dll",
 		"Cirrious.MvvmCross.Plugins.Json.dll",
 		"Cirrious.MvvmCross.Plugins.File.dll",
 		"Cirrious.MvvmCross.Plugins.File.Droid.dll",
 		"Cirrious.MvvmCross.Plugins.DownloadCache.dll",
 		"Cirrious.MvvmCross.Plugins.DownloadCache.Droid.dll",
-		"GooglePlayServicesFroyoLib.dll",
-		"Xamarin.Android.Support.v4.dll",
+		"Cirrious.MvvmCross.Droid.dll",
+		"Cirrious.MvvmCross.dll",
+		"Cirrious.MvvmCross.Droid.Fragging.dll",
 		"Kangou.Core.dll",
 		"System.Collections.Concurrent.dll",
 		"System.Collections.dll",
@@ -134,7 +136,12 @@ class MonoPackageManager_Resources {
 		"System.Xml.ReaderWriter.dll",
 		"System.Xml.XDocument.dll",
 		"System.Xml.XmlSerializer.dll",
-		"Newtonsoft.Json.dll",
+		"Xamarin.Socket.IO.dll",
+		"WebSocket4Net.MonoTouch.dll",
+		"SuperSocket.ClientEngine.Core.dll",
+		"SuperSocket.ClientEngine.Common.dll",
+		"SuperSocket.ClientEngine.Protocol.dll",
+		"Microsoft.Threading.Tasks.dll",
 		"ModernHttpClient.dll",
 	};
 	public static final String[] Dependencies = new String[]{

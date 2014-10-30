@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System;
 using Kangou.Core.ViewModels;
 using SlidingPanels.Lib.PanelContainers;
+using Kangou.Core;
 
 namespace Kangou.Touch
 {
@@ -21,12 +22,8 @@ namespace Kangou.Touch
             }
         }
 
-		private enum TypeViewOpened
-		{
-			REGISTER_ORDER, ACTIVE_ORDER_LIST, EDIT_PROFILE, NONE
-		}
+		public TypeRootViewOpened typeViewOpened;
 
-		private TypeViewOpened typeViewOpened;
 
         public override void ViewDidLoad ()
         {
@@ -41,7 +38,6 @@ namespace Kangou.Touch
 
 			base.ViewDidLoad();
 			var viewModel = ViewModel as LeftPanelViewModel;
-			typeViewOpened = TypeViewOpened.NONE;
 
 			var widthButton = WIDTH;
 			var heightButton = HEIGHT * 0.1f;
@@ -51,6 +47,30 @@ namespace Kangou.Touch
 			var showRegisterOrderViewButton = new UIButton (UIButtonType.RoundedRect);
 			var showActiveOrdersViewButton = new UIButton (UIButtonType.RoundedRect);
 			var showEditProfileViewButton = new UIButton (UIButtonType.RoundedRect);
+
+			viewModel.TogglePanelChanged += (typeViewOpened) => {
+				this.typeViewOpened = typeViewOpened;
+				Console.WriteLine("TogglePanelChanged: {0}",typeViewOpened);
+
+				showRegisterOrderViewButton.TintColor = UIColor.Gray;
+				showActiveOrdersViewButton.TintColor = UIColor.Gray;
+				showEditProfileViewButton.TintColor = UIColor.Gray;
+
+				switch(typeViewOpened)
+				{
+				case TypeRootViewOpened.REGISTER_ORDER:
+					showRegisterOrderViewButton.TintColor = Constants.TINT_COLOR_PRIMARY;
+					break;
+
+				case TypeRootViewOpened.ACTIVE_ORDER_LIST:
+					showActiveOrdersViewButton.TintColor = Constants.TINT_COLOR_PRIMARY;
+					break;
+
+				case TypeRootViewOpened.EDIT_PROFILE:
+					showEditProfileViewButton.TintColor = Constants.TINT_COLOR_PRIMARY;
+					break;
+				}
+			};
 
 			showRegisterOrderViewButton.HorizontalAlignment = UIControlContentHorizontalAlignment.Left;
 			showRegisterOrderViewButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
@@ -62,7 +82,7 @@ namespace Kangou.Touch
 			showRegisterOrderViewButton.BackgroundColor = UIColor.FromWhiteAlpha (1f, 0.7f);
 			showRegisterOrderViewButton.TouchUpInside += delegate {
 				viewModel.DoOpenRegisterOrder.Execute(null);
-				typeViewOpened = TypeViewOpened.REGISTER_ORDER;
+				typeViewOpened = TypeRootViewOpened.REGISTER_ORDER;
 				showRegisterOrderViewButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 				showActiveOrdersViewButton.TintColor = UIColor.Gray;
 				showEditProfileViewButton.TintColor = UIColor.Gray;
@@ -81,7 +101,7 @@ namespace Kangou.Touch
 			showActiveOrdersViewButton.BackgroundColor = UIColor.FromWhiteAlpha (1f, 0.7f);
 			showActiveOrdersViewButton.TouchUpInside += delegate {
 				viewModel.DoOpenActiveOrdersList.Execute(null);
-				typeViewOpened = TypeViewOpened.ACTIVE_ORDER_LIST;
+				typeViewOpened = TypeRootViewOpened.ACTIVE_ORDER_LIST;
 				showRegisterOrderViewButton.TintColor = UIColor.Gray;
 				showActiveOrdersViewButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 				showEditProfileViewButton.TintColor = UIColor.Gray;
@@ -99,7 +119,7 @@ namespace Kangou.Touch
 			showEditProfileViewButton.BackgroundColor = UIColor.FromWhiteAlpha (1f, 0.7f);
 			showEditProfileViewButton.TouchUpInside += delegate {
 				viewModel.DoOpenEditProfile.Execute(null);
-				typeViewOpened = TypeViewOpened.EDIT_PROFILE;
+				typeViewOpened = TypeRootViewOpened.EDIT_PROFILE;
 				showRegisterOrderViewButton.TintColor = UIColor.Gray;
 				showActiveOrdersViewButton.TintColor = UIColor.Gray;
 				showEditProfileViewButton.TintColor = Constants.TINT_COLOR_PRIMARY;

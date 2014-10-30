@@ -155,7 +155,8 @@ namespace Kangou.Core.ViewModels
 
 		public void PublishData()
 		{
-			var pickUpData = new PickUpData () {
+			var pickUpData = new PickUpData () 
+			{
 				FullName =  this.FullName,
 				AddressToDisplay = this.AddressToDisplay,
 				Street = this.Street,

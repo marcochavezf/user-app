@@ -21,6 +21,7 @@ namespace Kangou.Core.ViewModels
     {
 		private KangouClient _kangouClient;
 		private UserData _userData;
+		private IMvxMessenger _messenger;
 
 		private bool _isBusy;
 		public bool IsBusy
@@ -38,6 +39,7 @@ namespace Kangou.Core.ViewModels
 		{
 			_kangouClient = new KangouClient (_jsonConverter);
 			_userData = dataService.GetUserData ();
+			_messenger = messenger;
 
 			IsBusy = true;
 
@@ -121,6 +123,11 @@ namespace Kangou.Core.ViewModels
 					});
 				}
 			});
+		}
+
+		public void PublishMessageViewOpened()
+		{
+			_messenger.Publish<ChangeStateViewToggledMessage> (new ChangeStateViewToggledMessage(this, TypeRootViewOpened.ACTIVE_ORDER_LIST));
 		}
 	}
 }

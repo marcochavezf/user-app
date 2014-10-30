@@ -19,6 +19,7 @@
     <activity android:label="¿Dónde recolectar?" android:name="kangou.droid.views.PickUpListView" />
     <activity android:label="Agregar tarjeta de crédito" android:name="kangou.droid.views.CreditCardListView" />
     <activity android:icon="@drawable/icon" android:label="Orden confirmada" android:name="kangou.droid.views.ConfirmationOrderView" />
+    <activity android:label="View for FirstViewModel" android:name="kangou.droid.views.FirstView" />
     <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="2147483647" android:authorities="com.kangou.mono.MonoRuntimeProvider.__mono_init__" />
     <receiver android:name="mono.android.Seppuku">
       <intent-filter>

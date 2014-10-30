@@ -39,7 +39,6 @@ namespace Kangou.Core.ViewModels
 			get {
 				_AddDropOffDataCommand = _AddDropOffDataCommand ?? new MvxCommand (() =>{
 					ShowViewModel<DropOffViewModel>();
-					//Close(this);
 				});
 				return _AddDropOffDataCommand;
 			}

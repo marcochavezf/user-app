@@ -63,7 +63,7 @@ namespace Kangou.Core.ViewModels
 			var creaditCardViewModel = (CreditCardViewModel)requestDropOffInfoMessage.Sender;
 			creaditCardViewModel.DropOffData = _dropOffData;
 		}
-
+			
 		private void ResetOrderData(ResetOrderDataMessage resetOrderDataMessage)
 		{
 			_itemsData = null;
@@ -304,6 +304,11 @@ namespace Kangou.Core.ViewModels
 				{
 					errorAction(StringMessages.ERROR_ORDER_RESPONSE_MESSAGE);
 				});
+		}
+
+		public void PublishMessageViewOpened()
+		{
+			_messenger.Publish<ChangeStateViewToggledMessage> (new ChangeStateViewToggledMessage(this, TypeRootViewOpened.REGISTER_ORDER));
 		}
 	}
 }

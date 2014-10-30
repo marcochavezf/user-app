@@ -1,32 +1,33 @@
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/Kangou.Droid/bin/Debug/Kangou.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Droid/bin/Debug/Kangou.dll
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/System.dll
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/System.Xml.dll
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v2.3/Mono.Android.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.PortableSupport.3.1.1/lib/MonoAndroid/System.Net.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.PortableSupport.3.1.1/lib/MonoAndroid/System.Windows.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.PortableSupport.3.1.1/lib/MonoAndroid/System.Xml.Serialization.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.CrossCore.3.1.1/lib/MonoAndroid/Cirrious.CrossCore.Droid.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.CrossCore.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Binding.Droid.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.CrossCore.3.1.1/lib/MonoAndroid/Cirrious.CrossCore.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.CrossCore.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Binding.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.CrossCore.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Localization.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.MvvmCrossLibraries.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Droid.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.MvvmCrossLibraries.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.Plugin.Messenger.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.Messenger.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.Droid.Fragging.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Droid.Fragging.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.Plugin.Location.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.Location.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.Plugin.Location.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.Location.Droid.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.Community.Plugin.Sqlite.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Community.Plugins.Sqlite.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.Community.Plugin.Sqlite.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Community.Plugins.Sqlite.Droid.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.Plugin.Json.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.Json.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.Plugin.File.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.File.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.Plugin.File.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.File.Droid.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.Plugin.DownloadCache.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.DownloadCache.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/packages/MvvmCross.HotTuna.Plugin.DownloadCache.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.DownloadCache.Droid.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/Components/googleplayservicesfroyo-12.0.5/lib/android/GooglePlayServicesFroyoLib.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/Components/googleplayservicesfroyo-12.0.5/lib/android/Xamarin.Android.Support.v4.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.Community.Plugin.Sqlite.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Community.Plugins.Sqlite.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.Community.Plugin.Sqlite.3.1.1/lib/MonoAndroid/Cirrious.MvvmCross.Community.Plugins.Sqlite.Droid.dll
+/Users/marcochavezf/Google Drive/user-app/Components/googleplayservicesfroyo-12.0.5/lib/android/GooglePlayServicesFroyoLib.dll
+/Users/marcochavezf/Google Drive/user-app/Components/googleplayservicesfroyo-12.0.5/lib/android/Xamarin.Android.Support.v4.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.PortableSupport.3.2.1/lib/MonoAndroid/System.Net.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.PortableSupport.3.2.1/lib/MonoAndroid/System.Windows.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.PortableSupport.3.2.1/lib/MonoAndroid/System.Xml.Serialization.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.CrossCore.3.2.1/lib/MonoAndroid/Cirrious.CrossCore.Droid.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.CrossCore.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.Binding.Droid.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.CrossCore.3.2.1/lib/MonoAndroid/Cirrious.CrossCore.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.CrossCore.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.Binding.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.CrossCore.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.Localization.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.Plugin.Messenger.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.Messenger.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.Plugin.Location.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.Location.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.Plugin.Location.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.Location.Droid.dll
+/Users/marcochavezf/Google Drive/user-app/packages/Newtonsoft.Json.6.0.5/lib/portable-net45+wp80+win8+wpa81/Newtonsoft.Json.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.Plugin.Json.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.Json.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.Plugin.File.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.File.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.Plugin.File.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.File.Droid.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.Plugin.DownloadCache.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.DownloadCache.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.Plugin.DownloadCache.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.Plugins.DownloadCache.Droid.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.MvvmCrossLibraries.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.Droid.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.MvvmCrossLibraries.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.dll
+/Users/marcochavezf/Google Drive/user-app/packages/MvvmCross.HotTuna.Droid.Fragging.3.2.1/lib/MonoAndroid/Cirrious.MvvmCross.Droid.Fragging.dll
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/System.Core.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/Kangou.Core/bin/Debug/Kangou.Core.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Core/bin/Debug/Kangou.Core.dll
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/mscorlib.dll
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/Facades/System.Collections.Concurrent.dll
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/Facades/System.Collections.dll
@@ -76,9 +77,16 @@
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/Facades/System.Xml.XmlSerializer.dll
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/System.ServiceModel.dll
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/System.Runtime.Serialization.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/Kangou.Droid/bin/Debug/Newtonsoft.Json.dll
+/Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/Microsoft.CSharp.dll
+/Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/Mono.CSharp.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Droid/bin/Debug/Xamarin.Socket.IO.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Droid/bin/Debug/WebSocket4Net.MonoTouch.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Droid/bin/Debug/SuperSocket.ClientEngine.Core.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Droid/bin/Debug/SuperSocket.ClientEngine.Common.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Droid/bin/Debug/SuperSocket.ClientEngine.Protocol.dll
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/System.Net.Http.dll
-/Users/marcochavezf/Dropbox/Trabajo/Kangou/KangouApp/Kangou.Droid/bin/Debug/ModernHttpClient.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Droid/bin/Debug/Microsoft.Threading.Tasks.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Droid/bin/Debug/ModernHttpClient.dll
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/System.ComponentModel.DataAnnotations.dll
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/System.Numerics.dll
 /Library/Frameworks/Mono.framework/External/xbuild-frameworks/MonoAndroid/v1.0/System.ComponentModel.Composition.dll

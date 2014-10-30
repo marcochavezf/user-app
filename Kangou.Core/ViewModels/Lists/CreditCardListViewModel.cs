@@ -38,7 +38,6 @@ namespace Kangou.Core.ViewModels
 			get {
 				_addCreditCardDataCommand = _addCreditCardDataCommand ?? new MvxCommand (() =>{
 					ShowViewModel<CreditCardViewModel>();
-					Close(this);
 				});
 				return _addCreditCardDataCommand;
 			}

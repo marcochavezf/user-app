@@ -243,16 +243,10 @@ namespace Kangou.Touch.Views
 			NavigationItem.BackBarButtonItem = new UIBarButtonItem ("Cancelar", UIBarButtonItemStyle.Plain, null); 
 		}
 
-
-		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations ()
+		public override void ViewWillAppear (bool animated)
 		{
-			return UIInterfaceOrientationMask.Portrait ;
-
-		}
-
-		public override bool ShouldAutorotate ()
-		{
-			return false;
+			base.ViewWillAppear (animated);
+			_viewModel.PublishMessageViewOpened ();
 		}
 
 		private void ConfirmOrderClicked()

@@ -12,7 +12,6 @@ using Kangou.Core.ViewModels.ObserverMessages;
 namespace Kangou.Core.ViewModels
 {
 
-
 	public class PickUpListViewModel
 		: MvxViewModel, IDelete
     {
@@ -38,7 +37,6 @@ namespace Kangou.Core.ViewModels
 		public ICommand AddPIckUpDataCommand {
 			get {
 				_AddPickUpDataCommand = _AddPickUpDataCommand ?? new MvxCommand (() =>{
-					//Close(this);
 					ShowViewModel<PickUpViewModel>();
 				});
 				return _AddPickUpDataCommand;

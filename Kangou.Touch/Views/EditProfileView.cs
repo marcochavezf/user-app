@@ -15,6 +15,9 @@ namespace Kangou.Touch
 {
 	public partial class EditProfileView : RootMvxViewController
     {
+
+		EditProfileViewModel _viewModel;
+
 		public override void ViewDidLoad()
 		{
 			NavigationItem.Title = "Datos personales";
@@ -31,7 +34,7 @@ namespace Kangou.Touch
 			//Load Root View
 			View = new UIView(){ BackgroundColor = UIColor.White};
 			base.ViewDidLoad();
-			var viewModel = (EditProfileViewModel)ViewModel;
+			_viewModel = (EditProfileViewModel)ViewModel;
 			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
 			NavigationController.NavigationBar.TintColor = Constants.TINT_COLOR_PRIMARY;
 
@@ -73,36 +76,13 @@ namespace Kangou.Touch
 			Add (emailTextField);
 			pYoffset += HEIGHT_TEXTFIELD-1;
 
+			var tapGesture = new UITapGestureRecognizer ((g) => {
+				fullNameTextField.ResignFirstResponder();
+				phoneNumberTextField.ResignFirstResponder();
+				emailTextField.ResignFirstResponder();
+			});
+			View.AddGestureRecognizer (tapGesture);
 
-			//Toolbar with Done Button for FullName
-			var toolbarFullName = new UIToolbar (new RectangleF (0.0f, 0.0f, this.View.Frame.Size.Width, 44.0f));
-			toolbarFullName.Items = new UIBarButtonItem[]{
-				new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-				new UIBarButtonItem(UIBarButtonSystemItem.Done, delegate {
-					phoneNumberTextField.BecomeFirstResponder();
-				})
-			};
-			fullNameTextField.InputAccessoryView = toolbarFullName;
-
-			//Toolbar with Done Button for PhoneNumber
-			var toolbarPhoneNumber = new UIToolbar (new RectangleF (0.0f, 0.0f, this.View.Frame.Size.Width, 44.0f));
-			toolbarPhoneNumber.Items = new UIBarButtonItem[]{
-				new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-				new UIBarButtonItem(UIBarButtonSystemItem.Done, delegate {
-					emailTextField.BecomeFirstResponder();
-				})
-			};
-			phoneNumberTextField.InputAccessoryView = toolbarPhoneNumber;
-
-			//Toolbar with Done Button for Email
-			var toolbarEmail = new UIToolbar (new RectangleF (0.0f, 0.0f, this.View.Frame.Size.Width, 44.0f));
-			toolbarEmail.Items = new UIBarButtonItem[]{
-				new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-				new UIBarButtonItem(UIBarButtonSystemItem.Done, delegate {
-					emailTextField.ResignFirstResponder();
-				})
-			};
-			emailTextField.InputAccessoryView = toolbarEmail;
 
 			//Binding
 			var set = this.CreateBindingSet<EditProfileView, EditProfileViewModel>();
@@ -114,7 +94,7 @@ namespace Kangou.Touch
 
 			var navigationController = NavigationController as SlidingPanelsNavigationViewController;
 
-			if (String.IsNullOrWhiteSpace (viewModel.Name)) {
+			if (String.IsNullOrWhiteSpace (_viewModel.Name)) {
 				NavigationItem.LeftBarButtonItem.Enabled = false;
 				SlidingGestureRecogniser.EnableGesture = false;
 			}
@@ -157,7 +137,7 @@ namespace Kangou.Touch
 								};
 								alert.Show();
 							} else {
-								viewModel.SaveData();
+								_viewModel.SaveData();
 								var alert = new UIAlertView("Tu información se ha guardado", ""
 									, null, "Ok", null);
 								alert.Clicked += delegate {
@@ -171,7 +151,11 @@ namespace Kangou.Touch
 				, true);
 		}
 
-
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+			_viewModel.PublishMessageViewOpened ();
+		}
     }
 }
 

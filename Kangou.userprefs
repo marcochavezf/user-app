@@ -1,23 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Kangou.Core/ViewModels/LeftPanelViewModel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Kangou.Core/Helpers/SocketEvents.cs">
     <Files>
-      <File FileName="Kangou.Core/ViewModels/PickUpViewModel.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/ViewModels/Lists/PickUpListViewModel.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/ViewModels/Lists/DropOffListViewModel.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Touch/Views/EditProfileView.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Touch/Views/PickUpView.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Touch/Views/DropOffView.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Touch/Views/CreditCardView.cs" Line="69" Column="69" />
-      <File FileName="Kangou.Touch/Views/RegisterOrderView.cs" Line="23" Column="23" />
-      <File FileName="Kangou.Touch/Helpers/Constants.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Touch/Views/ActiveOrderListView.cs" Line="1" Column="1" />
+      <File FileName="../../GitHub/socket.io-test/app.js" Line="1" Column="1" />
+      <File FileName="../../GitHub/socket.io-test/public/index.html" Line="1" Column="1" />
+      <File FileName="Socket.IO/SocketIO.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Core/App.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Core/WebClients/Kangou/ActiveOrder.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Core/WebClients/Kangou/KangouClient.cs" Line="1" Column="1" />
       <File FileName="Kangou.Core/ViewModels/Lists/ActiveOrderListViewModel.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/ViewModels/EditProfileViewModel.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/ViewModels/RegisterOrderViewModel.cs" Line="3" Column="3" />
-      <File FileName="Kangou.Core/ViewModels/LeftPanelViewModel.cs" Line="4" Column="4" />
-      <File FileName="Kangou.Touch/Helpers/LeftPanelView.cs" Line="10" Column="10" />
-      <File FileName="Kangou.Core/ViewModels/Messages/ChangeStateViewToggledMessage.cs" Line="71" Column="71" />
+      <File FileName="Kangou.Core/Helpers/SocketEvents.cs" Line="3" Column="3" />
+      <File FileName="Kangou.Core/Helpers/StatusOrder.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

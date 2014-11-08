@@ -225,8 +225,8 @@ namespace Xamarin.Socket.IO
 						var handshakeUri = string.Format ("{0}://{1}:{2}/{3}/{4}", scheme, Host, Port, socketIOConnectionString, query);
 						responseBody = await client.GetStringAsync (handshakeUri);
 
-						System.Diagnostics.Debug.WriteLine("handshakeUri: {0}",handshakeUri);
-						System.Diagnostics.Debug.WriteLine("responseBody: {0}",responseBody);
+						Debug.WriteLine("handshakeUri: {0}",handshakeUri);
+						Debug.WriteLine("responseBody: {0}",responseBody);
 
 						var responseElements = responseBody.Split (':');
 						SessionID = responseElements[0];

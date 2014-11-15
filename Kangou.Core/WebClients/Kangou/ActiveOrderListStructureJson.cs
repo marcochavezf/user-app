@@ -5,7 +5,7 @@ namespace Kangou.Core
 {
 	public class ActiveOrderListRoot
 	{
-		public List<ActiveOrder> active_order { get; set; }
+		public List<ActiveOrder> activeOrders { get; set; }
 	}
 }
 

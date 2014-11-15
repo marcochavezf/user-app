@@ -60,6 +60,6 @@
 	-sdk \
 	8.1 \
 	-targetver \
-	7.0 \
+	8.1 \
 	--abi=i386 \
 	"/Users/marcochavezf/Google Drive/user-app/Kangou.Touch/bin/iPhoneSimulator/Debug/KangouTouch.exe" \

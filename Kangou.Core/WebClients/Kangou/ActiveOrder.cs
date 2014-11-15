@@ -4,13 +4,19 @@ namespace Kangou.Core
 {
 	public class ActiveOrder
 	{
-		public static int LAST_ORDER_PLACED_ID = -1;
+		public static string LAST_ORDER_PLACED_ID = "";
 
-		public int Id { get; set; }
+		public string _id { get; set; }
 		public string Status { get; set; }
 		public string Date { get; set; }
 		public string Format {
-			get { return String.Format("Orden {0} - {1}", Id, Date); }
+			get { 
+				var stringId = _id;
+				if (stringId.Length > 4)
+					stringId = _id.Substring (_id.Length - 4);
+
+				return String.Format("Orden {0} - {1}", stringId.ToUpper(), Date); 
+			}
 		}
 	}
 }

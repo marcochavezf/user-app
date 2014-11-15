@@ -5,3 +5,9 @@ Kangou.Touch/obj/
 Kangou.Droid/bin/
 Kangou.Droid/obj/
 Kangou.Droid/bin/
+
+*.mdb
+
+*.mdb
+
+*.dll

@@ -265,7 +265,7 @@ namespace SlidingPanels.Lib
 				}
 
 				/* Global variable from Kangou.Core, sorry but it's necessary.  */
-				if(ActiveOrder.LAST_ORDER_PLACED_ID < 0)
+				if(String.IsNullOrWhiteSpace(ActiveOrder.LAST_ORDER_PLACED_ID)) //There isn't an active order
 					ShowPanel (container);
 				Console.WriteLine ("container: {0} Id:{1}",container,ActiveOrder.LAST_ORDER_PLACED_ID);
 

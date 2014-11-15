@@ -198,7 +198,10 @@ namespace Xamarin.Socket.IO
 		{
 			var queryString = "";
 			foreach (KeyValuePair<string, string> query in queries)
-				queryString += string.Format ("?{0}={1}", query.Key, query.Value);
+				if(queryString == "")
+					queryString += string.Format ("?{0}={1}", query.Key, query.Value);
+				else
+					queryString += string.Format ("&{0}={1}", query.Key, query.Value);
 			return await ConnectAsync (queryString);
 		}
 

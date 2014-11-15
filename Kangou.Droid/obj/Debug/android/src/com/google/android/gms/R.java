@@ -274,15 +274,16 @@ containing a value of this type.
         public static int creditcardview=0x7f030002;
         public static int dropofflistview=0x7f030003;
         public static int dropoffview=0x7f030004;
-        public static int item_creditcarddata=0x7f030005;
-        public static int item_dropoffdata=0x7f030006;
-        public static int item_pickupdata=0x7f030007;
-        public static int itemsview=0x7f030008;
-        public static int pickuplistview=0x7f030009;
-        public static int pickupview=0x7f03000a;
-        public static int promocodeview=0x7f03000b;
-        public static int registerorderview=0x7f03000c;
-        public static int splashscreen=0x7f03000d;
+        public static int firstview=0x7f030005;
+        public static int item_creditcarddata=0x7f030006;
+        public static int item_dropoffdata=0x7f030007;
+        public static int item_pickupdata=0x7f030008;
+        public static int itemsview=0x7f030009;
+        public static int pickuplistview=0x7f03000a;
+        public static int pickupview=0x7f03000b;
+        public static int promocodeview=0x7f03000c;
+        public static int registerorderview=0x7f03000d;
+        public static int splashscreen=0x7f03000e;
     }
     public static final class menu {
         public static int accept=0x7f090000;

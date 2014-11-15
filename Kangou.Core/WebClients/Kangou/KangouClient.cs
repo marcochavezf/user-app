@@ -12,19 +12,19 @@ namespace Kangou.Core.WebClients
 {
 	public class KangouClient
 	{
+		private readonly string _endPoint = "https://kangou.herokuapp.com";
+		//private readonly string _endPoint = "http://localhost:5000";
+
 		private readonly IMvxJsonConverter _jsonConverter;
 		public KangouClient (IMvxJsonConverter jsonConverter)
 		{
 			_jsonConverter = jsonConverter;
 		}
 
-		public void SendOrderData(ItemsData itemsData, PickUpData pickUpData, DropOffData dropOffData, CreditCardData _creditCardData, UserData userData,  Action<int> succesAction, Action<string> errorAction)
+		public void SendOrderData(ItemsData itemsData, PickUpData pickUpData, DropOffData dropOffData, CreditCardData _creditCardData, UserData userData, string distancePickUpToDropOff, int priceInPesos, Action<string> succesAction, Action<string> errorAction)
 		{
-			//var _endPointOrderData = "https://kangou.mx/rest_orders.json";
-			var _endPointOrderData = "http://localhost:5000/orders";
-
 			/* Preparing Data. */
-			var request = (HttpWebRequest)WebRequest.Create(_endPointOrderData);
+			var request = (HttpWebRequest)WebRequest.Create(_endPoint + "/orders");
 			request.ContentType = "application/x-www-form-urlencoded";
 			request.Method = "POST";
 
@@ -35,6 +35,9 @@ namespace Kangou.Core.WebClients
 				"&clientName=" 					+ userData.Name + 
 				"&clientEmail=" 				+ userData.Email +
 				"&clientPhoneNumber=" 			+ userData.PhoneNumber +
+
+				"&distancePickUpToDropOff=" 	+ distancePickUpToDropOff +
+				"&priceInPesos=" 				+ priceInPesos +
 
 				"&listItems=" 					+ itemsData.Items +
 
@@ -100,10 +103,16 @@ namespace Kangou.Core.WebClients
 								{
 									/* Getting Success response from server */
 									var reader = new StreamReader(stream);
-									var rootObj = _jsonConverter.DeserializeObject<RootObject>(reader.ReadToEnd());
-									var confirmationNumber = rootObj.order.confirmation_number;
-									System.Diagnostics.Debug.WriteLine("Confirmation number:{0}",confirmationNumber);
-									succesAction(confirmationNumber);
+									var rawData = reader.ReadToEnd();
+									Debug.WriteLine("rawData: {0}",rawData);
+									if(rawData.Contains("error")){
+										errorAction(rawData);
+									}else{
+										var order = _jsonConverter.DeserializeObject<Order>(rawData);
+										var confirmationNumber = order.confirmationNumber;
+										System.Diagnostics.Debug.WriteLine("Confirmation number:{0}",confirmationNumber);
+										succesAction(confirmationNumber);
+									}
 								}
 							}
 						}
@@ -116,77 +125,45 @@ namespace Kangou.Core.WebClients
 					}, null);
 
 			}, null);
-
 		}
 
 
-
-		public void GetActiveOrderList(int userId, Action<List<ActiveOrder>> succesAction, Action<string> errorAction)
+		public void GetActiveOrderList(string email, Action<List<ActiveOrder>> succesAction, Action<string> errorAction)
 		{
-			var _endPointOrderData = "https://kangou.mx/rest_orders/1.json";
+			var _endPointOrderData = String.Format("{0}/orders/findByClientEmail/{1}",_endPoint,email);
 
 			/* Preparing Data. */
 			var request = (HttpWebRequest)WebRequest.Create(_endPointOrderData);
 			request.ContentType = "application/x-www-form-urlencoded";
-			request.Method = "POST";
+			request.Method = "GET";
 
-			string postData = 
-				"user_id=" + userId;
 
-			Debug.WriteLine ("postData:{0}",postData);
-
-			// Convert the string into a byte array.
-			byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-
-			/* Sending Data to Server. */
-			request.BeginGetRequestStream (asynchResultReq => {
-				try
+			/* Requesting Response from Server. */
+			request.BeginGetResponse(asynchResultResp =>
 				{
-					using (var stream = request.EndGetRequestStream(asynchResultReq))
+					try
 					{
-						System.Diagnostics.Debug.WriteLine("******* Writing: {0}",stream.CanWrite);
-
-						// Write to the request stream.
-						stream.Write(byteArray, 0, postData.Length);
-						stream.Dispose ();
-
-					}
-				}
-				catch (WebException ex)
-				{
-					var errorString = String.Format("ERROR Requesting Stream: '{0}' when making {1} request to {2}", ex.Message, request.Method, request.RequestUri.AbsoluteUri);
-					Mvx.Error(errorString);
-					errorAction(errorString);
-				}
-
-				/* Requesting Response from Server. */
-				request.BeginGetResponse(asynchResultResp =>
-					{
-						try
+						using (var response = request.EndGetResponse(asynchResultResp))
 						{
-							using (var response = request.EndGetResponse(asynchResultResp))
+							using (var stream = response.GetResponseStream())
 							{
-								using (var stream = response.GetResponseStream())
-								{
-									/* Getting Success response from server */
-									var reader = new StreamReader(stream);
-									var jsonString = reader.ReadToEnd();
-									Debug.WriteLine("reader: {0}",jsonString);
-									var rootObj = _jsonConverter.DeserializeObject<ActiveOrderListRoot>(jsonString);
-									succesAction(rootObj.active_order);
-								}
+								/* Getting Success response from server */
+								var reader = new StreamReader(stream);
+								var jsonString = reader.ReadToEnd();
+								Debug.WriteLine("reader: {0}",jsonString);
+								var rootObj = _jsonConverter.DeserializeObject<ActiveOrderListRoot>(jsonString);
+								succesAction(rootObj.activeOrders);
 							}
 						}
-						catch (WebException ex)
-						{
-							var errorString = String.Format("ERROR Requesting Response: '{0}' when making {1} request to {2}", ex.Message, request.Method, request.RequestUri.AbsoluteUri);
-							Mvx.Error(errorString);
-							errorAction(errorString);
-						}
-					}, null);
-
-			}, null);
-
+					}
+					catch (WebException ex)
+					{
+						var errorString = String.Format("ERROR Requesting Response: '{0}' when making {1} request to {2}", ex.Message, request.Method, request.RequestUri.AbsoluteUri);
+						Mvx.Error(errorString);
+						errorAction(errorString);
+					}
+				}, null);
+					
 		}
 	}
 }

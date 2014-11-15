@@ -137,7 +137,7 @@ namespace Kangou.Touch.Views
 			pYoffset += PADDING_SECTION * 1.5f;
 
 			//Confirm Order Alert
-			var confirmOrderAlert = new UIAlertView ("Confirmar Orden",StringMessages.CONFIRM_MESSAGE_IOS, null, "Cancelar", "Confirmar");
+			var confirmOrderAlert = new UIAlertView ("Confirmar Orden","", null, "Cancelar", "Confirmar");
 			confirmOrderAlert.Clicked += (object alertSender, UIButtonEventArgs eventArgsAlert) => {
 				switch (eventArgsAlert.ButtonIndex) {
 
@@ -159,8 +159,37 @@ namespace Kangou.Touch.Views
 			pideUnKangouButton.Layer.BorderWidth = BORDER_WIDTH;
 			pideUnKangouButton.TouchUpInside += (object sender, System.EventArgs e) => {
 				if (_viewModel.IsDeliveryDataSet ()) {
-					if (_viewModel.IsPaymentInfoSet ())
+					if (_viewModel.IsPaymentInfoSet ()){
+
+						var origin = new CLLocation(_viewModel.PickUpData.Lat, _viewModel.PickUpData.Lng); 
+						var destiny = new CLLocation(_viewModel.DropOffData.Lat, _viewModel.DropOffData.Lng);
+						var meters = destiny.DistanceFrom(origin);
+						var km = Math.Round(meters/1000.0f, 1);
+						var priceInPesos = 50;
+
+						if(km > 7 && km <= 10)
+							priceInPesos = 80;
+						else
+						if(km > 10 && km <= 15)
+							priceInPesos = 120;
+						else
+						if(km > 15 && km <= 20)
+							priceInPesos = 170;
+						else
+						if(km > 20 && km <= 25)
+							priceInPesos = 230;
+						else
+						if(km > 25){
+							new UIAlertView ("Distancias muy retiradas","La distancia entre el punto de recogida y el punto de entrega es muy lejos", null, "Ok").Show();
+							return;
+						}
+
+						_viewModel.PriceInPesos = priceInPesos;
+						_viewModel.DistancePickUpToDropOff = String.Format("{0} Km",km.ToString());
+											
+						confirmOrderAlert.Message = String.Format(StringMessages.CONFIRM_MESSAGE_IOS, priceInPesos.ToString(), km.ToString());
 						confirmOrderAlert.Show ();
+					}
 				}
 			};
 			Add (pideUnKangouButton);
@@ -181,6 +210,7 @@ namespace Kangou.Touch.Views
 				InvokeOnMainThread (delegate {  
 					itemsButton.TintColor = UIColor.DarkGray;
 					itemsButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
+
 					pickUpButton.Enabled = true;
 					pickUpButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
 					pickUpLabel.TextColor = UIColor.Gray;
@@ -192,6 +222,7 @@ namespace Kangou.Touch.Views
 				InvokeOnMainThread (delegate {
 					pickUpButton.TintColor = UIColor.DarkGray;
 					pickUpButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
+
 					dropOffButton.Enabled = true;
 					dropOffButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
 					dropOffLabel.TextColor = UIColor.Gray;
@@ -203,6 +234,7 @@ namespace Kangou.Touch.Views
 				InvokeOnMainThread (delegate {  
 					dropOffButton.TintColor = UIColor.DarkGray;
 					dropOffButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
+
 					paymentMethodButton.Enabled = true;
 					paymentMethodButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
 					paymentMethodLabel.TextColor = UIColor.Gray;
@@ -214,6 +246,7 @@ namespace Kangou.Touch.Views
 				InvokeOnMainThread (delegate {  
 					paymentMethodButton.TintColor = UIColor.DarkGray;
 					paymentMethodButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
+
 					pideUnKangouButton.Enabled = true;
 				});
 			};
@@ -273,7 +306,7 @@ namespace Kangou.Touch.Views
 				try
 				{
 					_viewModel.ConfirmOrder (
-						(sucessResponse) => {
+						() => {
 							InvokeOnMainThread (delegate {  
 								loadingOverlay.Hide ();
 							});

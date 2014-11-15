@@ -1,17 +1,33 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Kangou.Core/Helpers/SocketEvents.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Kangou.Core/Helpers/StringMessages.cs">
     <Files>
-      <File FileName="../../GitHub/socket.io-test/app.js" Line="1" Column="1" />
-      <File FileName="../../GitHub/socket.io-test/public/index.html" Line="1" Column="1" />
-      <File FileName="Socket.IO/SocketIO.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/App.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/WebClients/Kangou/ActiveOrder.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/WebClients/Kangou/KangouClient.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/ViewModels/Lists/ActiveOrderListViewModel.cs" Line="1" Column="1" />
-      <File FileName="Kangou.Core/Helpers/SocketEvents.cs" Line="3" Column="3" />
-      <File FileName="Kangou.Core/Helpers/StatusOrder.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Core/WebClients/Kangou/KangouClient.cs" Line="51" Column="51" />
+      <File FileName="Kangou.Core/ViewModels/RegisterOrderViewModel.cs" Line="4" Column="4" />
+      <File FileName="Kangou.Touch/Views/DropOffView.cs" Line="82" Column="82" />
+      <File FileName="Kangou.Touch/Views/DropOffListView.cs" Line="52" Column="52" />
+      <File FileName="Kangou.Touch/Views/RegisterOrderView.cs" Line="43" Column="43" />
+      <File FileName="Kangou.Core/Helpers/StringMessages.cs" Line="354" Column="354" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Kangou.Core" expanded="True">
+            <Node name="Helpers" expanded="True" />
+            <Node name="Services" expanded="True">
+              <Node name="DataStore" expanded="True" />
+            </Node>
+            <Node name="ViewModels" expanded="True" />
+            <Node name="WebClients" expanded="True">
+              <Node name="Kangou" expanded="True" />
+            </Node>
+          </Node>
+          <Node name="Kangou.Touch" expanded="True" selected="True">
+            <Node name="Views" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

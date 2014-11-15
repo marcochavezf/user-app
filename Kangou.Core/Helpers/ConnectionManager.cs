@@ -3,12 +3,14 @@ using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Diagnostics;
 using Xamarin.Socket.IO;
+using System.Collections.Generic;
 
 namespace Kangou.Core
 {
 	public class ConnectionManager
 	{
-		private const string _endPoint 	= "kangou-test.herokuapp.com";
+		private static string _userId;
+		private const string _endPoint 	= "kangou.herokuapp.com";
 
 		public SocketIO Socket { get; set; }
 			
@@ -38,8 +40,13 @@ namespace Kangou.Core
 			Instance.Socket.Off (name);
 		}
 
-		public static void Connect(){
-			Instance.Socket.ConnectAsync ();
+		public static void Connect(string userId){
+			_userId = userId;
+			Instance.Socket.ConnectAsync (new Dictionary<string, string>()
+				{
+					{ "typeUser", "kangouClient" },
+					{ "userId", _userId },
+				});
 		}
 				
 		public static void Disconnect(){
@@ -52,10 +59,10 @@ namespace Kangou.Core
 				Instance.Socket.Emit (name, args);
 			} else {
 				Instance.TryingToReconnect (true);
-				Instance.Socket.ConnectAsync ();
 				Instance.Socket.On (SocketEvents.Connected, (data) => {
 					Instance.Socket.Emit (name, args);
 				});
+				Connect (_userId);
 			}
 		}
 
@@ -71,8 +78,8 @@ namespace Kangou.Core
 			}
 		}
 
-		public static string OrderIdJsonString(int orderId){
-			return String.Format( "{{ \"id\": {0} }}", orderId);
+		public static string OrderIdJsonString(string orderId){
+			return String.Format( "{{ \"id\": \"{0}\" }}", orderId);
 		}
 
 		public event Action<bool> TryingToReconnect = delegate {};

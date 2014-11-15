@@ -99,7 +99,7 @@ namespace Kangou.Droid.Views
 				try
 				{
 					_viewModel.ConfirmOrder (
-						(sucessResponse) => {
+						() => {
 							dialog.Dismiss ();
 						},
 						(errorResponse) => {

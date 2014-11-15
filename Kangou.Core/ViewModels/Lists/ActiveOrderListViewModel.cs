@@ -53,15 +53,15 @@ namespace Kangou.Core.ViewModels
 
 		public void PopulateListFromServer (){
 
-			if (ActiveOrder.LAST_ORDER_PLACED_ID > 0) {
+			if ( !String.IsNullOrWhiteSpace( ActiveOrder.LAST_ORDER_PLACED_ID )) {
 				var orderId = ActiveOrder.LAST_ORDER_PLACED_ID;
-				ActiveOrder.LAST_ORDER_PLACED_ID = -1;
+				ActiveOrder.LAST_ORDER_PLACED_ID = "";
 				OpenActiveOrder (orderId);
 				return;
 			}
 
 			Task.Run (() => {
-				_kangouClient.GetActiveOrderList (_userData.Id, 
+				_kangouClient.GetActiveOrderList (_userData.Email, 
 					(activeOrderList) => {
 						InvokeOnMainThread (delegate {
 							ActiveOrderList = activeOrderList;
@@ -87,16 +87,16 @@ namespace Kangou.Core.ViewModels
 			get
 			{
 				return new MvxCommand<ActiveOrder>(activeOrder => {
-					OpenActiveOrder(activeOrder.Id);
+					OpenActiveOrder(activeOrder._id);
 				});
 			}
 		}
 
-		private void OpenActiveOrder(int orderId){
+		private void OpenActiveOrder(string orderId){
 			IsBusy = true;
 			Task.Run (()=>{
 				System.Diagnostics.Debug.WriteLine ("ConnectAsync");
-				ConnectionManager.Connect();
+				ConnectionManager.Connect(_userData.Id.ToString());
 			});
 
 			ConnectionManager.On(SocketEvents.Connected, (data) => {
@@ -113,7 +113,7 @@ namespace Kangou.Core.ViewModels
 					Debug.WriteLine ("Opening On StatusOrderViewModel" );
 
 					ShowViewModel<StatusOrderViewModel>(new ActiveOrder(){
-						Id = Convert.ToInt32(data["id"].ToString()),
+						_id = data["id"].ToString(),
 						Status = data["status"].ToString(),
 						Date = data["date"].ToString()
 					});

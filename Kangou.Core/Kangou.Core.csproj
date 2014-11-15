@@ -63,7 +63,6 @@
     <Compile Include="ViewModels\ConfirmationOrderViewModel.cs" />
     <Compile Include="ViewModels\Messages\ResetOrderDataMessage.cs" />
     <Compile Include="Helpers\StringValidator.cs" />
-    <Compile Include="Helpers\DataSender.cs" />
     <Compile Include="Services\DataStore\UserData.cs" />
     <Compile Include="Services\DataSender\IDataSenderService.cs" />
     <Compile Include="Services\DataSender\DataSenderService.cs" />

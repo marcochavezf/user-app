@@ -59,6 +59,12 @@ namespace Kangou.Core.ViewModels
 			_tokenRequestDropOffInfo = messenger.Subscribe<RequestDropOffInfoMessage> (RequestDropOffData);
 		}
 
+		public DropOffData DropOffData { get { return _dropOffData; } }
+		public PickUpData PickUpData { get { return _pickUpData; } }
+
+		public int PriceInPesos { get; set; }
+		public string DistancePickUpToDropOff { get; set; }
+
 		private void RequestDropOffData(RequestDropOffInfoMessage requestDropOffInfoMessage){
 			var creaditCardViewModel = (CreditCardViewModel)requestDropOffInfoMessage.Sender;
 			creaditCardViewModel.DropOffData = _dropOffData;
@@ -87,19 +93,24 @@ namespace Kangou.Core.ViewModels
 				return;
 
 			Items = itemsInfoString;
-			EnablePickUpButton ();
+			if(_pickUpData == null)
+				EnablePickUpButton ();
 		}
 			
 		private void UpdatePickUpViewModel(PickUpDataMessage pickUpDataMessage){
 			_pickUpData = pickUpDataMessage.PickUpData;
 			PickUpAddress = _pickUpData.AddressToDisplay;
-			EnableDropOffButton ();
+
+			if(_dropOffData == null)
+				EnableDropOffButton ();
 		}
 
 		private void UpdateDropOffData(DropOffDataMessage dropOffDataMessage){
 			_dropOffData = dropOffDataMessage.DropOffData;
 			DropOffAddress = _dropOffData.AddressToDisplay;
-			EnablePaymentMethodButton ();
+
+			if(_creditCardData == null)
+				EnablePaymentMethodButton ();
 		}
 
 		private void UpdateCreditCardData(CreditCardDataMessage creditCardMessage){
@@ -287,15 +298,15 @@ namespace Kangou.Core.ViewModels
 			EnablePUKButton ();
 		}
 
-		public void ConfirmOrder(Action<int> successAction, Action<string> errorAction)
+		public void ConfirmOrder(Action successAction, Action<string> errorAction)
 		{
 			var userData = _dataService.GetUserData ();
 
-			_kangouClient.SendOrderData(_itemsData, _pickUpData, _dropOffData, _creditCardData, userData, 
+			_kangouClient.SendOrderData(_itemsData, _pickUpData, _dropOffData, _creditCardData, userData, DistancePickUpToDropOff, PriceInPesos,
 				(response) =>
 				{
 					ActiveOrder.LAST_ORDER_PLACED_ID = response;
-					successAction(ActiveOrder.LAST_ORDER_PLACED_ID);
+					successAction();
 					ShowViewModel <ActiveOrderListViewModel> ();
 					ResetOrderData (null);
 					DisableButtons ();

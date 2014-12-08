@@ -13,9 +13,12 @@ namespace Kangou.Core
 		: MvxViewModel
     {
 		public static bool HasBeenClosedByUser;
+		private ActiveOrder _activeOrder;
 
-		public ReviewViewModel(){
+		public void Init(ActiveOrder activeOrder)
+		{
 			HasBeenClosedByUser = false;
+			_activeOrder = activeOrder;
 
 			ConnectionManager.On  ( SocketEvents.ReviewAcceptedByClient, (data) => {
 				ConnectionManager.Off  ( SocketEvents.ReviewAcceptedByClient );
@@ -69,7 +72,7 @@ namespace Kangou.Core
 		private void DoAcceptCommand ()
 		{
 			IsBusy = true;
-			var jsonString = String.Format( "{{ \"{0}\": true, \"commentsAboutClient\": \"{1}\", \"ratingAboutClient\": {2} }}", SocketEvents.ReviewAcceptedByClient, CommentsAboutClient, RatingAboutClient);
+			var jsonString = String.Format( "{{ \"{0}\": true, \"commentsAboutClient\": \"{1}\", \"ratingAboutClient\": {2}, \"orderId\": \"{3}\" }}", SocketEvents.ReviewAcceptedByClient, CommentsAboutClient.Replace(System.Environment.NewLine," "), RatingAboutClient, _activeOrder._id);
 			ConnectionManager.Emit( SocketEvents.ReviewAcceptedByClient, jsonString);
 		}
 

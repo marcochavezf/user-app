@@ -39,7 +39,7 @@ namespace Kangou.Core.WebClients
 				"&distancePickUpToDropOff=" 	+ distancePickUpToDropOff +
 				"&priceInPesos=" 				+ priceInPesos +
 
-				"&listItems=" 					+ itemsData.Items +
+				"&listItems=" 					+ itemsData.Items.Replace(System.Environment.NewLine," ") +
 
 				"&pickupLat=" 					+ pickUpData.Lat +
 				"&pickupLng=" 					+ pickUpData.Lng +
@@ -163,8 +163,7 @@ namespace Kangou.Core.WebClients
 						errorAction(errorString);
 					}
 				}, null);
-					
+
 		}
 	}
 }
-

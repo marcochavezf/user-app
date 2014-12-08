@@ -11,6 +11,7 @@ using System;
 using SlidingPanels.Lib;
 using SlidingPanels.Lib.PanelContainers;
 using Kangou.Helpers;
+using System.Collections.Generic;
 
 namespace Kangou.Touch.Views
 {
@@ -19,6 +20,7 @@ namespace Kangou.Touch.Views
 	{
 		private BindableProgress _bindableProgress;
 		private ActiveOrderListViewModel _viewModel;
+		private volatile bool _isAlertShown;
 
 		public override void ViewDidLoad()
 		{
@@ -33,6 +35,7 @@ namespace Kangou.Touch.Views
 
 			NavigationItem.Title = "Órdenes Activas";
 			_bindableProgress = new BindableProgress(TableView);
+			_isAlertShown = false;
 
 			//Binding
 			var set = this.CreateBindingSet<ActiveOrderListView, ActiveOrderListViewModel>();
@@ -48,10 +51,22 @@ namespace Kangou.Touch.Views
 				var internetErorAlert = new UIAlertView ("No hay conexión a Iternet", ""
 					, null, "Ok", null);
 				internetErorAlert.Clicked += delegate {
+					_viewModel.ActiveOrderList = new List<ActiveOrder> ();
 					navigationController.TogglePanel(PanelType.LeftPanel);
+					_isAlertShown = false;
 				};
-				internetErorAlert.Show ();
+				if (!_isAlertShown) {
+					internetErorAlert.Show ();
+					_isAlertShown = true;
+				}
 			}
+
+			var conecctionLostAlert = new UIAlertView ("Se ha perdido la conexión", "\nVerifica la conexión a internet", null, "Ok");
+			conecctionLostAlert.Clicked += delegate {
+				//navigationController.TogglePanel(PanelType.LeftPanel);
+				_viewModel.ActiveOrderList = new List<ActiveOrder> ();
+				_isAlertShown = false;
+			};
 
 			ConnectionManager.SocketDisconnected (delegate {
 				InvokeOnMainThread(delegate {
@@ -62,11 +77,10 @@ namespace Kangou.Touch.Views
 					if(ReviewViewModel.HasBeenClosedByUser)
 						return;
 
-					var conecctionLostAlert = new UIAlertView ("Se ha perdido la conexión", "\nVerifica la conexión a internet", null, "Ok");
-					conecctionLostAlert.Clicked += delegate {
-						navigationController.TogglePanel(PanelType.LeftPanel);
-					};
-					conecctionLostAlert.Show();
+					if (!_isAlertShown) {
+						conecctionLostAlert.Show();
+						_isAlertShown = true;
+					}
 				});
 			});
 

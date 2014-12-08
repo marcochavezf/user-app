@@ -13,6 +13,7 @@ using Kangou.Core;
 using Kangou.Touch;
 using System.Diagnostics;
 using SlidingPanels.Lib;
+using Kangou.Core.Helpers;
 
 namespace KangouMessenger.Touch
 {
@@ -32,7 +33,7 @@ namespace KangouMessenger.Touch
 			base.ViewDidLoad();
 		
 			//Setting origin and destiny directions
-			var origin = new CLLocationCoordinate2D (19.4361727,-99.1954972);
+			var origin = new CLLocationCoordinate2D (19.43260,-99.13320);
 			_viewModel = (StatusOrderViewModel)ViewModel;
 
 			//Adding map
@@ -50,16 +51,8 @@ namespace KangouMessenger.Touch
 				Title = "Kangou"
 			};
 			mapView.AddAnnotation (annotation);
-			ConnectionManager.On (SocketEvents.KangouPosition, (data) => {
-				var lat = Convert.ToDouble(data["lat"]);
-				var lng = Convert.ToDouble(data["lng"]);
-				var coordinate = new CLLocationCoordinate2D(lat, lng);
-				InvokeOnMainThread(delegate {
-					annotation.Coordinate = coordinate;
-				});
-			});
 
-			//Address Text View
+			//Status Text View
 			var widthTextView = WIDTH; 
 			var heightTextView = Constants.HEIGHT_TEXTVIEW * 1.25f;
 			var posYinst = NavigationController.NavigationBar.Frame.Y + NavigationController.NavigationBar.Frame.Height;
@@ -72,7 +65,7 @@ namespace KangouMessenger.Touch
 			statusTextView.Alpha = alphaTextViews;
 			Add(statusTextView);
 
-			//Help Button
+			//Distance Text View
 			var posYbutton = heightMap - heightTextView;
 			var distanceTextView = new UITextView(new RectangleF(posXOffsetInst, posYbutton, widthTextView, heightTextView));
 			distanceTextView.Editable = false;
@@ -86,6 +79,38 @@ namespace KangouMessenger.Touch
 			set.Bind(statusTextView).To(vm => vm.Status);
 			set.Bind(distanceTextView).To(vm => vm.Distance);
 			set.Apply();
+
+			ConnectionManager.On (SocketEvents.KangouPosition, (data) => {
+				var lat = Convert.ToDouble(data["lat"]);
+				var lng = Convert.ToDouble(data["lng"]);
+
+				CLLocation destiny;
+				double meters;
+				double km;
+
+				var coordinate = new CLLocationCoordinate2D(lat, lng);
+				InvokeOnMainThread(delegate {
+					annotation.Coordinate = coordinate;
+					mapView.SetCenterCoordinate(coordinate, true);
+
+					switch (_viewModel.ActiveOrder.Status) {
+					case StatusOrder.KangouGoingToPickUp:
+						destiny = new CLLocation(_viewModel.ActiveOrder.PickUpLat, _viewModel.ActiveOrder.PickUpLng);
+						meters = destiny.DistanceFrom(new CLLocation(lat,lng));
+						km = Math.Round(meters/1000.0f, 1);
+						distanceTextView.Text = "El kangou está a " + km + " Km para recoger o comprar";
+						break;
+
+					case StatusOrder.KangouGoingToDropOff:
+						destiny = new CLLocation(_viewModel.ActiveOrder.DropOffLat, _viewModel.ActiveOrder.DropOffLng);
+						meters = destiny.DistanceFrom(new CLLocation(lat,lng));
+						km = Math.Round(meters/1000.0f, 1);
+						distanceTextView.Text = "El kangou está a " + km + " Km para entregar";
+						break;
+					}
+
+				});
+			});
 
 			Console.WriteLine (_viewModel.ActiveOrder.Status);
 

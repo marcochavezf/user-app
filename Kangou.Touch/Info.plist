@@ -9,7 +9,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
-	<string>8.1</string>
+	<string>8.0</string>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -51,13 +51,9 @@
 	<string>NSLocationAlwaysUsageDescription</string>
 	<key>UIStatusBarHidden</key>
 	<true/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>location</string>
-	</array>
 	<key>CFBundleShortVersionString</key>
-	<string>0.1.2</string>
+	<string>0.1.5</string>
 	<key>CFBundleVersion</key>
-	<string>0.1.2</string>
+	<string>0.1.5</string>
 </dict>
 </plist>

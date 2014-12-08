@@ -20,7 +20,7 @@ namespace Kangou.Core
 		{
 			Debug.WriteLine ("ActiveORder: {0}", activeOrder);
 			Status = "Buscando Kangou";
-			Distance = "El kangou se encuentra a 7 km de su destino";
+			Distance = "";
 			ActiveOrder = activeOrder;
 
 			HasBeenClosedByUser = false;
@@ -47,7 +47,7 @@ namespace Kangou.Core
 
 			ConnectionManager.On(SocketEvents.OrderSignedByClient, (data) => {
 				ConnectionManager.Off(SocketEvents.OrderSignedByClient);
-				SetOrderSignedByClient();
+				SetOrderSignedByClient(activeOrder);
 			});
 
 			ConnectionManager.SocketDisconnected (delegate {
@@ -73,7 +73,7 @@ namespace Kangou.Core
 				break;
 
 			case StatusOrder.OrderSignedByClient:
-				SetOrderSignedByClient();
+				SetOrderSignedByClient(activeOrder);
 				break;
 
 			case StatusOrder.OrderReviewed:
@@ -91,8 +91,9 @@ namespace Kangou.Core
 		}
 
 		private void SetKangouGoingToPickUp(){
-			var message = "Un kangou va en camino a recoger";
+			var message = "Un kangou va en camino a recoger o comprar";
 			Status = message;
+			Distance = "Obteniendo posición del kangou...";
 			ActiveOrder.Status = StatusOrder.KangouGoingToPickUp;
 			StatusUpdated (message);
 		}
@@ -108,6 +109,7 @@ namespace Kangou.Core
 		private void SetKangouGoingToDropOff(){
 			var message = "El kangou está en camino a entregar";
 			Status = message;
+			Distance = "Obteniendo posición del kangou...";
 			ActiveOrder.Status = StatusOrder.KangouGoingToDropOff;
 			StatusUpdated (message);
 		}
@@ -120,14 +122,14 @@ namespace Kangou.Core
 			StatusUpdated (message);
 		}
 
-		private void SetOrderSignedByClient(){
+		private void SetOrderSignedByClient(ActiveOrder activeOrder){
 			var message = "La orden ha finalizado";
 			Status = message;
 			Distance = "";
 			ActiveOrder.Status = StatusOrder.OrderSignedByClient;
 			StatusUpdated (message);
 			Task.Run (delegate {
-				ShowViewModel<ReviewViewModel> ();
+				ShowViewModel<ReviewViewModel> (activeOrder);
 			});
 		}
 

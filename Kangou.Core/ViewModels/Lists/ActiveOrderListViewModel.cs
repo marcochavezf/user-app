@@ -44,10 +44,11 @@ namespace Kangou.Core.ViewModels
 			IsBusy = true;
 
 			ConnectionManager.FailedToConnect (()=>{
+				ConnectionManager.Off(SocketEvents.Connected);
+				ConnectionManager.Off(SocketEvents.ActiveOrder);
+
 				Debug.WriteLine("FailedToConnect");
-				InvokeOnMainThread (delegate {
-					IsBusy = false;
-				});
+				PopulateListFromServer();
 			});
 		}
 
@@ -106,16 +107,19 @@ namespace Kangou.Core.ViewModels
 			});
 
 			ConnectionManager.On (SocketEvents.ActiveOrder, (data) => {
-				ConnectionManager.Off (SocketEvents.ActiveOrder);
-				Debug.WriteLine ("ActiveOrder On: {0}", data["status"] );
 				ConnectionManager.Off(SocketEvents.ActiveOrder);
+
 				if(IsBusy){
 					Debug.WriteLine ("Opening On StatusOrderViewModel" );
 
 					ShowViewModel<StatusOrderViewModel>(new ActiveOrder(){
-						_id = data["id"].ToString(),
+						_id = data["_id"].ToString(),
 						Status = data["status"].ToString(),
-						Date = data["date"].ToString()
+						Date = data["date"].ToString(),
+						PickUpLat = Convert.ToDouble( data["pickup"]["lat"].ToString() ),
+						PickUpLng = Convert.ToDouble( data["pickup"]["lng"].ToString() ),
+						DropOffLat = Convert.ToDouble( data["dropoff"]["lat"].ToString() ),
+						DropOffLng = Convert.ToDouble( data["dropoff"]["lng"].ToString() )
 					});
 					InvokeOnMainThread (delegate {
 						ActiveOrderList = new List<ActiveOrder> ();

@@ -584,15 +584,17 @@ namespace Xamarin.Socket.IO
 		void SendDisconnectMessage (object o, string endPoint = "")
 		{
 			Debug.WriteLine ("Send Disconnect Message");
-			WebSocket.Send (string.Format ("{0}::{1}", (int)MessageType.Disconnect, endPoint));
-			if (string.IsNullOrEmpty (endPoint)) {
-				try{
+			try{
+				WebSocket.Send (string.Format ("{0}::{1}", (int)MessageType.Disconnect, endPoint));
+				if (string.IsNullOrEmpty (endPoint)) {
 					WebSocket.Close ();
-				} catch (Exception e){ };
-				HeartbeatTimer.Change (0, 0);
-				Connected = false;
+					HeartbeatTimer.Change (0, 0);
+					Connected = false;
+				}
+				SocketDisconnected (null, null);
+			}catch(Exception e){
+				Debug.WriteLine ("Exception: {0}",e);
 			}
-			SocketDisconnected (null, null);
 		}
 
 		void EmitMessage (Message messageObject, string endpoint, string messageId)

@@ -21,6 +21,12 @@ namespace Kangou.Core
 		}
 
 		public static void FailedToConnect(Action action){
+			Instance.Socket.SocketReceivedError += (MessageID arg1, string arg2) => {
+
+
+				action();
+			};
+
 			Instance.Socket.SocketFailedToConnect += (obj) => {
 				action();
 			};

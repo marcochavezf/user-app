@@ -6,6 +6,7 @@ using MonoTouch.UIKit;
 using MonoTouch.Foundation;
 using Kangou.Core.ViewModels;
 using SlidingPanels.Lib;
+using System;
 
 namespace Kangou.Touch.Views
 {
@@ -50,6 +51,20 @@ namespace Kangou.Touch.Views
 
 			TableView.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
 			NavigationItem.BackBarButtonItem = new UIBarButtonItem ("Cancelar", UIBarButtonItemStyle.Plain, null);
+
+			viewModel.CloseViewToRoot = delegate {
+				var currentViewControllers = NavigationController.ViewControllers;
+				for (int i = 0; i < currentViewControllers.Length; i++) {
+					if(currentViewControllers [i].NavigationItem.Title.Equals("Crear orden")){
+						InvokeOnMainThread(delegate {
+							NavigationController.PopToViewController(currentViewControllers [i], true);
+						});
+						break;
+					}
+				}
+			};
+
+			NavigationItem.Title = "4. Tarjeta";
 		}
 
 		public override void ViewWillAppear (bool animated)

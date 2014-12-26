@@ -50,7 +50,14 @@ namespace Kangou.Core.ViewModels
 			{
 				return new MvxCommand<DropOffData>(dropOffData => {
 					_messenger.Publish (new DropOffDataMessage (this, dropOffData));
-					Close(this);
+					if(RegisterOrderViewModel.isStraightNavigation){
+						if (_dataService.CountCreditCardData > 0) 
+							ShowViewModel <CreditCardListViewModel> ();
+						else
+							ShowViewModel <CreditCardViewModel> ();
+					} else {
+						Close(this);
+					}
 				});
 			}
 		}

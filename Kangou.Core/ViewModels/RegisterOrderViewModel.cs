@@ -23,6 +23,7 @@ namespace Kangou.Core.ViewModels
 		: MvxViewModel
     {
 		public static Location LOCATION = new Location ();
+		public static bool isStraightNavigation = true;
 
 		private readonly MvxSubscriptionToken 
 		_tokenItems,
@@ -82,6 +83,7 @@ namespace Kangou.Core.ViewModels
 			DropOffAddress = "Seleccionar una dirección";
 			InfoPaymentMethod = "Seleccionar forma de pago";
 			PromoCode = "Código de promoción";
+			isStraightNavigation = true;
 		}
 
 		private void UpdateItems(ItemsDataMessage itemsDataMessage){
@@ -118,6 +120,7 @@ namespace Kangou.Core.ViewModels
 			var creditCardString = _creditCardData.CreditCardNumber.ToString ();
 			InfoPaymentMethod = creditCardString;
 			EnablePUKButton ();
+			isStraightNavigation = false;
 		}
 
 		private void UpdatePromoCode(PromoCodeMessage promoCode){
@@ -133,6 +136,8 @@ namespace Kangou.Core.ViewModels
 		public Action EnablePaymentMethodButton { get; set; }
 		public Action EnablePUKButton { get; set; }
 		public Action DisableButtons { get; set; }
+
+		public bool IsAPurchase { get{ return _itemsData.IsAPurchase; }}
 
 		private string _items;
 		public string Items { 
@@ -176,6 +181,15 @@ namespace Kangou.Core.ViewModels
 			set {
 				_promoCode = value;
 				RaisePropertyChanged (() => PromoCode);
+			}
+		}
+
+		private string _pushDeviceToken = "";
+		public string PushDeviceToken { 
+			get { return _pushDeviceToken; }
+			set {
+				_pushDeviceToken = value;
+				RaisePropertyChanged (() => PushDeviceToken);
 			}
 		}
 
@@ -302,7 +316,7 @@ namespace Kangou.Core.ViewModels
 		{
 			var userData = _dataService.GetUserData ();
 
-			_kangouClient.SendOrderData(_itemsData, _pickUpData, _dropOffData, _creditCardData, userData, DistancePickUpToDropOff, PriceInPesos,
+			_kangouClient.SendOrderData(_itemsData, _pickUpData, _dropOffData, _creditCardData, userData, DistancePickUpToDropOff, PriceInPesos, _pushDeviceToken,
 				(response) =>
 				{
 					ActiveOrder.LAST_ORDER_PLACED_ID = response;

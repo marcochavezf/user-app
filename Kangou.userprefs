@@ -1,12 +1,21 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="AppStore|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Kangou.Core/ViewModels/RegisterOrderViewModel.cs">
     <Files>
-      <File FileName="Kangou.Touch/Views/ActiveOrderListView.cs" Line="39" Column="39" />
-      <File FileName="Kangou.Core/ViewModels/Lists/ActiveOrderListViewModel.cs" Line="43" Column="43" />
-      <File FileName="Kangou.Core/Helpers/ConnectionManager.cs" Line="5" Column="5" />
-      <File FileName="Kangou.Core/Helpers/Timer.cs" Line="5" Column="5" />
+      <File FileName="Kangou.Core/ViewModels/RegisterOrderViewModel.cs" Line="3" Column="3" />
+      <File FileName="Kangou.Touch/Views/DropOffListView.cs" Line="46" Column="46" />
+      <File FileName="Kangou.Touch/Views/PickUpListView.cs" Line="50" Column="50" />
+      <File FileName="Kangou.Touch/Views/ItemsView.cs" Line="4" Column="4" />
+      <File FileName="Kangou.Touch/Views/PickUpView.cs" Line="46" Column="46" />
+      <File FileName="Kangou.Touch/Views/DropOffView.cs" Line="51" Column="51" />
+      <File FileName="Kangou.Touch/Views/CreditCardView.cs" Line="16" Column="16" />
+      <File FileName="Kangou.Touch/Views/CreditCardListView.cs" Line="40" Column="40" />
     </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
@@ -15,4 +24,8 @@
   <DisabledProjects>
     <String>SlidingPanels/SlidingPanels/Sliding Panels.csproj</String>
   </DisabledProjects>
+  <MonoDevelop.Ide.ItemProperties.Kangou.Touch>
+    <IPhoneTestFlightSettings_27CAppStore ApiToken="9d9b1dc9de82d851598768a71792ebfa_MjIyODg0NDIwMTQtMTEtMTIgMTM6NTU6MDkuNDU4NTU4" TeamToken="8fe156d57d37451457422163f75b8e5c_NDU5ODY4MjAxNC0xMi0xNSAxMjo0MDo1Ni45NjUxMjc" ReleaseNotes="Review del cliente corregido" NotifyTeamMembers="False" ReplaceBinaries="False" DistributionLists="" UploadDSYMs="False" />
+    <IPhoneTestFlightSettings_27CAd-Hoc ApiToken="9d9b1dc9de82d851598768a71792ebfa_MjIyODg0NDIwMTQtMTEtMTIgMTM6NTU6MDkuNDU4NTU4" TeamToken="8fe156d57d37451457422163f75b8e5c_NDU5ODY4MjAxNC0xMi0xNSAxMjo0MDo1Ni45NjUxMjc" ReleaseNotes="Review del cliente corregido" NotifyTeamMembers="False" ReplaceBinaries="False" DistributionLists="" UploadDSYMs="False" />
+  </MonoDevelop.Ide.ItemProperties.Kangou.Touch>
 </Properties>

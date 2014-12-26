@@ -3,6 +3,7 @@ using Cirrious.MvvmCross.Plugins.Location;
 using Cirrious.MvvmCross.Plugins.Messenger;
 using Kangou.Core.Helpers;
 using Kangou.Core.ViewModels;
+using System.Diagnostics;
 
 namespace Kangou.Core.Services.Location
 {
@@ -19,10 +20,10 @@ namespace Kangou.Core.Services.Location
 
         private void OnLocation(MvxGeoLocation location)
         {
-
+			Debug.WriteLine (location.Coordinates);
 			RegisterOrderViewModel.LOCATION.Lat = location.Coordinates.Latitude;
 			RegisterOrderViewModel.LOCATION.Lng = location.Coordinates.Longitude;
-			_watcher.Stop ();
+			//_watcher.Stop ();
         }
 
         private void OnError(MvxLocationError error)

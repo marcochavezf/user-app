@@ -12,7 +12,6 @@ namespace Kangou.Core
 			creditCardNumber = creditCardNumber.Replace (" ", string.Empty);
 
 			var cardNumberLenght = creditCardNumber.Length;
-
 			if (cardNumberLenght >= 12) {
 				char[] c = creditCardNumber.ToCharArray ();
 				Array.Reverse(c);

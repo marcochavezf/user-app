@@ -58,7 +58,7 @@ namespace Kangou.Core.ViewModels
 		public string Email { 
 			get { return _email; }
 			set {
-				_email = value;
+				_email = value.ToLower();
 				RaisePropertyChanged (() => Email);
 			}
 		}

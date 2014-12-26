@@ -20,6 +20,7 @@ namespace Kangou.Core.ViewModels
 
 		private IMvxMessenger _messenger;
 		private readonly IDataService _dataService;
+		private MvxSubscriptionToken _subscriptionId;
 
 
 		public PickUpViewModel (IDataService dataService, IMvxMessenger messenger)
@@ -153,6 +154,23 @@ namespace Kangou.Core.ViewModels
 			}
 		}
 
+		private MvxCommand _openPlaceAutocompleteCommand;
+		public ICommand OpenPlaceAutocompleteCommand {
+			get {
+				_openPlaceAutocompleteCommand = _openPlaceAutocompleteCommand ?? new MvxCommand (DoOpenPlaceAutocompleteCommand);
+				return _openPlaceAutocompleteCommand;
+			}
+		}
+
+		private void DoOpenPlaceAutocompleteCommand ()
+		{
+			_subscriptionId = _messenger.Subscribe<PlaceDetailsResponseMessage> ((placeDetailsResponseMessage)=>{
+				ChangeLocation(placeDetailsResponseMessage.PlaceDetailsResponse);
+				_messenger.Unsubscribe<PlaceDetailsResponseMessage>(_subscriptionId);
+			});
+			ShowViewModel<PlaceAutocompleteViewModel> ();   
+		}
+			
 		public void PublishData()
 		{
 			var pickUpData = new PickUpData () 
@@ -172,7 +190,16 @@ namespace Kangou.Core.ViewModels
 			};
 			_dataService.Add(pickUpData);
 			_messenger.Publish (new PickUpDataMessage (this, pickUpData));
+			if(RegisterOrderViewModel.isStraightNavigation){
+				if (_dataService.CountDropOffData > 0) 
+					ShowViewModel <DropOffListViewModel> ();
+				else
+					ShowViewModel <DropOffViewModel> ();
+			} else {
+				Close(this);
+			}
 		}
 
+		public Action<PlaceDetailsResponse> ChangeLocation { get; set; }
 	}
 }

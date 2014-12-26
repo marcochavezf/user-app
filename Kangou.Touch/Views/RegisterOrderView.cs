@@ -24,20 +24,17 @@ namespace Kangou.Touch.Views
 		private const int CREDIT_CARD_ID = 0;
 		private const int CASH_ID = 1;
 		private RegisterOrderViewModel _viewModel;
-		private CLLocationManager locMgr;
+		private UIButton _priceDistanceButton;
 
 		public override void ViewDidLoad()
 		{
 			NavigationItem.Title = "Crear orden";
 			base.ViewDidLoad();
+			var locMngr = LocationManager.Instance;
+			locMngr.StartLocationUpdates ();
 
 			View.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
 			NavigationController.NavigationBar.TintColor = Constants.TINT_COLOR_SECONDARY;
-
-			locMgr = new CLLocationManager();
-			if (UIDevice.CurrentDevice.CheckSystemVersion (7, 8)) {
-				locMgr.RequestWhenInUseAuthorization ();
-			}
 
 			//Constants
 			var WIDTH = UIScreen.MainScreen.Bounds.Width;
@@ -55,12 +52,12 @@ namespace Kangou.Touch.Views
 			var pYoffset = HEIGHT * 0.2f;
 
 			//Items Label
-			var itemsLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20));
-			itemsLabel.Text = "1. ¿Qué comprar o traer?";
+			var itemsLabel = new UIButton (UIButtonType.RoundedRect);
+			itemsLabel.SetTitle ("1. ¿Qué comprar o traer?", UIControlState.Normal);
 			itemsLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
-			itemsLabel.TextColor = UIColor.Gray;
-			itemsLabel.TextAlignment = UITextAlignment.Center;
-			Add(itemsLabel);
+			itemsLabel.TintColor = UIColor.Gray;
+			itemsLabel.Frame = new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20);
+			Add (itemsLabel);
 			pYoffset += PADDING_LABEL_BUTTON;
 
 			//Items Button
@@ -75,12 +72,12 @@ namespace Kangou.Touch.Views
 			pYoffset += PADDING_SECTION;
 
 			//Items Label
-			var pickUpLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20));
-			pickUpLabel.Text = "2. ¿Dónde recoger?";
+			var pickUpLabel = new UIButton (UIButtonType.RoundedRect);
+			pickUpLabel.SetTitle ("2. ¿Dónde recoger?", UIControlState.Normal);
 			pickUpLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
-			pickUpLabel.TextColor = UIColor.Gray;
-			pickUpLabel.TextAlignment = UITextAlignment.Center;
-			Add(pickUpLabel);
+			pickUpLabel.TintColor = UIColor.Gray;
+			pickUpLabel.Frame = new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20);
+			Add (pickUpLabel);
 			pYoffset += PADDING_LABEL_BUTTON;
 
 			//Items Button
@@ -95,12 +92,12 @@ namespace Kangou.Touch.Views
 			pYoffset += PADDING_SECTION;
 
 			//Drop Off Label
-			var dropOffLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20));
-			dropOffLabel.Text = "3. ¿Dónde entregar?";
+			var dropOffLabel = new UIButton (UIButtonType.RoundedRect);
+			dropOffLabel.SetTitle ("3. ¿Dónde entregar?", UIControlState.Normal);
 			dropOffLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
-			dropOffLabel.TextColor = UIColor.Gray;
-			dropOffLabel.TextAlignment = UITextAlignment.Center;
-			Add(dropOffLabel);
+			dropOffLabel.TintColor = UIColor.Gray;
+			dropOffLabel.Frame = new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20);
+			Add (dropOffLabel);
 			pYoffset += PADDING_LABEL_BUTTON;
 
 			//Drop Off Button
@@ -116,12 +113,12 @@ namespace Kangou.Touch.Views
 			pYoffset += PADDING_SECTION;
 
 			//Payment Method Label
-			var paymentMethodLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20));
-			paymentMethodLabel.Text = "4. Medio de pago";
+			var paymentMethodLabel = new UIButton (UIButtonType.RoundedRect);
+			paymentMethodLabel.SetTitle ("4. Medio de pago", UIControlState.Normal);
 			paymentMethodLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
-			paymentMethodLabel.TextColor = UIColor.Gray;
-			paymentMethodLabel.TextAlignment = UITextAlignment.Center;
-			Add(paymentMethodLabel);
+			paymentMethodLabel.TintColor = UIColor.Gray;
+			paymentMethodLabel.Frame = new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20);
+			Add (paymentMethodLabel);
 			pYoffset += PADDING_LABEL_BUTTON;
 
 			//Payment Method Button
@@ -134,7 +131,7 @@ namespace Kangou.Touch.Views
 			paymentMethodButton.Layer.BorderWidth = BORDER_WIDTH;
 			Add (paymentMethodButton);
 
-			pYoffset += PADDING_SECTION * 1.5f;
+			pYoffset += PADDING_SECTION * 1.25f;
 
 			//Confirm Order Alert
 			var confirmOrderAlert = new UIAlertView ("Confirmar Orden","", null, "Cancelar", "Confirmar");
@@ -143,9 +140,29 @@ namespace Kangou.Touch.Views
 
 				//Confirm
 				case 1:
+					_viewModel.PushDeviceToken =  NSUserDefaults.StandardUserDefaults.StringForKey("PushDeviceToken");
 					ConfirmOrderClicked();
 					break;
 
+				}
+			};
+
+			EventHandler actionPideUnKangou = (object sender, System.EventArgs e) => {
+				if (_viewModel.IsDeliveryDataSet ()) {
+					if (_viewModel.IsPaymentInfoSet ()){
+
+						var km = RecomputePriceAndGetDistance();
+						if(km > 25){
+							new UIAlertView ("Distancias muy retiradas","La distancia entre el punto de recogida y el punto de entrega es muy lejos", null, "Ok").Show();
+							return;
+						}
+
+						if(_viewModel.IsAPurchase)
+							confirmOrderAlert.Message = String.Format(StringMessages.CONFIRM_MESSAGE_PURCHASE_IOS, _viewModel.PriceInPesos, km);
+						else
+							confirmOrderAlert.Message = String.Format(StringMessages.CONFIRM_MESSAGE_IOS, _viewModel.PriceInPesos, km);
+						confirmOrderAlert.Show ();
+					}
 				}
 			};
 
@@ -157,53 +174,39 @@ namespace Kangou.Touch.Views
 			pideUnKangouButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			pideUnKangouButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			pideUnKangouButton.Layer.BorderWidth = BORDER_WIDTH;
-			pideUnKangouButton.TouchUpInside += (object sender, System.EventArgs e) => {
-				if (_viewModel.IsDeliveryDataSet ()) {
-					if (_viewModel.IsPaymentInfoSet ()){
-
-						var origin = new CLLocation(_viewModel.PickUpData.Lat, _viewModel.PickUpData.Lng); 
-						var destiny = new CLLocation(_viewModel.DropOffData.Lat, _viewModel.DropOffData.Lng);
-						var meters = destiny.DistanceFrom(origin);
-						var km = Math.Round(meters/1000.0f, 1);
-						var priceInPesos = 50;
-
-						if(km > 7 && km <= 10)
-							priceInPesos = 80;
-						else
-						if(km > 10 && km <= 15)
-							priceInPesos = 120;
-						else
-						if(km > 15 && km <= 20)
-							priceInPesos = 170;
-						else
-						if(km > 20 && km <= 25)
-							priceInPesos = 230;
-						else
-						if(km > 25){
-							new UIAlertView ("Distancias muy retiradas","La distancia entre el punto de recogida y el punto de entrega es muy lejos", null, "Ok").Show();
-							return;
-						}
-
-						_viewModel.PriceInPesos = priceInPesos;
-						_viewModel.DistancePickUpToDropOff = String.Format("{0} Km",km.ToString());
-											
-						confirmOrderAlert.Message = String.Format(StringMessages.CONFIRM_MESSAGE_IOS, priceInPesos.ToString(), km.ToString());
-						confirmOrderAlert.Show ();
-					}
-				}
-			};
+			pideUnKangouButton.TouchUpInside += actionPideUnKangou;
 			Add (pideUnKangouButton);
+			pYoffset += HEIGHT_BUTTON;
+
+			_priceDistanceButton = new UIButton (UIButtonType.RoundedRect);
+			_priceDistanceButton.SetTitle ("", UIControlState.Normal);
+			_priceDistanceButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
+			_priceDistanceButton.TintColor = UIColor.Orange;
+			_priceDistanceButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON* 2);
+			_priceDistanceButton.LineBreakMode = UILineBreakMode.WordWrap;
+			_priceDistanceButton.TitleLabel.TextAlignment = UITextAlignment.Center;
+			_priceDistanceButton.Layer.BorderColor = UIColor.Gray.CGColor;
+			_priceDistanceButton.Layer.BorderWidth = BORDER_WIDTH;
+			_priceDistanceButton.TouchUpInside += actionPideUnKangou;
+			Add (_priceDistanceButton);
 
 			//Data Binding
 			var set = this.CreateBindingSet<RegisterOrderView, RegisterOrderViewModel>();
+
 			set.Bind(itemsButton).For("Title").To(vm => vm.Items);
 			set.Bind(pickUpButton).For("Title").To(vm => vm.PickUpAddress);
 			set.Bind(dropOffButton).For("Title").To(vm => vm.DropOffAddress);
 			set.Bind(paymentMethodButton).For("Title").To(vm => vm.InfoPaymentMethod);
+
 			set.Bind(itemsButton).To (vm => vm.AddItemsCommand);
 			set.Bind(pickUpButton).To (vm => vm.AddPickUpAddressCommand);
 			set.Bind(dropOffButton).To(vm => vm.AddDropOffAddressCommand);
 			set.Bind(paymentMethodButton).To(vm => vm.AddCreditCardCommand);
+
+			set.Bind(itemsLabel).To (vm => vm.AddItemsCommand);
+			set.Bind(pickUpLabel).To (vm => vm.AddPickUpAddressCommand);
+			set.Bind(dropOffLabel).To(vm => vm.AddDropOffAddressCommand);
+			set.Bind(paymentMethodLabel).To(vm => vm.AddCreditCardCommand);
 			set.Apply();
 
 			_viewModel.EnablePickUpButton = delegate {
@@ -213,7 +216,7 @@ namespace Kangou.Touch.Views
 
 					pickUpButton.Enabled = true;
 					pickUpButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
-					pickUpLabel.TextColor = UIColor.Gray;
+					pickUpLabel.Enabled = true;
 				});
 			};
 
@@ -225,7 +228,7 @@ namespace Kangou.Touch.Views
 
 					dropOffButton.Enabled = true;
 					dropOffButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
-					dropOffLabel.TextColor = UIColor.Gray;
+					dropOffLabel.Enabled = true;
 				});
 			};
 
@@ -237,7 +240,7 @@ namespace Kangou.Touch.Views
 
 					paymentMethodButton.Enabled = true;
 					paymentMethodButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
-					paymentMethodLabel.TextColor = UIColor.Gray;
+					paymentMethodLabel.Enabled = true;
 				});
 			};
 
@@ -248,7 +251,9 @@ namespace Kangou.Touch.Views
 					paymentMethodButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
 
 					pideUnKangouButton.Enabled = true;
+					_priceDistanceButton.Enabled = true;
 				});
+				RecomputePriceAndGetDistance();
 			};
 
 			_viewModel.DisableButtons = delegate {
@@ -257,18 +262,20 @@ namespace Kangou.Touch.Views
 					dropOffButton.Enabled = false;
 					paymentMethodButton.Enabled = false;
 					pideUnKangouButton.Enabled = false;
+					_priceDistanceButton.Enabled = false;
 
 					itemsButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 					pickUpButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 					dropOffButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 					paymentMethodButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 					pideUnKangouButton.TintColor = Constants.TINT_COLOR_PRIMARY;
+					_priceDistanceButton.TintColor = Constants.TINT_COLOR_PRIMARY;
 
 					itemsButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
 
-					pickUpLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
-					dropOffLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
-					paymentMethodLabel.TextColor = UIColor.FromWhiteAlpha(0.5f, 0.5f);
+					pickUpLabel.Enabled = false;
+					dropOffLabel.Enabled = false;
+					paymentMethodLabel.Enabled = false;
 				});
 			};
 			_viewModel.DisableButtons ();
@@ -280,6 +287,43 @@ namespace Kangou.Touch.Views
 		{
 			base.ViewWillAppear (animated);
 			_viewModel.PublishMessageViewOpened ();
+			RecomputePriceAndGetDistance ();
+		}
+
+		private double RecomputePriceAndGetDistance(){
+			if (_viewModel.PickUpData  == null
+			||  _viewModel.DropOffData == null)
+				return 0;
+
+			var origin = new CLLocation(_viewModel.PickUpData.Lat, _viewModel.PickUpData.Lng); 
+			var destiny = new CLLocation(_viewModel.DropOffData.Lat, _viewModel.DropOffData.Lng);
+			var meters = destiny.DistanceFrom(origin);
+			var km = Math.Round(meters/1000.0f, 1);
+			var priceInPesos = 50;
+			string titlePriceDistanceButton = "";
+
+			if(km > 7 && km <= 10)
+				priceInPesos = 80;
+			else
+				if(km > 10 && km <= 15)
+					priceInPesos = 120;
+				else
+					if(km > 15 && km <= 20)
+						priceInPesos = 170;
+					else
+						if(km > 20 && km <= 25)
+							priceInPesos = 230;
+							
+			titlePriceDistanceButton = String.Format ("Distancia: {0} km\nCosto del envío: ${1}.00", km, priceInPesos);
+			if(km > 25)
+				titlePriceDistanceButton = "Distancia mayor a 25 km";
+
+			_viewModel.PriceInPesos = priceInPesos;
+			_viewModel.DistancePickUpToDropOff = String.Format("{0} Km",km.ToString());
+			InvokeOnMainThread (delegate {
+				_priceDistanceButton.SetTitle (titlePriceDistanceButton, UIControlState.Normal);
+			});
+			return km;
 		}
 
 		private void ConfirmOrderClicked()

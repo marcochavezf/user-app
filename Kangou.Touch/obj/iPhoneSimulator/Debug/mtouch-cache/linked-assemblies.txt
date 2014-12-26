@@ -12,8 +12,10 @@
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/Mono.Dynamic.Interpreter.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/SuperSocket.ClientEngine.Protocol.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/Cirrious.MvvmCross.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/Cirrious.MvvmCross.Plugins.Visibility.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/Cirrious.MvvmCross.Plugins.File.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/System.Core.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/Cirrious.MvvmCross.Plugins.Visibility.Touch.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/System.Xml.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/SlidingPanels.Lib.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/Cirrious.MvvmCross.Plugins.DownloadCache.dll
@@ -22,6 +24,7 @@
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/WebSocket4Net.MonoTouch.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/Cirrious.MvvmCross.Plugins.Location.Touch.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/Cirrious.CrossCore.dll
+/Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/GoogleMaps.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/Microsoft.Threading.Tasks.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/Cirrious.MvvmCross.Localization.dll
 /Users/marcochavezf/Google Drive/user-app/Kangou.Touch/obj/iPhoneSimulator/Debug/mtouch-cache/Link/SuperSocket.ClientEngine.Core.dll

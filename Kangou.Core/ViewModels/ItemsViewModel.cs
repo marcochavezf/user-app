@@ -16,12 +16,13 @@ namespace Kangou.Core.ViewModels
 	public class ItemsViewModel 
 		: MvxViewModel
     {
-
 		private readonly IMvxMessenger _messenger;
+		private readonly IDataService _dataService;
 
-		public ItemsViewModel (IMvxMessenger messenger)
+		public ItemsViewModel (IMvxMessenger messenger, IDataService dataService)
 		{
 			_messenger = messenger;
+			_dataService = dataService;
 		}
 
 		/* * * * * * * * * * * *
@@ -36,12 +37,30 @@ namespace Kangou.Core.ViewModels
 			}
 		}
 
+		public static bool _isAPurchase;
+		public bool IsAPurchase { 
+			get { return _isAPurchase; }
+			set {
+				_isAPurchase = value;
+				RaisePropertyChanged (() => IsAPurchase);
+			}
+		}
+
 		public void PublishData()
 		{
 			var itemsData = new ItemsData () {
-				Items = this.Items
+				Items = this.Items,
+				IsAPurchase = this.IsAPurchase
 			};
 			_messenger.Publish (new ItemsDataMessage (this, itemsData));
+			if (RegisterOrderViewModel.isStraightNavigation) {
+				if (_dataService.CountPickUpData > 0)
+					ShowViewModel <PickUpListViewModel> ();
+				else
+					ShowViewModel <PickUpViewModel> ();
+			} else {
+				Close (this);
+			}
 		}
 	}
 }

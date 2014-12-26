@@ -9,6 +9,7 @@ using Kangou.Core;
 using Kangou.Helpers;
 using System.Threading.Tasks;
 using SlidingPanels.Lib;
+using System;
 
 namespace Kangou.Touch.Views
 {
@@ -24,9 +25,8 @@ namespace Kangou.Touch.Views
 			var WIDTH = UIScreen.MainScreen.Bounds.Width;
 			var HEIGHT = UIScreen.MainScreen.Bounds.Height;
 			var MARGIN_WIDTH_SUBVIEWS = WIDTH / 8; 
-			var MARGIN_WIDTH_TEXTVIEW = MARGIN_WIDTH_SUBVIEWS * 1.5f;
 			var HEIGHT_TEXTFIELD = HEIGHT * 0.075f;
-			var HEIGHT_TEXTVIEW = HEIGHT * 0.3f;
+			var HEIGHT_TEXTVIEW = HEIGHT * 0.4f;
 			var LABEL_FONT_SIZE = 15f;
 			var LABEL_FONT = "Arial-BoldMT";
 
@@ -94,15 +94,20 @@ namespace Kangou.Touch.Views
 			pYoffset += HEIGHT_TEXTFIELD * 1.85f;
 
 			//Info Pick Up Text View
-			var aboutChargeTextView = new UILabel(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTVIEW));
-			aboutChargeTextView.Text = "Se realizará el cargo del envío una vez que se haya confirmado la orden.\n\nEn caso de compra, se realizará un segundo cargo: la compra más la comisión del 5% de la misma.\n\nEl Kangou te avisará del monto total antes de hacer la compra.";
-			aboutChargeTextView.Lines = 0;
+			var aboutChargeTextView = new UITextView(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTVIEW));
+			var messageAboutCharge = "Se realizará el cargo hasta que el kangou más cercano haya aceptado la orden de envío.\n\n";
+			if(ItemsViewModel._isAPurchase)
+				messageAboutCharge += "Por ser una compra, se realizará un segundo cargo: la compra más el 5% de comisión de la misma.\n\nEl Kangou te avisará del monto total antes de hacer la compra.\n\n";
+			messageAboutCharge += "Precio por distancia:\n\nhasta 7km $50.00\nhasta 10km $80.00\nhasta 15km $120.00\nhasta 20km $170.00\nhasta 25km $230.00";
+			aboutChargeTextView.Text = messageAboutCharge;
 			aboutChargeTextView.Font = UIFont.FromName(LABEL_FONT, 12f);
 			aboutChargeTextView.TextColor = UIColor.Black;
 			aboutChargeTextView.TextAlignment = UITextAlignment.Center;
 			aboutChargeTextView.BackgroundColor = UIColor.FromWhiteAlpha (1f, 0.5f);
 			aboutChargeTextView.Layer.BorderColor = UIColor.DarkGray.CGColor;
 			aboutChargeTextView.Layer.BorderWidth = 0.5f;
+			aboutChargeTextView.TextContainerInset = new UIEdgeInsets (20,20,20,20);
+			aboutChargeTextView.Editable = false;
 			Add(aboutChargeTextView);
 
 			var tapGesture = new UITapGestureRecognizer ((g) => {
@@ -122,9 +127,13 @@ namespace Kangou.Touch.Views
 			set.Bind(_bindableProgress).For(b => b.Visible).To(vm => vm.IsBusy);
 			set.Apply();
 
+			var titleForRightButton = "Guardar";
+			if(RegisterOrderViewModel.isStraightNavigation)
+				titleForRightButton = "Continuar";
+
 			//Add Button
 			this.NavigationItem.SetRightBarButtonItem(
-				new UIBarButtonItem("Guardar", UIBarButtonItemStyle.Done, (sender,args) => {
+				new UIBarButtonItem(titleForRightButton, UIBarButtonItemStyle.Done, (sender,args) => {
 
 					var creditCardString = creditCardNumberTextField.Text.Trim ();
 					var expirationDateString = expirationDateTextField.Text.Trim ();
@@ -151,6 +160,8 @@ namespace Kangou.Touch.Views
 
 				})
 				, true);
+
+			NavigationItem.Title = "4. Tarjeta";
 		}
 
 		public override void ViewWillAppear (bool animated)
@@ -190,17 +201,24 @@ namespace Kangou.Touch.Views
 				var viewModel = (CreditCardViewModel)ViewModel;
 				viewModel.IsBusy = true;
 
-				Task.Run (()=>{
+				InvokeInBackground(delegate {
+
 					var isSuccesful = viewModel.PublishData ();
-
 					System.Diagnostics.Debug.WriteLine("isSuccesful: {0}",isSuccesful);
-					InvokeOnMainThread (delegate {  
 
+					InvokeOnMainThread (delegate {  
 						viewModel.IsBusy = false;
 
-						if(isSuccesful)
-							NavigationController.PopViewControllerAnimated(true);
-						else
+						if(isSuccesful){
+							var currentViewControllers = NavigationController.ViewControllers;
+							for (int i = 0; i < currentViewControllers.Length; i++) {
+								Console.WriteLine(currentViewControllers [i].NavigationItem.Title);
+								if(currentViewControllers [i].NavigationItem.Title.Equals("Crear orden")){
+									NavigationController.PopToViewController(currentViewControllers [i], true);
+									break;
+								}
+							}
+						}else
 							new UIAlertView ("Error al registrar datos", "Favor de verificar que sus datos sean correctos o que tenga conexión a Internet", null, "Ok", null).Show ();
 					});
 

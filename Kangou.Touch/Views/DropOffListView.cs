@@ -49,7 +49,9 @@ namespace Kangou.Touch.Views
 			},true);
 
 			TableView.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
-			NavigationItem.BackBarButtonItem = new UIBarButtonItem ("Cancelar", UIBarButtonItemStyle.Plain, null);
+			if(!RegisterOrderViewModel.isStraightNavigation)
+				NavigationItem.BackBarButtonItem = new UIBarButtonItem ("Cancelar", UIBarButtonItemStyle.Plain, null);
+			NavigationItem.Title = "3. Entregar";
 		}
 
 		public override void ViewWillAppear (bool animated)

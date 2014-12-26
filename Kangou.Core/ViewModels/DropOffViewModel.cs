@@ -8,6 +8,7 @@ using Kangou.Core.Services.Location;
 using Kangou.Core.Services.DataStore;
 using Kangou.Core.Helpers;
 using Kangou.Core.ViewModels.ObserverMessages;
+using System;
 
 namespace Kangou.Core.ViewModels
 {
@@ -22,6 +23,7 @@ namespace Kangou.Core.ViewModels
 
 		private readonly IMvxMessenger _messenger;
 		private readonly IDataService _dataService;
+		private MvxSubscriptionToken _subscriptionId;
 
 		public DropOffViewModel (IDataService dataService, IMvxMessenger messenger)
 		{
@@ -153,6 +155,23 @@ namespace Kangou.Core.ViewModels
 			}
 		}
 
+		private MvxCommand _openPlaceAutocompleteCommand;
+		public ICommand OpenPlaceAutocompleteCommand {
+			get {
+				_openPlaceAutocompleteCommand = _openPlaceAutocompleteCommand ?? new MvxCommand (DoOpenPlaceAutocompleteCommand);
+				return _openPlaceAutocompleteCommand;
+			}
+		}
+
+		private void DoOpenPlaceAutocompleteCommand ()
+		{
+			_subscriptionId = _messenger.Subscribe<PlaceDetailsResponseMessage> ((placeDetailsResponseMessage)=>{
+				ChangeLocation(placeDetailsResponseMessage.PlaceDetailsResponse);
+				_messenger.Unsubscribe<PlaceDetailsResponseMessage>(_subscriptionId);
+			});
+			ShowViewModel<PlaceAutocompleteViewModel> ();   
+		}
+
 		public void PublishData()
 		{
 			var dropOffData = new DropOffData () {
@@ -171,7 +190,18 @@ namespace Kangou.Core.ViewModels
 			};
 			_dataService.Add(dropOffData);
 			_messenger.Publish (new DropOffDataMessage (this, dropOffData));
+
+			if(RegisterOrderViewModel.isStraightNavigation){
+				if (_dataService.CountCreditCardData > 0)
+					ShowViewModel <CreditCardListViewModel> ();
+				else
+					ShowViewModel <CreditCardViewModel> ();
+			} else {
+				Close(this);
+			}
 		}
+
+		public Action<PlaceDetailsResponse> ChangeLocation { get; set; }
 
 	}
 }

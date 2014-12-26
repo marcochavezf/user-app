@@ -49,7 +49,14 @@ namespace Kangou.Core.ViewModels
 			{
 				return new MvxCommand<PickUpData>(pickUpData => {
 					_messenger.Publish (new PickUpDataMessage (this, pickUpData));
-					Close(this);
+					if(RegisterOrderViewModel.isStraightNavigation){
+						if (_dataService.CountDropOffData > 0) 
+							ShowViewModel <DropOffListViewModel> ();
+						else
+							ShowViewModel <DropOffViewModel> ();
+					} else {
+						Close(this);
+					}
 				});
 			}
 		}

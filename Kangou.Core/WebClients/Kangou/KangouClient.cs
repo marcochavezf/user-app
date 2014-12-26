@@ -7,6 +7,7 @@ using Cirrious.CrossCore;
 using Cirrious.CrossCore.Platform;
 using System.Diagnostics;
 using System.Collections.Generic;
+using Kangou.Core.Helpers;
 
 namespace Kangou.Core.WebClients
 {
@@ -14,6 +15,7 @@ namespace Kangou.Core.WebClients
 	{
 		private readonly string _endPoint = "https://kangou.herokuapp.com";
 		//private readonly string _endPoint = "http://localhost:5000";
+		private readonly string _apiKey = "AIzaSyDYafz9sSckTgvHXsQKxKKtt4pLTQjDAk0";
 
 		private readonly IMvxJsonConverter _jsonConverter;
 		public KangouClient (IMvxJsonConverter jsonConverter)
@@ -21,7 +23,7 @@ namespace Kangou.Core.WebClients
 			_jsonConverter = jsonConverter;
 		}
 
-		public void SendOrderData(ItemsData itemsData, PickUpData pickUpData, DropOffData dropOffData, CreditCardData _creditCardData, UserData userData, string distancePickUpToDropOff, int priceInPesos, Action<string> succesAction, Action<string> errorAction)
+		public void SendOrderData(ItemsData itemsData, PickUpData pickUpData, DropOffData dropOffData, CreditCardData _creditCardData, UserData userData, string distancePickUpToDropOff, int priceInPesos, string pushDeviceToken, Action<string> succesAction, Action<string> errorAction)
 		{
 			/* Preparing Data. */
 			var request = (HttpWebRequest)WebRequest.Create(_endPoint + "/orders");
@@ -31,6 +33,8 @@ namespace Kangou.Core.WebClients
 			string postData = 
 				"creditCardId=" 				+ _creditCardData.CardId +
 				"&typeCardId=" 					+ _creditCardData.TypeCardId + 
+				"&pushDeviceToken=" 			+ pushDeviceToken + 
+				"&isAPurchase="					+ itemsData.IsAPurchase +
 
 				"&clientName=" 					+ userData.Name + 
 				"&clientEmail=" 				+ userData.Email +
@@ -153,6 +157,91 @@ namespace Kangou.Core.WebClients
 								Debug.WriteLine("reader: {0}",jsonString);
 								var rootObj = _jsonConverter.DeserializeObject<ActiveOrderListRoot>(jsonString);
 								succesAction(rootObj.activeOrders);
+							}
+						}
+					}
+					catch (WebException ex)
+					{
+						var errorString = String.Format("ERROR Requesting Response: '{0}' when making {1} request to {2}", ex.Message, request.Method, request.RequestUri.AbsoluteUri);
+						Mvx.Error(errorString);
+						errorAction(errorString);
+					}
+				}, null);
+		}
+
+		public void GetPlacesList(string inputToPredict, Action<List<Prediction>> succesAction, Action<string> errorAction)
+		{
+			var _endPointOrderData = String.Format("https://maps.googleapis.com/maps/api/place/autocomplete/json?input={0}&language=es&key={1}",Uri.EscapeDataString(inputToPredict),_apiKey);
+
+			/* Preparing Data. */
+			var request = (HttpWebRequest)WebRequest.Create(_endPointOrderData);
+			request.ContentType = "application/x-www-form-urlencoded";
+			request.Method = "GET";
+
+
+			/* Requesting Response from Server. */
+			request.BeginGetResponse(asynchResultResp =>
+				{
+					try
+					{
+						using (var response = request.EndGetResponse(asynchResultResp))
+						{
+							using (var stream = response.GetResponseStream())
+							{
+								/* Getting Success response from server */
+								var reader = new StreamReader(stream);
+								var jsonString = reader.ReadToEnd();
+								//Debug.WriteLine("reader: {0}",jsonString);
+								var autocompleteResponse = _jsonConverter.DeserializeObject<PlaceAutocompleteResponse>(jsonString);
+								//Debug.WriteLine("autocompleteResponse: {0}",autocompleteResponse.predictions[0].description);
+
+								if(autocompleteResponse.status.Equals("OK"))
+									succesAction(autocompleteResponse.predictions);
+								else
+									errorAction(autocompleteResponse.status);
+
+								GetLatLngFromPlaceId(autocompleteResponse.predictions[0].place_id, delegate {}, delegate {});
+							}
+						}
+					}
+					catch (WebException ex)
+					{
+						var errorString = String.Format("ERROR Requesting Response: '{0}' when making {1} request to {2}", ex.Message, request.Method, request.RequestUri.AbsoluteUri);
+						Mvx.Error(errorString);
+						errorAction(errorString);
+					}
+				}, null);
+		}
+
+
+		public void GetLatLngFromPlaceId(string placeId, Action<PlaceDetailsResponse> succesAction, Action<string> errorAction)
+		{
+			var _endPointOrderData = String.Format("https://maps.googleapis.com/maps/api/place/details/json?placeid={0}&language=es&key={1}",placeId,_apiKey);
+
+			/* Preparing Data. */
+			var request = (HttpWebRequest)WebRequest.Create(_endPointOrderData);
+			request.ContentType = "application/x-www-form-urlencoded";
+			request.Method = "GET";
+
+			/* Requesting Response from Server. */
+			request.BeginGetResponse(asynchResultResp =>
+				{
+					try
+					{
+						using (var response = request.EndGetResponse(asynchResultResp))
+						{
+							using (var stream = response.GetResponseStream())
+							{
+								/* Getting Success response from server */
+								var reader = new StreamReader(stream);
+								var jsonString = reader.ReadToEnd();
+								//Debug.WriteLine("reader: {0}",jsonString);
+								var placeDetailsResponse = _jsonConverter.DeserializeObject<PlaceDetailsResponse>(jsonString);
+								//Debug.WriteLine("placeDetailsResponse Location: {0}",placeDetailsResponse.result.geometry.location);
+								if(placeDetailsResponse.status.Equals("OK"))
+									succesAction(placeDetailsResponse);
+								else
+									errorAction(placeDetailsResponse.status);
 							}
 						}
 					}

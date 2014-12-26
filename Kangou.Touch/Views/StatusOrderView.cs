@@ -14,6 +14,8 @@ using Kangou.Touch;
 using System.Diagnostics;
 using SlidingPanels.Lib;
 using Kangou.Core.Helpers;
+using Google.Maps;
+using Kangou.Core.ViewModels;
 
 namespace KangouMessenger.Touch
 {
@@ -33,34 +35,36 @@ namespace KangouMessenger.Touch
 			base.ViewDidLoad();
 		
 			//Setting origin and destiny directions
-			var origin = new CLLocationCoordinate2D (19.43260,-99.13320);
 			_viewModel = (StatusOrderViewModel)ViewModel;
 
 			//Adding map
 			var widthMap = CONTAINER_SIZE.Width;
 			var heightMap = CONTAINER_SIZE.Height;
-			var mapView = new MKMapView ();
-			mapView.SetRegion (MKCoordinateRegion.FromDistance (origin, 1000, 1000), true);
+			var camera = CameraPosition.FromCamera (
+				latitude: RegisterOrderViewModel.LOCATION.Lat, 
+				longitude: RegisterOrderViewModel.LOCATION.Lng, 
+				zoom: 15);
+			var mapView = MapView.FromCamera (RectangleF.Empty, camera);
 			mapView.Frame = new RectangleF (0, 0, widthMap, heightMap);
-			mapView.PitchEnabled = true;
-			mapView.ShowsBuildings = true;
-			mapView.ShowsUserLocation = true;
+			mapView.Layer.BorderColor = UIColor.Gray.CGColor;
+			mapView.Layer.BorderWidth = 0.5f;
 			Add (mapView);
 
-			var annotation = new MKPointAnnotation () {
-				Title = "Kangou"
-			};
-			mapView.AddAnnotation (annotation);
+			var marker = new Marker ();
+			var kangouMarkerImage = UIImage.FromBundle("kangouMarker.png");
+			marker.Icon = kangouMarkerImage;
+			marker.Title = "Kangou";
+			marker.Map = mapView;
 
 			//Status Text View
 			var widthTextView = WIDTH; 
-			var heightTextView = Constants.HEIGHT_TEXTVIEW * 1.25f;
+			var heightTextView = Kangou.Touch.Constants.HEIGHT_TEXTVIEW * 1.25f;
 			var posYinst = NavigationController.NavigationBar.Frame.Y + NavigationController.NavigationBar.Frame.Height;
 			var posXOffsetInst = 0f;
 			var alphaTextViews = 0.75f;
 			var statusTextView = new UITextView(new RectangleF(posXOffsetInst, posYinst, widthTextView, heightTextView));
 			statusTextView.Editable = false;
-			statusTextView.Font = UIFont.FromName(Constants.LABEL_BOLD_FONT, Constants.LABEL_FONT_SIZE);
+			statusTextView.Font = UIFont.FromName(Kangou.Touch.Constants.LABEL_BOLD_FONT, Kangou.Touch.Constants.LABEL_FONT_SIZE);
 			statusTextView.TextAlignment = UITextAlignment.Center;
 			statusTextView.Alpha = alphaTextViews;
 			Add(statusTextView);
@@ -69,7 +73,7 @@ namespace KangouMessenger.Touch
 			var posYbutton = heightMap - heightTextView;
 			var distanceTextView = new UITextView(new RectangleF(posXOffsetInst, posYbutton, widthTextView, heightTextView));
 			distanceTextView.Editable = false;
-			distanceTextView.Font = UIFont.FromName(Constants.LABEL_BOLD_FONT, Constants.LABEL_FONT_SIZE);
+			distanceTextView.Font = UIFont.FromName(Kangou.Touch.Constants.LABEL_BOLD_FONT, Kangou.Touch.Constants.LABEL_FONT_SIZE);
 			distanceTextView.TextAlignment = UITextAlignment.Center;
 			distanceTextView.Alpha = alphaTextViews;
 			Add(distanceTextView);
@@ -90,8 +94,8 @@ namespace KangouMessenger.Touch
 
 				var coordinate = new CLLocationCoordinate2D(lat, lng);
 				InvokeOnMainThread(delegate {
-					annotation.Coordinate = coordinate;
-					mapView.SetCenterCoordinate(coordinate, true);
+					marker.Position = coordinate;
+					mapView.Animate(coordinate);
 
 					switch (_viewModel.ActiveOrder.Status) {
 					case StatusOrder.KangouGoingToPickUp:
@@ -120,7 +124,7 @@ namespace KangouMessenger.Touch
 			if (_viewModel.ActiveOrder.Status == StatusOrder.OrderReviewed) {
 				var orderFinishedAlert = new UIAlertView ("Esta orden ya ha finalizado", "¡Muchas gracias por usar Kangou!", null, "Ok");
 				orderFinishedAlert.Clicked += (object alertSender, UIButtonEventArgs eventArgsAlert) => {
-					StatusOrderViewModel.HasBeenClosedByUser = true;
+					ConnectionManager.ConnectionState = ConnectionStates.DISCONNECTED_BY_USER;
 					ConnectionManager.Disconnect();
 					NavigationController.PopViewControllerAnimated(true);
 				};
@@ -147,17 +151,16 @@ namespace KangouMessenger.Touch
 			SlidingGestureRecogniser.EnableGesture = true;
 			if (_viewModel.ActiveOrder.Status != StatusOrder.OrderSignedByClient) {
 				//It's dissapearing because user has pressed back button
-				StatusOrderViewModel.HasBeenClosedByUser = true;
+				ConnectionManager.ConnectionState = ConnectionStates.DISCONNECTED_BY_USER;
 				ConnectionManager.Disconnect ();
 			}
-			_viewModel.TurnOffConnectionManager ();
 		}
 
 
 		public override void ViewWillDisappear (bool animated)
 		{
 			base.ViewWillDisappear (animated);
-			Console.WriteLine ("ViewWillDisappear Status");
+			_viewModel.TurnOffConnectionManager ();
 		}
 
 		private void ScheduleStatusOrderNotification(string message){

@@ -43,6 +43,7 @@ namespace Kangou.Core.ViewModels
 
 			IsBusy = true;
 
+			var instanceConnectionManager = ConnectionManager.Instance;
 			ConnectionManager.FailedToConnect (()=>{
 				ConnectionManager.Off(SocketEvents.Connected);
 				ConnectionManager.Off(SocketEvents.ActiveOrder);
@@ -53,6 +54,8 @@ namespace Kangou.Core.ViewModels
 		}
 
 		public void PopulateListFromServer (){
+
+			IsThereActiveOrders = true;
 
 			if ( !String.IsNullOrWhiteSpace( ActiveOrder.LAST_ORDER_PLACED_ID )) {
 				var orderId = ActiveOrder.LAST_ORDER_PLACED_ID;
@@ -76,34 +79,75 @@ namespace Kangou.Core.ViewModels
 			});
 		}
 
+		private bool _isTableVisible;
+		public bool IsTableVisible
+		{
+			get { return _isTableVisible; }
+			set
+			{
+				_isTableVisible = value; 
+				RaisePropertyChanged(() => IsTableVisible);
+			}
+		}
+
+		private bool _isThereActiveOrders;
+		public bool IsThereActiveOrders { 
+			get { return _isThereActiveOrders; }
+			set {
+				_isThereActiveOrders = value;
+				RaisePropertyChanged (() => IsThereActiveOrders);
+			}
+		}
+
 		private List<ActiveOrder> _activeOrderList;
 		public List<ActiveOrder> ActiveOrderList
 		{
 			get { return _activeOrderList; }
-			set { _activeOrderList = value; RaisePropertyChanged(() => ActiveOrderList); }
+			set { 
+				_activeOrderList = value; 
+				RaisePropertyChanged(() => ActiveOrderList);
+				IsTableVisible = ActiveOrderList.Count > 0;
+				IsThereActiveOrders = ActiveOrderList.Count > 0;
+			}
 		}
 
+		private ICommand _selectActiveOrderCommand;
 		public ICommand SelectActiveOrderCommand
 		{
 			get
 			{
-				return new MvxCommand<ActiveOrder>(activeOrder => {
+				_selectActiveOrderCommand = _selectActiveOrderCommand ?? new MvxCommand<ActiveOrder>(activeOrder => {
 					OpenActiveOrder(activeOrder._id);
 				});
+				return _selectActiveOrderCommand;
 			}
 		}
 
 		private void OpenActiveOrder(string orderId){
-			IsBusy = true;
-			Task.Run (()=>{
-				System.Diagnostics.Debug.WriteLine ("ConnectAsync");
-				ConnectionManager.Connect(_userData.Id.ToString());
+			InvokeOnMainThread (delegate {
+				IsBusy = true;
 			});
+
+			ConnectionManager.ConnectionState = ConnectionStates.USER_WANTS_TO_BE_CONNECTED;
+			var connectionState = ConnectionManager.ConnectionState;
+
+			Debug.WriteLine (ConnectionManager.ConnectionState);
+			ConnectionManager.Connect(_userData.Id.ToString());
 
 			ConnectionManager.On(SocketEvents.Connected, (data) => {
 				ConnectionManager.Off(SocketEvents.Connected);
+
+				Debug.WriteLine ("On Connected state: {0}", connectionState);
+
+				if(connectionState != ConnectionStates.USER_WANTS_TO_BE_CONNECTED){
+					Debug.WriteLine ("Ignored because of state: {0}", connectionState);
+					return;
+				}
+
 				System.Diagnostics.Debug.WriteLine ("connected On: {0}", data["isSuccesful"] );
 				ConnectionManager.Emit( SocketEvents.ActiveOrder, ConnectionManager.OrderIdJsonString(orderId));
+				ConnectionManager.ConnectionState = ConnectionStates.CONNECTED_BY_SERVER;
+				connectionState = ConnectionManager.ConnectionState;
 			});
 
 			ConnectionManager.On (SocketEvents.ActiveOrder, (data) => {

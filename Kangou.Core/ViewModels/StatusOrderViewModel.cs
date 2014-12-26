@@ -14,16 +14,12 @@ namespace Kangou.Core
     public class StatusOrderViewModel 
 		: MvxViewModel
     {
-		public static bool HasBeenClosedByUser;
-
 		public void Init(ActiveOrder activeOrder)
 		{
 			Debug.WriteLine ("ActiveORder: {0}", activeOrder);
 			Status = "Buscando Kangou";
 			Distance = "";
 			ActiveOrder = activeOrder;
-
-			HasBeenClosedByUser = false;
 
 			ConnectionManager.On(SocketEvents.KangouGoingToPickUp, (data) => {
 				ConnectionManager.Off(SocketEvents.KangouGoingToPickUp);
@@ -50,34 +46,50 @@ namespace Kangou.Core
 				SetOrderSignedByClient(activeOrder);
 			});
 
-			ConnectionManager.SocketDisconnected (delegate {
-				Close(this);
+			/* This methods are for updating view model information when 
+			 * connection manager is trying to reconnect. */
+
+			ConnectionManager.On(SocketEvents.Connected, (data) => {
+				ConnectionManager.Emit( SocketEvents.ActiveOrder, ConnectionManager.OrderIdJsonString(activeOrder._id));
 			});
-				
-			switch (ActiveOrder.Status) {
 
+			ConnectionManager.On (SocketEvents.ActiveOrder, (data) => {
+				Debug.WriteLine("**************** On Active Order: {0}",data["status"].ToString());
+				SetPropertiesViewModel (new ActiveOrder(){
+					_id = data["_id"].ToString(),
+					Status = data["status"].ToString(),
+					Date = data["date"].ToString(),
+					PickUpLat = Convert.ToDouble( data["pickup"]["lat"].ToString() ),
+					PickUpLng = Convert.ToDouble( data["pickup"]["lng"].ToString() ),
+					DropOffLat = Convert.ToDouble( data["dropoff"]["lat"].ToString() ),
+					DropOffLng = Convert.ToDouble( data["dropoff"]["lng"].ToString() )
+				});
+			});
+
+			SetPropertiesViewModel (activeOrder);
+		}
+
+		private void SetPropertiesViewModel (ActiveOrder activeOrder)
+		{
+			Debug.WriteLine("**************** Status: {0}",activeOrder.Status);
+			switch (activeOrder.Status) {
 			case StatusOrder.KangouGoingToPickUp:
-				SetKangouGoingToPickUp();
+				SetKangouGoingToPickUp ();
 				break;
-
 			case StatusOrder.KangouWaitingToPickUp:
 				SetKangouWaitingToPickUp ();
 				break;
-
 			case StatusOrder.KangouGoingToDropOff:
-				SetKangouGoingToDropOff();
+				SetKangouGoingToDropOff ();
 				break;
-
 			case StatusOrder.KangouWaitingToDropOff:
-				SetKangouWaitingToDropOff();
+				SetKangouWaitingToDropOff ();
 				break;
-
 			case StatusOrder.OrderSignedByClient:
-				SetOrderSignedByClient(activeOrder);
+				SetOrderSignedByClient (activeOrder);
 				break;
-
 			case StatusOrder.OrderReviewed:
-				SetOrderReviewed();
+				SetOrderReviewed ();
 				break;
 			}
 		}
@@ -88,6 +100,10 @@ namespace Kangou.Core
 			ConnectionManager.Off(SocketEvents.KangouGoingToDropOff);
 			ConnectionManager.Off(SocketEvents.KangouWaitingToDropOff);
 			ConnectionManager.Off(SocketEvents.OrderSignedByClient);
+			ConnectionManager.Off(SocketEvents.KangouPosition);
+
+			ConnectionManager.Off(SocketEvents.Connected);
+			ConnectionManager.Off(SocketEvents.ActiveOrder);
 		}
 
 		private void SetKangouGoingToPickUp(){
@@ -123,6 +139,7 @@ namespace Kangou.Core
 		}
 
 		private void SetOrderSignedByClient(ActiveOrder activeOrder){
+			TurnOffConnectionManager ();
 			var message = "La orden ha finalizado";
 			Status = message;
 			Distance = "";

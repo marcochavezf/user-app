@@ -2,6 +2,8 @@ using Cirrious.MvvmCross.ViewModels;
 
 namespace Kangou.Core.Helpers
 {
+
+
     public class Location
         : MvxNotifyPropertyChanged
     {

@@ -45,15 +45,13 @@
 		<string>Icon-Small-40</string>
 		<string>Icon-Small-40@2x</string>
 	</array>
-	<key>Foreground Location</key>
-	<string>NSLocationWhenInUseUsageDescription</string>
-	<key>Background Location</key>
-	<string>NSLocationAlwaysUsageDescription</string>
 	<key>UIStatusBarHidden</key>
 	<true/>
-	<key>CFBundleShortVersionString</key>
-	<string>0.1.5</string>
 	<key>CFBundleVersion</key>
-	<string>0.1.5</string>
+	<string>1.0.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Getting location for application</string>
 </dict>
 </plist>

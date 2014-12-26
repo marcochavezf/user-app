@@ -9,6 +9,7 @@ using Kangou.Core.Services.DataStore;
 using System.Collections.Generic;
 using Kangou.Core.ViewModels.ObserverMessages;
 using Kangou.Core.ViewModels;
+using System;
 
 namespace Kangou.Core.ViewModels
 {
@@ -49,10 +50,12 @@ namespace Kangou.Core.ViewModels
 			{
 				return new MvxCommand<CreditCardData>(creditCardData => {
 					_messenger.Publish (new CreditCardDataMessage (this, creditCardData));
-					Close(this);
+					CloseViewToRoot();
 				});
 			}
 		}
+
+		public Action CloseViewToRoot { get; set; }
 
 		#region IDelete implementation
 		public void DeleteData(int id)

@@ -19,6 +19,7 @@ Newtonsoft.Json.dll
 System.Net.Http.dll
 Microsoft.Threading.Tasks.dll
 ModernHttpClient.dll
+GoogleMaps.dll
 MBProgressHUD.dll
 Cirrious.MvvmCross.Touch.dll
 Cirrious.CrossCore.Touch.dll
@@ -32,3 +33,5 @@ Cirrious.MvvmCross.Plugins.Json.dll
 Cirrious.MvvmCross.Plugins.DownloadCache.dll
 Cirrious.MvvmCross.Plugins.File.dll
 Cirrious.MvvmCross.Plugins.DownloadCache.Touch.dll
+Cirrious.MvvmCross.Plugins.Visibility.dll
+Cirrious.MvvmCross.Plugins.Visibility.Touch.dll

@@ -1,21 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Kangou.Core/ViewModels/RegisterOrderViewModel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Kangou.Touch/Views/PickUpView.cs">
     <Files>
-      <File FileName="Kangou.Core/ViewModels/RegisterOrderViewModel.cs" Line="3" Column="3" />
-      <File FileName="Kangou.Touch/Views/DropOffListView.cs" Line="46" Column="46" />
-      <File FileName="Kangou.Touch/Views/PickUpListView.cs" Line="50" Column="50" />
-      <File FileName="Kangou.Touch/Views/ItemsView.cs" Line="4" Column="4" />
-      <File FileName="Kangou.Touch/Views/PickUpView.cs" Line="46" Column="46" />
-      <File FileName="Kangou.Touch/Views/DropOffView.cs" Line="51" Column="51" />
-      <File FileName="Kangou.Touch/Views/CreditCardView.cs" Line="16" Column="16" />
-      <File FileName="Kangou.Touch/Views/CreditCardListView.cs" Line="40" Column="40" />
+      <File FileName="Kangou.Touch/Views/PickUpView.cs" Line="49" Column="49" />
+      <File FileName="Kangou.Touch/Views/DropOffView.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Core/Helpers/GpsArea.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Core/Helpers/Location.cs" Line="1" Column="1" />
+      <File FileName="Kangou.Core/Helpers/StringValidator.cs" Line="1" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

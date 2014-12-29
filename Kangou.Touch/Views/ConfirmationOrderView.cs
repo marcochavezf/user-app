@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using CoreGraphics;
 using Cirrious.MvvmCross.Binding.BindingContext;
 using Cirrious.MvvmCross.Touch.Views;
-using MonoTouch.ObjCRuntime;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+using ObjCRuntime;
+using UIKit;
+using Foundation;
 using Kangou.Core.ViewModels;
 using Kangou.Core.Helpers;
 
@@ -34,12 +34,12 @@ namespace Kangou.Touch.Views
 			var heightImage = 260f;
 			var marginWidthImage = WIDTH * 0.5f - widthImage * 0.5f;
 			var pYoffset = marginWidthImage * 0.5f;
-			kangouImage.Frame = new RectangleF (marginWidthImage, pYoffset, widthImage, heightImage);
+			kangouImage.Frame = new CGRect (marginWidthImage, pYoffset, widthImage, heightImage);
 			Add (kangouImage);
 			pYoffset += heightImage + MARGIN_HEIGHT_SUBVIEWS;
 
 			//Confirmation Message Text View
-			var confirmationMessageTextView = new UITextView(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTLABEL));
+			var confirmationMessageTextView = new UITextView(new CGRect(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTLABEL));
 			confirmationMessageTextView.Text = StringMessages.ORDER_CONFIRMED_MESSAGE;
 			confirmationMessageTextView.Font = UIFont.FromName(LABEL_FONT, 12f);
 			confirmationMessageTextView.TextColor = UIColor.Gray;
@@ -53,7 +53,7 @@ namespace Kangou.Touch.Views
 			var comeBackButton = new UIButton (UIButtonType.RoundedRect);
 			comeBackButton.SetTitle ("Regresar", UIControlState.Normal);
 			comeBackButton.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
-			comeBackButton.Frame = new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_BUTTON);
+			comeBackButton.Frame = new CGRect(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_BUTTON);
 			comeBackButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			comeBackButton.Layer.BorderWidth = 0.5f;
 			Add (comeBackButton);

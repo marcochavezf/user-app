@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using CoreGraphics;
 using Cirrious.MvvmCross.Binding.BindingContext;
 using Cirrious.MvvmCross.Touch.Views;
-using MonoTouch.ObjCRuntime;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+using ObjCRuntime;
+using UIKit;
+using Foundation;
 using Kangou.Core.ViewModels;
 using Kangou.Core;
 using Kangou.Helpers;
@@ -38,7 +38,7 @@ namespace Kangou.Touch.Views
 			var pYoffset = HEIGHT * 0.22f;
 
 			//CreditCard Number
-			var creditCardNumberTextField = new UITextField(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
+			var creditCardNumberTextField = new UITextField(new CGRect(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
 			creditCardNumberTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			creditCardNumberTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			creditCardNumberTextField.Layer.BorderWidth = 0.5f;
@@ -57,7 +57,7 @@ namespace Kangou.Touch.Views
 			pYoffset += HEIGHT_TEXTFIELD-0.5f;
 
 			//Expiration Date
-			var expirationDateTextField = new UITextField(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
+			var expirationDateTextField = new UITextField(new CGRect(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
 			expirationDateTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			expirationDateTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			expirationDateTextField.Layer.BorderWidth = 0.5f;
@@ -76,7 +76,7 @@ namespace Kangou.Touch.Views
 			pYoffset += HEIGHT_TEXTFIELD-0.5f;
 
 			//CVV
-			var cvvTextField = new UITextField(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
+			var cvvTextField = new UITextField(new CGRect(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
 			cvvTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			cvvTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			cvvTextField.Layer.BorderWidth = 0.5f;
@@ -94,7 +94,7 @@ namespace Kangou.Touch.Views
 			pYoffset += HEIGHT_TEXTFIELD * 1.85f;
 
 			//Info Pick Up Text View
-			var aboutChargeTextView = new UITextView(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTVIEW));
+			var aboutChargeTextView = new UITextView(new CGRect(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTVIEW));
 			var messageAboutCharge = "Se realizará el cargo hasta que el kangou más cercano haya aceptado la orden de envío.\n\n";
 			if(ItemsViewModel._isAPurchase)
 				messageAboutCharge += "Por ser una compra, se realizará un segundo cargo: la compra más el 5% de comisión de la misma.\n\nEl Kangou te avisará del monto total antes de hacer la compra.\n\n";

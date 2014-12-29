@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using CoreGraphics;
 using Cirrious.MvvmCross.Binding.BindingContext;
 using Cirrious.MvvmCross.Touch.Views;
-using MonoTouch.ObjCRuntime;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+using ObjCRuntime;
+using UIKit;
+using Foundation;
 using Kangou.Core.ViewModels;
 using SlidingPanels.Lib;
 using System;

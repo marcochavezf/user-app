@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using CoreGraphics;
 using Cirrious.MvvmCross.Binding.BindingContext;
 using Cirrious.MvvmCross.Touch.Views;
-using MonoTouch.ObjCRuntime;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+using ObjCRuntime;
+using UIKit;
+using Foundation;
 using Kangou.Core;
 using Cirrious.MvvmCross.Binding.Touch.Views;
 using Kangou.Core.ViewModels;
@@ -35,7 +35,7 @@ namespace Kangou.Touch.Views
 			var LABEL_FONT = "Arial-BoldMT";
 
 			//Creating Table
-			var tableView = new UITableView(new RectangleF(0, 0, WIDTH, HEIGHT), UITableViewStyle.Plain);
+			var tableView = new UITableView(new CGRect(0, 0, WIDTH, HEIGHT), UITableViewStyle.Plain);
 			tableView.BackgroundColor = UIColor.FromPatternImage(UIImage.FromFile("background.png"));
 			var source = new MvxStandardTableViewSource (tableView, UITableViewCellStyle.Subtitle, new NSString("Id"), "TitleText Format", UITableViewCellAccessory.None);
 			tableView.Source = source;
@@ -43,7 +43,7 @@ namespace Kangou.Touch.Views
 
 			var pYoffset = NavigationController.NavigationBar.Frame.Y + NavigationController.NavigationBar.Frame.Height + MARGIN_SUBVIEWS;
 
-			_thereIsNotActiveOrdersLabel = new UILabel (new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20));
+			_thereIsNotActiveOrdersLabel = new UILabel (new CGRect(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20));
 			_thereIsNotActiveOrdersLabel.Text = "No hay órdenes activas";
 			_thereIsNotActiveOrdersLabel.TextAlignment = UITextAlignment.Center;
 			_thereIsNotActiveOrdersLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);

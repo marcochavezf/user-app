@@ -1,8 +1,8 @@
 ﻿using System;
 using Cirrious.MvvmCross.Touch.Views;
-using MonoTouch.UIKit;
+using UIKit;
 using SlidingPanels.Lib.PanelContainers;
-using System.Drawing;
+using CoreGraphics;
 using SlidingPanels.Lib;
 
 namespace Kangou.Touch
@@ -51,7 +51,7 @@ namespace Kangou.Touch
 
 		protected UIBarButtonItem CreateSliderButton(string imageName, PanelType panelType)
 		{
-			UIButton button = new UIButton(new RectangleF(0, 0, 40f, 40f));
+			UIButton button = new UIButton(new CGRect(0, 0, 40f, 40f));
 			button.SetBackgroundImage(UIImage.FromBundle(imageName), UIControlState.Normal);
 			button.TouchUpInside += delegate
 			{

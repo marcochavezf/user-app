@@ -1,6 +1,6 @@
 using System;
 using Cirrious.MvvmCross.Touch.Views.Presenters;
-using MonoTouch.UIKit;
+using UIKit;
 using SlidingPanels.Lib;
 using SlidingPanels.Lib.PanelContainers;
 using Cirrious.MvvmCross.Touch.Views;
@@ -8,7 +8,7 @@ using Cirrious.MvvmCross.ViewModels;
 using Cirrious.CrossCore.Exceptions;
 using Cirrious.CrossCore.Platform;
 using Cirrious.MvvmCross.Views;
-using System.Drawing;
+using CoreGraphics;
 using Kangou.Core.ViewModels;
 
 namespace Kangou.Touch

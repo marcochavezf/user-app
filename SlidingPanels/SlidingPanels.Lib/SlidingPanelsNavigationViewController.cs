@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MonoTouch.UIKit;
+using UIKit;
 using SlidingPanels.Lib.PanelContainers;
 using Kangou.Core.ViewModels;
 using Kangou.Core;

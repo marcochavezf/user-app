@@ -1,7 +1,7 @@
 ﻿using System;
 using Cirrious.MvvmCross.Touch.Views;
-using MonoTouch.UIKit;
-using MonoTouch.ObjCRuntime;
+using UIKit;
+using ObjCRuntime;
 using Kangou.Touch.Views;
 
 namespace Kangou.Touch

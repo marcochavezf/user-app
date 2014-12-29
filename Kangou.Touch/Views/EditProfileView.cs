@@ -1,7 +1,7 @@
 using System;
-using System.Drawing;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using CoreGraphics;
+using Foundation;
+using UIKit;
 using Cirrious.MvvmCross.Touch.Views;
 using SlidingPanels.Lib;
 using Cirrious.MvvmCross.Binding.BindingContext;
@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using SlidingPanels.Lib.PanelContainers;
 using Kangou.Core.ViewModels;
 using Kangou.Core;
-using MonoTouch.ObjCRuntime;
+using ObjCRuntime;
 
 namespace Kangou.Touch
 {
@@ -41,7 +41,7 @@ namespace Kangou.Touch
 			var pYoffset = NavigationController.NavigationBar.Frame.Y + NavigationController.NavigationBar.Frame.Height + MARGIN_WIDTH_SUBVIEWS;
 
 			//FullName
-			var fullNameTextField = new UITextField(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
+			var fullNameTextField = new UITextField(new CGRect(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
 			fullNameTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			fullNameTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			fullNameTextField.Layer.BorderWidth = 0.5f;
@@ -52,7 +52,7 @@ namespace Kangou.Touch
 			pYoffset += HEIGHT_TEXTFIELD-0.5f;
 
 			//PhoneNumber
-			var phoneNumberTextField = new UITextField(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
+			var phoneNumberTextField = new UITextField(new CGRect(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
 			phoneNumberTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			phoneNumberTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			phoneNumberTextField.Layer.BorderWidth = 0.5f;
@@ -64,7 +64,7 @@ namespace Kangou.Touch
 			pYoffset += HEIGHT_TEXTFIELD-0.5f;
 
 			//Email
-			var emailTextField = new UITextField(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
+			var emailTextField = new UITextField(new CGRect(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
 			emailTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			emailTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			emailTextField.Layer.BorderWidth = 0.5f;

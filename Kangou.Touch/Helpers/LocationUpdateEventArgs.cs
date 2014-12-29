@@ -1,6 +1,6 @@
 ﻿using System;
 
-using MonoTouch.CoreLocation;
+using CoreLocation;
 
 namespace Kangou.Touch
 {

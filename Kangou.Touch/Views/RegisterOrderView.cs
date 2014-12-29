@@ -1,17 +1,16 @@
-﻿using System.Drawing;
+﻿using CoreGraphics;
 using Cirrious.MvvmCross.Binding.BindingContext;
 using Cirrious.MvvmCross.Touch.Views;
-using MonoTouch.ObjCRuntime;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+using ObjCRuntime;
+using UIKit;
+using Foundation;
 using Kangou.Core.ViewModels;
 using System.Collections.Generic;
 using System;
 using Kangou.Touch.Helpers;
 using Kangou.Core.Helpers;
 using Kangou.Helpers;
-using MonoTouch.CoreGraphics;
-using MonoTouch.CoreLocation;
+using CoreLocation;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using SlidingPanels.Lib;
@@ -56,7 +55,7 @@ namespace Kangou.Touch.Views
 			itemsLabel.SetTitle ("1. ¿Qué comprar o traer?", UIControlState.Normal);
 			itemsLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			itemsLabel.TintColor = UIColor.Gray;
-			itemsLabel.Frame = new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20);
+			itemsLabel.Frame = new CGRect(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20);
 			Add (itemsLabel);
 			pYoffset += PADDING_LABEL_BUTTON;
 
@@ -65,7 +64,7 @@ namespace Kangou.Touch.Views
 			itemsButton.SetTitle ("Agregar productos", UIControlState.Normal);
 			itemsButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_B);
 			itemsButton.TintColor = UIColor.Orange;
-			itemsButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
+			itemsButton.Frame = new CGRect(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			itemsButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			itemsButton.Layer.BorderWidth = BORDER_WIDTH;
 			Add (itemsButton);
@@ -76,7 +75,7 @@ namespace Kangou.Touch.Views
 			pickUpLabel.SetTitle ("2. ¿Dónde recoger?", UIControlState.Normal);
 			pickUpLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			pickUpLabel.TintColor = UIColor.Gray;
-			pickUpLabel.Frame = new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20);
+			pickUpLabel.Frame = new CGRect(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20);
 			Add (pickUpLabel);
 			pYoffset += PADDING_LABEL_BUTTON;
 
@@ -85,7 +84,7 @@ namespace Kangou.Touch.Views
 			pickUpButton.SetTitle ("Agregar dirección", UIControlState.Normal);
 			pickUpButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
 			pickUpButton.TintColor = UIColor.Orange;
-			pickUpButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
+			pickUpButton.Frame = new CGRect(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			pickUpButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			pickUpButton.Layer.BorderWidth = BORDER_WIDTH;
 			Add (pickUpButton);
@@ -96,7 +95,7 @@ namespace Kangou.Touch.Views
 			dropOffLabel.SetTitle ("3. ¿Dónde entregar?", UIControlState.Normal);
 			dropOffLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			dropOffLabel.TintColor = UIColor.Gray;
-			dropOffLabel.Frame = new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20);
+			dropOffLabel.Frame = new CGRect(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20);
 			Add (dropOffLabel);
 			pYoffset += PADDING_LABEL_BUTTON;
 
@@ -105,7 +104,7 @@ namespace Kangou.Touch.Views
 			dropOffButton.SetTitle ("Agregar dirección", UIControlState.Normal);
 			dropOffButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
 			dropOffButton.TintColor = UIColor.Orange;
-			dropOffButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
+			dropOffButton.Frame = new CGRect(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			dropOffButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			dropOffButton.Layer.BorderWidth = BORDER_WIDTH;
 			Add (dropOffButton);
@@ -117,7 +116,7 @@ namespace Kangou.Touch.Views
 			paymentMethodLabel.SetTitle ("4. Medio de pago", UIControlState.Normal);
 			paymentMethodLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			paymentMethodLabel.TintColor = UIColor.Gray;
-			paymentMethodLabel.Frame = new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20);
+			paymentMethodLabel.Frame = new CGRect(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, 20);
 			Add (paymentMethodLabel);
 			pYoffset += PADDING_LABEL_BUTTON;
 
@@ -126,7 +125,7 @@ namespace Kangou.Touch.Views
 			paymentMethodButton.SetTitle ("Seleccionar forma de pago", UIControlState.Normal);
 			paymentMethodButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
 			paymentMethodButton.TintColor = UIColor.Orange;
-			paymentMethodButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
+			paymentMethodButton.Frame = new CGRect(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			paymentMethodButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			paymentMethodButton.Layer.BorderWidth = BORDER_WIDTH;
 			Add (paymentMethodButton);
@@ -171,7 +170,7 @@ namespace Kangou.Touch.Views
 			pideUnKangouButton.SetTitle ("Pedir un Kangou", UIControlState.Normal);
 			pideUnKangouButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_C);
 			pideUnKangouButton.TintColor = UIColor.Orange;
-			pideUnKangouButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
+			pideUnKangouButton.Frame = new CGRect(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON);
 			pideUnKangouButton.Layer.BorderColor = UIColor.Gray.CGColor;
 			pideUnKangouButton.Layer.BorderWidth = BORDER_WIDTH;
 			pideUnKangouButton.TouchUpInside += actionPideUnKangou;
@@ -182,7 +181,7 @@ namespace Kangou.Touch.Views
 			_priceDistanceButton.SetTitle ("", UIControlState.Normal);
 			_priceDistanceButton.Font = UIFont.FromName(Constants.BUTTON_FONT, Constants.BUTTON_FONT_SIZE_A);
 			_priceDistanceButton.TintColor = UIColor.Orange;
-			_priceDistanceButton.Frame = new RectangleF(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON* 2);
+			_priceDistanceButton.Frame = new CGRect(MARGIN_BUTTONS, pYoffset, WIDTH-MARGIN_BUTTONS*2, HEIGHT_BUTTON* 2);
 			_priceDistanceButton.LineBreakMode = UILineBreakMode.WordWrap;
 			_priceDistanceButton.TitleLabel.TextAlignment = UITextAlignment.Center;
 			_priceDistanceButton.Layer.BorderColor = UIColor.Gray.CGColor;
@@ -338,7 +337,7 @@ namespace Kangou.Touch.Views
 				// Determine the correct size to start the overlay (depending on device orientation)
 				var bounds = UIScreen.MainScreen.Bounds; // portrait bounds
 				if (UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.LandscapeLeft || UIApplication.SharedApplication.StatusBarOrientation == UIInterfaceOrientation.LandscapeRight) {
-					bounds.Size = new SizeF(bounds.Size.Height, bounds.Size.Width);
+					bounds.Size = new CGSize(bounds.Size.Height, bounds.Size.Width);
 				}
 				// show the loading overlay on the UI thread using the correct orientation sizing
 				var loadingOverlay = new LoadingOverlay (bounds);
@@ -364,6 +363,7 @@ namespace Kangou.Touch.Views
 						});
 
 				}catch (Exception e){
+					Debug.WriteLine ("Exception: {0}",e);
 					errorOrderResponseAlert.Show ();
 					loadingOverlay.Hide (()=>{
 						errorOrderResponseAlert.Show ();

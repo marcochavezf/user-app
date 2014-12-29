@@ -1,11 +1,11 @@
-﻿using System.Drawing;
+﻿using CoreGraphics;
 using Cirrious.MvvmCross.Binding.BindingContext;
 using Cirrious.MvvmCross.Touch.Views;
-using MonoTouch.ObjCRuntime;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+using ObjCRuntime;
+using UIKit;
+using Foundation;
 using Kangou.Core.ViewModels;
-using MonoTouch.CoreLocation;
+using CoreLocation;
 using System;
 using SlidingPanels.Lib;
 using Google.Maps;
@@ -44,7 +44,7 @@ namespace Kangou.Touch.Views
 			var pYoffset = HEIGHT * 0.175f;
 
 			//FullName
-			var fullNameTextField = new UITextField(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
+			var fullNameTextField = new UITextField(new CGRect(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
 			fullNameTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			fullNameTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			fullNameTextField.Layer.BorderWidth = 0.5f;
@@ -55,7 +55,7 @@ namespace Kangou.Touch.Views
 			pYoffset += HEIGHT_TEXTFIELD-0.5f;
 
 			//References
-			var referencesTextField = new UITextField(new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
+			var referencesTextField = new UITextField(new CGRect(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTFIELD));
 			referencesTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			referencesTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			referencesTextField.Layer.BorderWidth = 0.5f;
@@ -75,7 +75,7 @@ namespace Kangou.Touch.Views
 			addressTextField.SetTitleColor (UIColor.DarkTextColor, UIControlState.Application);
 			addressTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			addressTextField.TintColor = UIColor.DarkTextColor;
-			addressTextField.Frame = new RectangleF(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTVIEW);
+			addressTextField.Frame = new CGRect(MARGIN_WIDTH_SUBVIEWS, pYoffset, WIDTH-MARGIN_WIDTH_SUBVIEWS*2, HEIGHT_TEXTVIEW);
 			addressTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			addressTextField.Layer.BorderWidth = 0.5f;
 			addressTextField.BackgroundColor = Constants.LABEL_BACKGROUND_COLOR;
@@ -102,8 +102,8 @@ namespace Kangou.Touch.Views
 				latitude: RegisterOrderViewModel.LOCATION.Lat, 
 				longitude: RegisterOrderViewModel.LOCATION.Lng, 
 				zoom: 15);
-			_mapView = MapView.FromCamera (RectangleF.Empty, camera);
-			_mapView.Frame = new RectangleF (0, pYoffset, CONTAINER_SIZE.Width, CONTAINER_SIZE.Height - pYoffset);
+			_mapView = MapView.FromCamera (CGRect.Empty, camera);
+			_mapView.Frame = new CGRect (0, pYoffset, CONTAINER_SIZE.Width, CONTAINER_SIZE.Height - pYoffset);
 			_mapView.Layer.BorderColor = UIColor.Gray.CGColor;
 			_mapView.Layer.BorderWidth = 0.5f;
 			InvokeOnMainThread (()=> _mapView.MyLocationEnabled = true);
@@ -198,7 +198,7 @@ namespace Kangou.Touch.Views
 			var kangouMarker = new UIImageView (UIImage.FromBundle("ic_marker.png"));
 			var widthMarker = 41f;
 			var heightMarker = 60f;
-			kangouMarker.Frame = new RectangleF (CONTAINER_SIZE.Width*0.5f - widthMarker*0.5f, pYoffset - heightMarker*1.0f, widthMarker, heightMarker);
+			kangouMarker.Frame = new CGRect (CONTAINER_SIZE.Width*0.5f - widthMarker*0.5f, pYoffset - heightMarker*1.0f, widthMarker, heightMarker);
 			Add (kangouMarker);
 
 

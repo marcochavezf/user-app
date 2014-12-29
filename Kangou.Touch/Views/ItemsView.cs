@@ -1,12 +1,11 @@
-﻿using System.Drawing;
+﻿using CoreGraphics;
 using Cirrious.MvvmCross.Binding.BindingContext;
 using Cirrious.MvvmCross.Touch.Views;
-using MonoTouch.ObjCRuntime;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+using ObjCRuntime;
+using UIKit;
+using Foundation;
 using Kangou.Core.ViewModels;
 using SlidingPanels.Lib;
-using MonoTouch.Dialog;
 using System;
 
 namespace Kangou.Touch.Views
@@ -36,7 +35,7 @@ namespace Kangou.Touch.Views
 			var pYoffset = NavigationController.NavigationBar.Frame.Y + NavigationController.NavigationBar.Frame.Height + MARGIN_SUBVIEWS * 0.5f;
 
 			//Info Pick Up with Purchase
-			var infoPickUpLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_LABEL));
+			var infoPickUpLabel = new UILabel(new CGRect(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_LABEL));
 			infoPickUpLabel.Text = "¿Recoger o Comprar?";
 			infoPickUpLabel.Lines = 0;
 			infoPickUpLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
@@ -49,7 +48,7 @@ namespace Kangou.Touch.Views
 			pYoffset += PADDING_BTWN_ELEMENT;
 			var segmentControl = new UISegmentedControl();
 			var heightSegmentControl = HEIGHT_LABEL;
-			segmentControl.Frame = new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2,heightSegmentControl);
+			segmentControl.Frame = new CGRect(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2,heightSegmentControl);
 			segmentControl.InsertSegment("Recoger", 0, true);
 			segmentControl.InsertSegment("Comprar", 1, true);
 			segmentControl.SelectedSegment = -1;
@@ -63,7 +62,7 @@ namespace Kangou.Touch.Views
 			pYoffset += heightSegmentControl + PADDING_BTWN_ELEMENT * 0.5f;
 
 			//Info Pick Up Label
-			var infoLabel = new UILabel(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_LABEL));
+			var infoLabel = new UILabel(new CGRect(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_LABEL));
 			infoLabel.Text = "Inserta aquí el/los producto(s)";
 			infoLabel.Lines = 0;
 			infoLabel.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
@@ -74,7 +73,7 @@ namespace Kangou.Touch.Views
 			pYoffset += PADDING_BTWN_ELEMENT;
 
 			//Text Field Pick Up Label
-			itemsTextField = new UITextView(new RectangleF(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_TEXT_FIELD));
+			itemsTextField = new UITextView(new CGRect(MARGIN_SUBVIEWS, pYoffset, WIDTH-MARGIN_SUBVIEWS*2, HEIGHT_TEXT_FIELD));
 			itemsTextField.Font = UIFont.FromName(LABEL_FONT, LABEL_FONT_SIZE);
 			itemsTextField.TextAlignment = UITextAlignment.Center;
 			itemsTextField.Layer.CornerRadius = 0.5f;

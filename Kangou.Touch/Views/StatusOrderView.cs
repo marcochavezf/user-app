@@ -1,14 +1,14 @@
-using System.Drawing;
+using CoreGraphics;
 using Cirrious.MvvmCross.Binding.BindingContext;
 using Cirrious.MvvmCross.Touch.Views;
-using MonoTouch.ObjCRuntime;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+using ObjCRuntime;
+using UIKit;
+using Foundation;
 using System;
 using System.Threading.Tasks;
 using System.Threading;
-using MonoTouch.MapKit;
-using MonoTouch.CoreLocation;
+using MapKit;
+using CoreLocation;
 using Kangou.Core;
 using Kangou.Touch;
 using System.Diagnostics;
@@ -44,8 +44,8 @@ namespace KangouMessenger.Touch
 				latitude: RegisterOrderViewModel.LOCATION.Lat, 
 				longitude: RegisterOrderViewModel.LOCATION.Lng, 
 				zoom: 15);
-			var mapView = MapView.FromCamera (RectangleF.Empty, camera);
-			mapView.Frame = new RectangleF (0, 0, widthMap, heightMap);
+			var mapView = MapView.FromCamera (CGRect.Empty, camera);
+			mapView.Frame = new CGRect (0, 0, widthMap, heightMap);
 			mapView.Layer.BorderColor = UIColor.Gray.CGColor;
 			mapView.Layer.BorderWidth = 0.5f;
 			Add (mapView);
@@ -62,7 +62,7 @@ namespace KangouMessenger.Touch
 			var posYinst = NavigationController.NavigationBar.Frame.Y + NavigationController.NavigationBar.Frame.Height;
 			var posXOffsetInst = 0f;
 			var alphaTextViews = 0.75f;
-			var statusTextView = new UITextView(new RectangleF(posXOffsetInst, posYinst, widthTextView, heightTextView));
+			var statusTextView = new UITextView(new CGRect(posXOffsetInst, posYinst, widthTextView, heightTextView));
 			statusTextView.Editable = false;
 			statusTextView.Font = UIFont.FromName(Kangou.Touch.Constants.LABEL_BOLD_FONT, Kangou.Touch.Constants.LABEL_FONT_SIZE);
 			statusTextView.TextAlignment = UITextAlignment.Center;
@@ -71,7 +71,7 @@ namespace KangouMessenger.Touch
 
 			//Distance Text View
 			var posYbutton = heightMap - heightTextView;
-			var distanceTextView = new UITextView(new RectangleF(posXOffsetInst, posYbutton, widthTextView, heightTextView));
+			var distanceTextView = new UITextView(new CGRect(posXOffsetInst, posYbutton, widthTextView, heightTextView));
 			distanceTextView.Editable = false;
 			distanceTextView.Font = UIFont.FromName(Kangou.Touch.Constants.LABEL_BOLD_FONT, Kangou.Touch.Constants.LABEL_FONT_SIZE);
 			distanceTextView.TextAlignment = UITextAlignment.Center;
@@ -126,7 +126,7 @@ namespace KangouMessenger.Touch
 				orderFinishedAlert.Clicked += (object alertSender, UIButtonEventArgs eventArgsAlert) => {
 					ConnectionManager.ConnectionState = ConnectionStates.DISCONNECTED_BY_USER;
 					ConnectionManager.Disconnect();
-					NavigationController.PopViewControllerAnimated(true);
+					NavigationController.PopViewController(true);
 				};
 				orderFinishedAlert.Show ();
 			}

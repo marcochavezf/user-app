@@ -1,9 +1,9 @@
-using System.Drawing;
+using CoreGraphics;
 using Cirrious.MvvmCross.Binding.BindingContext;
 using Cirrious.MvvmCross.Touch.Views;
-using MonoTouch.ObjCRuntime;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+using ObjCRuntime;
+using UIKit;
+using Foundation;
 using System;
 using System.Threading.Tasks;
 using System.Threading;
@@ -40,7 +40,7 @@ namespace Kangou.Touch
 
 
 			//Commnents
-			var titleCommentsLabel = new UILabel(new RectangleF(posXtitle, posYoffset, widthLabel, heightLabel));
+			var titleCommentsLabel = new UILabel(new CGRect(posXtitle, posYoffset, widthLabel, heightLabel));
 			titleCommentsLabel.Text = "Comentarios acerca del cliente";
 			titleCommentsLabel.TextAlignment = UITextAlignment.Center;
 			titleCommentsLabel.Font = UIFont.FromName(Constants.LABEL_BOLD_FONT, Constants.LABEL_FONT_SIZE);
@@ -51,7 +51,7 @@ namespace Kangou.Touch
 			var widthTextField = WIDTH * 0.8f;
 			var heightTextField = HEIGHT * 0.125f;
 			var posXtextField = (WIDTH - widthTextField) * 0.5f;
-			var commentsAboutClientTextField = new UITextView(new RectangleF(posXtextField, posYoffset, widthTextField, heightTextField));
+			var commentsAboutClientTextField = new UITextView(new CGRect(posXtextField, posYoffset, widthTextField, heightTextField));
 			commentsAboutClientTextField.Font =  UIFont.FromName(Constants.LABEL_BOLD_FONT, Constants.LABEL_FONT_SIZE);
 			commentsAboutClientTextField.Layer.BorderColor = UIColor.Gray.CGColor;
 			commentsAboutClientTextField.Layer.BorderWidth = 0.5f;
@@ -60,7 +60,7 @@ namespace Kangou.Touch
 
 			//Rating
 			posYoffset += 80f;
-			var titleRatingLabel = new UILabel(new RectangleF(posXtitle, posYoffset, widthLabel, heightLabel));
+			var titleRatingLabel = new UILabel(new CGRect(posXtitle, posYoffset, widthLabel, heightLabel));
 			titleRatingLabel.Text = "Calificación acerca del cliente";
 			titleRatingLabel.TextAlignment = UITextAlignment.Center;
 			titleRatingLabel.Font = UIFont.FromName(Constants.LABEL_BOLD_FONT, Constants.LABEL_FONT_SIZE);
@@ -115,7 +115,7 @@ namespace Kangou.Touch
 		}
 
 
-		private void AddReviewStars (float WIDTH, float pY, ReviewViewModel viewModel)
+		private void AddReviewStars (nfloat WIDTH, nfloat pY, ReviewViewModel viewModel)
 		{
 			var starButtons = new List<UIButton> ();
 
@@ -130,7 +130,7 @@ namespace Kangou.Touch
 				var starReviewButton = new UIButton (UIButtonType.RoundedRect);
 				var pXOffset = pXstars + (widthImage + marginWidth) * i;
 				starReviewButton.SetBackgroundImage( UIImage.FromBundle ("starReviewOff.png"), UIControlState.Normal);
-				starReviewButton.Frame = new RectangleF (pXOffset, pYstars, widthImage, heightImage);
+				starReviewButton.Frame = new CGRect (pXOffset, pYstars, widthImage, heightImage);
 				starReviewButton.TouchUpInside += (object sender, EventArgs e) => {
 					viewModel.RatingAboutClient = starIndex + 1;
 					for(int j=0; j<starButtons.Count; j++){

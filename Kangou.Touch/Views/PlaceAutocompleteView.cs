@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using CoreGraphics;
 using Cirrious.MvvmCross.Binding.BindingContext;
 using Cirrious.MvvmCross.Touch.Views;
-using MonoTouch.ObjCRuntime;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
+using ObjCRuntime;
+using UIKit;
+using Foundation;
 using Kangou.Core;
 using Cirrious.MvvmCross.Binding.Touch.Views;
 using Kangou.Core.ViewModels;
@@ -33,7 +33,7 @@ namespace Kangou.Touch.Views
 
 			//Adding Text Field
 			var posXoffset = HEIGHT_TEXTFIELD * 0.38f;
-			_textField = new UITextField(new RectangleF(posXoffset, posYoffset, WIDTH-posXoffset, HEIGHT_TEXTFIELD));
+			_textField = new UITextField(new CGRect(posXoffset, posYoffset, WIDTH-posXoffset, HEIGHT_TEXTFIELD));
 			_textField.Placeholder = "Ingresa la ubicación";
 			Add(_textField);
 			posYoffset += HEIGHT_TEXTFIELD;
@@ -46,12 +46,12 @@ namespace Kangou.Touch.Views
 			var googleLogoTop = new UIImageView (UIImage.FromBundle("powered-by-google.png"));
 			var widthLogo = 150f;
 			var heightLogo = 23f;
-			googleLogoTop.Frame = new RectangleF (posXoffset-1f, posYoffset + heightLogo * 0.75f, widthLogo, heightLogo);
+			googleLogoTop.Frame = new CGRect (posXoffset-1f, posYoffset + heightLogo * 0.75f, widthLogo, heightLogo);
 			Add (googleLogoTop);
 
 			//Creating Table
 			var heightTable = HEIGHT * 0.65f;
-			var tableView = new UITableView(new RectangleF(0, posYoffset, WIDTH, heightTable), UITableViewStyle.Plain);
+			var tableView = new UITableView(new CGRect(0, posYoffset, WIDTH, heightTable), UITableViewStyle.Plain);
 			var source = new MvxStandardTableViewSource(tableView, "TitleText description");
 			tableView.Source = source;
 			tableView.AddGestureRecognizer (gesture);
@@ -60,7 +60,7 @@ namespace Kangou.Touch.Views
 
 			//Adding Google Bottom Logo
 			var googleLogoBottom = new UIImageView (UIImage.FromBundle("powered-by-google.png"));
-			googleLogoBottom.Frame = new RectangleF (posXoffset-1f, posYoffset + heightLogo * 0.75f, widthLogo, heightLogo);
+			googleLogoBottom.Frame = new CGRect (posXoffset-1f, posYoffset + heightLogo * 0.75f, widthLogo, heightLogo);
 			Add (googleLogoBottom);
 
 			//Data Binding

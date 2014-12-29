@@ -1,9 +1,8 @@
 ﻿using System;
 
-using MonoTouch.CoreLocation;
-using MonoTouch.UIKit;
-using MonoTouch.Foundation;
-using KangouMessenger.Core;
+using CoreLocation;
+using UIKit;
+using Foundation;
 
 namespace Kangou.Touch
 {
@@ -69,10 +68,12 @@ namespace Kangou.Touch
 						this.LocationUpdated (this, new LocationUpdatedEventArgs (e.Locations [e.Locations.Length - 1]));
 					};
 				} else {
+					/*
 					// this won't be called on iOS 6 (deprecated). We will get a warning here when we build.
 					LocMgr.UpdatedLocation += (object sender, CLLocationUpdatedEventArgs e) => {
 						this.LocationUpdated (this, new LocationUpdatedEventArgs (e.NewLocation));
 					};
+					*/
 				}
 
 				//iOS 8 requires you to manually request authorization now - Note the Info.plist file has a new key called requestWhenInUseAuthorization added to.

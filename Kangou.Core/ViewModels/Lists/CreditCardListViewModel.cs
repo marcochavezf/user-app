@@ -2,7 +2,6 @@ using Cirrious.MvvmCross.ViewModels;
 using System.Windows.Input;
 using System.Diagnostics;
 using Cirrious.MvvmCross.Plugins.Messenger;
-using Cirrious.MvvmCross.Plugins.Location;
 using Cirrious.CrossCore;
 using Kangou.Core.Services.Location;
 using Kangou.Core.Services.DataStore;

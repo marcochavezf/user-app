@@ -1,4 +1,5 @@
-﻿using Cirrious.CrossCore;
+﻿/*
+using Cirrious.CrossCore;
 using Cirrious.MvvmCross.Plugins.Location;
 using Cirrious.MvvmCross.Plugins.Messenger;
 using Kangou.Core.Helpers;
@@ -32,4 +33,4 @@ namespace Kangou.Core.Services.Location
         }
 
     }
-}
+}*/

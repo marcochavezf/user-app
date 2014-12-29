@@ -1,10 +1,10 @@
-﻿using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+﻿using Foundation;
+using UIKit;
 using Cirrious.CrossCore;
 using Cirrious.MvvmCross.Touch.Platform;
 using Cirrious.MvvmCross.ViewModels;
 using System.Threading.Tasks;
-using MonoTouch.CoreLocation;
+using CoreLocation;
 using Kangou.Core;
 using System;
 using Google.Maps;
